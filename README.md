@@ -12,6 +12,7 @@ visual assets. Local only, no remote. The app (iOS, relay, agent) lives in
 | `assets/mascot/app-current/` | Snapshot of the mascot files the iOS app ships (read-only reference) |
 | `assets/mascot/explorations/` | Dog style, motion and onboarding explorations |
 | `assets/logo/` | Logo proposals |
+| `docs/<topic>/index.md` | Notes, e.g. `docs/mascot-inventory/` |
 
 ## Preview
 
