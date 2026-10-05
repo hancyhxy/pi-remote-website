@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Onboarding 素材 Review</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f3f2ee;
+      --surface: #fffefb;
+      --surface-soft: #ebeae5;
+      --text: #181817;
+      --muted: #6d6b65;
+      --border: #d8d6cf;
+      --accent: #315efb;
+      --accent-soft: #e8edff;
+      --warning: #8b5b00;
+      --warning-soft: #fff1cc;
+      --shadow: 0 12px 36px rgba(24, 24, 23, .08);
+      --radius: 22px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121211;
+        --surface: #1c1c1a;
+        --surface-soft: #272724;
+        --text: #f4f3ef;
+        --muted: #aaa79e;
+        --border: #393833;
+        --accent: #8da7ff;
+        --accent-soft: #252d4c;
+        --warning: #ffd074;
+        --warning-soft: #3b301b;
+        --shadow: 0 12px 36px rgba(0, 0, 0, .28);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.55 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: inherit; }
+    .shell { width: min(1180px, 100%); margin: 0 auto; padding: max(28px, env(safe-area-inset-top)) 20px max(60px, env(safe-area-inset-bottom)); }
+    header { padding: 28px 0 24px; }
+    .eyebrow { color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { margin: 8px 0 8px; font-size: clamp(32px, 6vw, 58px); line-height: 1.04; letter-spacing: -.045em; }
+    h2 { margin: 0; font-size: clamp(24px, 4vw, 36px); line-height: 1.12; letter-spacing: -.03em; }
+    h3 { margin: 0; font-size: 18px; }
+    p { margin: 8px 0 0; }
+    .lede { max-width: 720px; color: var(--muted); font-size: 17px; }
+    .summary { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .pill { padding: 7px 11px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); font-size: 13px; }
+    nav {
+      position: sticky; top: 0; z-index: 10; display: flex; gap: 8px; overflow-x: auto;
+      padding: 12px 0; background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(16px); scrollbar-width: none;
+    }
+    nav::-webkit-scrollbar { display: none; }
+    nav a { flex: 0 0 auto; min-height: 44px; display: inline-flex; align-items: center; padding: 0 15px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); text-decoration: none; font-weight: 650; }
+    nav a:focus-visible, .media-link:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    section { scroll-margin-top: 76px; padding: 54px 0 8px; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 20px; }
+    .section-head p { color: var(--muted); max-width: 620px; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .card { overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+    .card-body { padding: 16px 18px 18px; }
+    .meta { margin-top: 5px; color: var(--muted); font-size: 13px; }
+    .media-link { display: block; background: var(--surface-soft); text-decoration: none; }
+    .media-link img { display: block; width: 100%; height: auto; }
+    .review-board img { aspect-ratio: 3 / 2; object-fit: contain; }
+    .portrait img { aspect-ratio: 4 / 5; object-fit: contain; }
+    .asset-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 12px; background: var(--surface-soft); }
+    .asset-grid a { display: grid; place-items: center; min-height: 170px; overflow: hidden; border: 1px solid var(--border); border-radius: 15px; background: var(--surface); }
+    .asset-grid img { width: 100%; height: 170px; object-fit: contain; }
+    .animation { display: grid; grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr); gap: 16px; }
+    .gif-wrap { display: grid; place-items: center; min-height: 430px; padding: 28px; background: #f2efe7; }
+    .gif-wrap img { width: min(100%, 430px); image-rendering: auto; }
+    .sprite img { aspect-ratio: 3 / 2; object-fit: contain; }
+    .notice { margin-top: 16px; padding: 14px 16px; border: 1px solid color-mix(in srgb, var(--warning) 36%, var(--border)); border-radius: 14px; color: var(--warning); background: var(--warning-soft); }
+    details { margin-top: 18px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); }
+    summary { min-height: 52px; padding: 14px 16px; cursor: pointer; font-weight: 700; }
+    .frames { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1px; padding: 1px; background: var(--border); }
+    .frames img { display: block; width: 100%; background: #f2efe7; }
+    .discarded { opacity: .82; }
+    footer { padding-top: 56px; color: var(--muted); font-size: 13px; }
+    button { min-height: 44px; border: 1px solid var(--border); border-radius: 999px; padding: 0 15px; color: var(--text); background: var(--surface); font: inherit; font-weight: 700; cursor: pointer; }
+    @media (max-width: 820px) {
+      .grid { grid-template-columns: 1fr; }
+      .animation { grid-template-columns: 1fr; }
+      .asset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .frames { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .section-head { display: block; }
+    }
+    @media (max-width: 430px) {
+      .shell { padding-left: 14px; padding-right: 14px; }
+      .asset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .asset-grid a, .asset-grid img { min-height: 130px; height: 130px; }
+      .frames { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .gif-wrap { min-height: 330px; padding: 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+    @media (prefers-reduced-transparency: reduce) {
+      nav { background: var(--bg); backdrop-filter: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div class="eyebrow">Pi-remote · visual review</div>
+      <h1>Onboarding 素材 Review</h1>
+      <p class="lede">集中查看本轮生成的四种风格、第一幕透明贴纸素材，以及两组小狗 24 帧循环动画。</p>
+      <div class="summary" aria-label="素材概览">
+        <span class="pill">4 种风格</span>
+        <span class="pill">24 个透明 PNG</span>
+        <span class="pill">2 个动态 GIF</span>
+        <span class="pill">24 帧 · 2.88 秒</span>
+      </div>
+    </header>
+
+    <nav aria-label="页面导航">
+      <a href="#act-1">第一幕贴纸</a>
+      <a href="#scene-2">早期场景测试</a>
+      <a href="#animation">225 小狗动效</a>
+      <a href="#china-marker">China marker</a>
+      <a href="#discarded">已弃用探索</a>
+    </nav>
+
+    <section id="act-1">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Current direction</div>
+          <h2>第一幕 · Still at the desk</h2>
+        </div>
+        <p>每种风格包含人物、桌面、小狗、时钟、台灯和会话卡片。所有单体均为透明 PNG，并保留白色 die-cut sticker 描边。</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <a class="media-link review-board" href="act-1/review-style-013.png"><img src="act-1/review-style-013.png" alt="013 风格第一幕六个贴纸素材总览"></a>
+          <div class="card-body"><h3>013 · Bold Flat Everyday Satire</h3><p class="meta">粗黑轮廓、扁平色块、明确姿态与冷面喜剧节奏。</p></div>
+          <div class="asset-grid" aria-label="013 独立素材">
+            <a href="act-1/style-013/01-person-chair.png"><img src="act-1/style-013/01-person-chair.png" alt="013 人物与椅子"></a>
+            <a href="act-1/style-013/02-desk-laptop.png"><img src="act-1/style-013/02-desk-laptop.png" alt="013 桌子与电脑"></a>
+            <a href="act-1/style-013/03-dog-lead.png"><img src="act-1/style-013/03-dog-lead.png" alt="013 小狗与牵引绳"></a>
+            <a href="act-1/style-013/04-clock.png"><img src="act-1/style-013/04-clock.png" alt="013 时钟"></a>
+            <a href="act-1/style-013/05-desk-lamp.png"><img src="act-1/style-013/05-desk-lamp.png" alt="013 台灯"></a>
+            <a href="act-1/style-013/06-session-cards.png"><img src="act-1/style-013/06-session-cards.png" alt="013 会话卡片"></a>
+          </div>
+        </article>
+
+        <article class="card">
+          <a class="media-link review-board" href="act-1/review-style-172.png"><img src="act-1/review-style-172.png" alt="172 风格第一幕六个贴纸素材总览"></a>
+          <div class="card-body"><h3>172 · Naive Folk Cartoon</h3><p class="meta">错透视、怪比例、直接色块与朴拙成人幽默。</p></div>
+          <div class="asset-grid" aria-label="172 独立素材">
+            <a href="act-1/style-172/01-person-chair.png"><img src="act-1/style-172/01-person-chair.png" alt="172 人物与椅子"></a>
+            <a href="act-1/style-172/02-desk-laptop.png"><img src="act-1/style-172/02-desk-laptop.png" alt="172 桌子与电脑"></a>
+            <a href="act-1/style-172/03-dog-lead.png"><img src="act-1/style-172/03-dog-lead.png" alt="172 小狗与牵引绳"></a>
+            <a href="act-1/style-172/04-clock.png"><img src="act-1/style-172/04-clock.png" alt="172 时钟"></a>
+            <a href="act-1/style-172/05-desk-lamp.png"><img src="act-1/style-172/05-desk-lamp.png" alt="172 台灯"></a>
+            <a href="act-1/style-172/06-session-cards.png"><img src="act-1/style-172/06-session-cards.png" alt="172 会话卡片"></a>
+          </div>
+        </article>
+
+        <article class="card">
+          <a class="media-link review-board" href="act-1/review-style-225.png"><img src="act-1/review-style-225.png" alt="225 风格第一幕六个贴纸素材总览"></a>
+          <div class="card-body"><h3>225 · Textured Cut-Paper Collage</h3><p class="meta">几何剪纸、粗糙纸边、层叠纹理与复古哑光色彩。</p></div>
+          <div class="asset-grid" aria-label="225 独立素材">
+            <a href="act-1/style-225/01-person-chair.png"><img src="act-1/style-225/01-person-chair.png" alt="225 人物与椅子"></a>
+            <a href="act-1/style-225/02-desk-laptop.png"><img src="act-1/style-225/02-desk-laptop.png" alt="225 桌子与电脑"></a>
+            <a href="act-1/style-225/03-dog-lead.png"><img src="act-1/style-225/03-dog-lead.png" alt="225 小狗与牵引绳"></a>
+            <a href="act-1/style-225/04-clock.png"><img src="act-1/style-225/04-clock.png" alt="225 时钟"></a>
+            <a href="act-1/style-225/05-desk-lamp.png"><img src="act-1/style-225/05-desk-lamp.png" alt="225 台灯"></a>
+            <a href="act-1/style-225/06-session-cards.png"><img src="act-1/style-225/06-session-cards.png" alt="225 会话卡片"></a>
+          </div>
+        </article>
+
+        <article class="card">
+          <a class="media-link review-board" href="act-1/review-style-china-marker.png"><img src="act-1/review-style-china-marker.png" alt="China marker 风格第一幕六个贴纸素材总览"></a>
+          <div class="card-body"><h3>China Marker Deconstruction</h3><p class="meta">蜡笔纸纹、解构造型、开放线条与灵活的有限配色。</p></div>
+          <div class="asset-grid" aria-label="China marker 独立素材">
+            <a href="act-1/style-china-marker/01-person-chair.png"><img src="act-1/style-china-marker/01-person-chair.png" alt="China marker 人物与椅子"></a>
+            <a href="act-1/style-china-marker/02-desk-laptop.png"><img src="act-1/style-china-marker/02-desk-laptop.png" alt="China marker 桌子与电脑"></a>
+            <a href="act-1/style-china-marker/03-dog-lead.png"><img src="act-1/style-china-marker/03-dog-lead.png" alt="China marker 小狗与牵引绳"></a>
+            <a href="act-1/style-china-marker/04-clock.png"><img src="act-1/style-china-marker/04-clock.png" alt="China marker 时钟"></a>
+            <a href="act-1/style-china-marker/05-desk-lamp.png"><img src="act-1/style-china-marker/05-desk-lamp.png" alt="China marker 台灯"></a>
+            <a href="act-1/style-china-marker/06-session-cards.png"><img src="act-1/style-china-marker/06-session-cards.png" alt="China marker 会话卡片"></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="act-2-assets">
+      <div class="section-head"><div><div class="eyebrow">Act 2 · New assets</div><h2>Out with your dog</h2><p>Static person, ongoing session loop and gentle tail wag.</p></div></div>
+      <p><a href="act-2/variants/">Open the new A / B assets and paper connecting orb →</a></p>
+      <p><a href="act-2/style-225/">Earlier Act 2 asset review</a></p>
+    </section>
+
+    <section id="scene-2">
+      <div class="section-head">
+        <div><div class="eyebrow">Earlier comparison</div><h2>手机遛狗场景 · 三种风格</h2></div>
+        <p>同一构图用于比较风格。用户通过手机继续 Mac 上的会话。</p>
+      </div>
+      <div class="grid">
+        <article class="card"><a class="media-link portrait" href="scene-2/scene-2-style-013.png"><img src="scene-2/scene-2-style-013.png" alt="013 风格手机遛狗场景"></a><div class="card-body"><h3>013</h3><p class="meta">Bold Flat Everyday Satire</p></div></article>
+        <article class="card"><a class="media-link portrait" href="scene-2/scene-2-style-172.png"><img src="scene-2/scene-2-style-172.png" alt="172 风格手机遛狗场景"></a><div class="card-body"><h3>172</h3><p class="meta">Naive Folk Cartoon</p></div></article>
+        <article class="card"><a class="media-link portrait" href="scene-2/scene-2-style-225.png"><img src="scene-2/scene-2-style-225.png" alt="225 风格手机遛狗场景"></a><div class="card-body"><h3>225</h3><p class="meta">Textured Cut-Paper Collage</p></div></article>
+      </div>
+    </section>
+
+    <section id="animation">
+      <div class="section-head">
+        <div><div class="eyebrow">Motion test</div><h2>225 风格小狗循环</h2></div>
+        <p>24 帧纸张拼贴定格动画。主要变化是抬爪、耳朵、头部、尾巴和牵引绳的小幅运动。</p>
+      </div>
+      <div class="animation">
+        <article class="card">
+          <div class="gif-wrap"><img id="dog-gif" src="motion/style-225/dog-225-loop.gif" alt="225 风格小狗等待出门的循环 GIF"></div>
+          <div class="card-body"><h3>Loop preview</h3><p class="meta">256 × 256 · 24 frames · 8.33 fps · 2.88 s · 1.1 MB</p><p><button type="button" id="replay">重新播放</button></p></div>
+        </article>
+        <article class="card sprite">
+          <a class="media-link" href="motion/style-225/dog-225-sprite-sheet.png"><img src="motion/style-225/dog-225-sprite-sheet.png" alt="225 风格小狗 6 乘 4 帧表"></a>
+          <div class="card-body"><h3>6 × 4 sprite sheet</h3><p class="meta">按从左到右、从上到下的顺序组成 GIF。</p></div>
+        </article>
+      </div>
+      <details>
+        <summary>查看 24 张独立帧</summary>
+        <div class="frames">
+          <img src="motion/style-225/frames/frame-01.png" alt="动画第 1 帧"><img src="motion/style-225/frames/frame-02.png" alt="动画第 2 帧"><img src="motion/style-225/frames/frame-03.png" alt="动画第 3 帧"><img src="motion/style-225/frames/frame-04.png" alt="动画第 4 帧"><img src="motion/style-225/frames/frame-05.png" alt="动画第 5 帧"><img src="motion/style-225/frames/frame-06.png" alt="动画第 6 帧">
+          <img src="motion/style-225/frames/frame-07.png" alt="动画第 7 帧"><img src="motion/style-225/frames/frame-08.png" alt="动画第 8 帧"><img src="motion/style-225/frames/frame-09.png" alt="动画第 9 帧"><img src="motion/style-225/frames/frame-10.png" alt="动画第 10 帧"><img src="motion/style-225/frames/frame-11.png" alt="动画第 11 帧"><img src="motion/style-225/frames/frame-12.png" alt="动画第 12 帧">
+          <img src="motion/style-225/frames/frame-13.png" alt="动画第 13 帧"><img src="motion/style-225/frames/frame-14.png" alt="动画第 14 帧"><img src="motion/style-225/frames/frame-15.png" alt="动画第 15 帧"><img src="motion/style-225/frames/frame-16.png" alt="动画第 16 帧"><img src="motion/style-225/frames/frame-17.png" alt="动画第 17 帧"><img src="motion/style-225/frames/frame-18.png" alt="动画第 18 帧">
+          <img src="motion/style-225/frames/frame-19.png" alt="动画第 19 帧"><img src="motion/style-225/frames/frame-20.png" alt="动画第 20 帧"><img src="motion/style-225/frames/frame-21.png" alt="动画第 21 帧"><img src="motion/style-225/frames/frame-22.png" alt="动画第 22 帧"><img src="motion/style-225/frames/frame-23.png" alt="动画第 23 帧"><img src="motion/style-225/frames/frame-24.png" alt="动画第 24 帧">
+        </div>
+      </details>
+    </section>
+
+    <section id="china-marker">
+      <div class="section-head">
+        <div><div class="eyebrow">Fourth style</div><h2>China Marker Deconstruction</h2></div>
+        <p>抽象、朴拙、解构式社论蜡笔风格。配色可随主体变化；风格由蜡笔材质、开放线条、宽大色块和解构造型保持一致。</p>
+      </div>
+      <div class="animation">
+        <article class="card">
+          <a class="media-link portrait" href="style-example-china-marker.png"><img src="style-example-china-marker.png" alt="China marker 风格人物示例"></a>
+          <div class="card-body"><h3>Style example</h3><p class="meta">橄榄绿、赭黄和棕色示例；不再绑定红蓝配色。</p></div>
+        </article>
+        <article class="card">
+          <div class="gif-wrap"><img id="china-dog-gif" src="motion/style-china-marker/dog-loop.gif" alt="China marker 风格小狗循环 GIF"></div>
+          <div class="card-body"><h3>Dog loop</h3><p class="meta">256 × 256 · 24 frames · 8.33 fps · 2.88 s · 1.4 MB</p><p><button type="button" id="replay-china">重新播放</button></p></div>
+        </article>
+      </div>
+      <article class="card sprite" style="margin-top: 16px;">
+        <a class="media-link" href="motion/style-china-marker/dog-sprite-sheet.png"><img src="motion/style-china-marker/dog-sprite-sheet.png" alt="China marker 风格小狗 6 乘 4 帧表"></a>
+        <div class="card-body"><h3>6 × 4 sprite sheet</h3><p class="meta">一次生成 24 帧，再由本地脚本裁切和合成 GIF。</p></div>
+      </article>
+    </section>
+
+    <section id="discarded" class="discarded">
+      <div class="section-head">
+        <div><div class="eyebrow">Discarded</div><h2>早期错误方向</h2></div>
+        <p>这组误用了 Build Week 剧本，不属于当前 onboarding。保留在页面底部，仅用于回看生成历史。</p>
+      </div>
+      <div class="notice">不要将这一组用于 onboarding 设计决策。</div>
+      <details>
+        <summary>展开三张已弃用图片</summary>
+        <div class="grid" style="padding: 16px;">
+          <a class="media-link card" href="archive/wrong-target/act-2-style-013.png"><img src="archive/wrong-target/act-2-style-013.png" alt="已弃用的 013 风格图片"></a>
+          <a class="media-link card" href="archive/wrong-target/act-2-style-172.png"><img src="archive/wrong-target/act-2-style-172.png" alt="已弃用的 172 风格图片"></a>
+          <a class="media-link card" href="archive/wrong-target/act-2-style-225.png"><img src="archive/wrong-target/act-2-style-225.png" alt="已弃用的 225 风格图片"></a>
+        </div>
+      </details>
+    </section>
+
+    <footer>静态 review 页面。素材位于 <code>tmp/2026-09-10/</code>，未修改 production 文件。</footer>
+  </main>
+  <script>
+    const replay = document.getElementById('replay');
+    const gif = document.getElementById('dog-gif');
+    function replayGif(image) {
+      const source = image.src;
+      image.src = '';
+      requestAnimationFrame(() => { image.src = source.split('?')[0] + '?replay=' + Date.now(); });
+    }
+    replay.addEventListener('click', () => replayGif(gif));
+    const replayChina = document.getElementById('replay-china');
+    const chinaGif = document.getElementById('china-dog-gif');
+    replayChina.addEventListener('click', () => replayGif(chinaGif));
+  </script>
+</body>
+</html>

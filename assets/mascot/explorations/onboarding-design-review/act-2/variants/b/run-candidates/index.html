@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Three generated run candidates</title>
+<link rel="stylesheet" href="/shared/styles.css">
+<style>
+  main { max-width: 1100px; margin: auto; padding: 24px 18px max(32px, env(safe-area-inset-bottom)); }
+  h1 { font-size: 25px; letter-spacing: -.025em; }
+  .note, #status { font-size: 13px; line-height: 1.7; color: var(--dim); }
+  .controls { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0; }
+  button, select, .links a { min-height: 44px; }
+  input { min-height: 44px; width: 160px; }
+  .grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; }
+  article { border: 1px solid var(--line); border-radius: 20px; padding: 18px; min-width: 0; }
+  article.selected { border: 2px solid var(--accent); }
+  h2 { font-size: 18px; }
+  canvas { display: block; width: 100%; max-width: 256px; height: auto; margin: 20px auto; background: var(--surface); border-radius: 12px; }
+  .links { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; }
+  .links a { display: inline-flex; align-items: center; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body data-state="loading" data-frame="1">
+<main>
+<h1>Same brief / Three generated runs</h1>
+<p class="note">Same references, prompt, frame size and speed. No joint rig. Each candidate has 24 frames and a 1.92 s loop.</p>
+<div class="controls">
+  <button id="play" disabled>Loading…</button>
+  <button id="step" disabled>Next frame</button>
+  <label>Frame <input id="frame" type="range" min="1" max="24" value="1" disabled><output id="number">1 / 24</output></label>
+  <label>Speed <select id="speed"><option value="80">Normal</option><option value="160">Half speed</option></select></label>
+  <button id="theme">Dark background</button>
+</div>
+<p id="status" role="status">Loading 72 frames…</p>
+<div class="grid">
+  <article><h2>C1 / Earlier recommendation</h2><canvas width="256" height="256" data-candidate="c1" role="img" aria-label="Candidate 1 generated running dog"></canvas><p class="note">More visible hind-leg recovery. The last-to-first silhouette change is smaller than C2 and C3.</p><div class="links"><a href="c1/run.gif">GIF</a><a href="c1/run.webp">WebP</a><a href="c1/still.png">Still</a></div></article>
+  <article><h2>C2 / Longer reach</h2><canvas width="256" height="256" data-candidate="c2" role="img" aria-label="Candidate 2 generated running dog"></canvas><p class="note">Stronger straight forward reaches. More visible movement at the loop seam.</p><div class="links"><a href="c2/run.gif">GIF</a><a href="c2/run.webp">WebP</a><a href="c2/still.png">Still</a></div></article>
+  <article class="selected"><h2>C3 / Selected for now</h2><canvas width="256" height="256" data-candidate="c3" role="img" aria-label="Candidate 3 generated running dog"></canvas><p class="note">Lively gathered poses, but some paws become crowded. More visible seam movement.</p><div class="links"><a href="c3/run.gif">GIF</a><a href="c3/run.webp">WebP</a><a href="c3/still.png">Still</a></div></article>
+</div>
+<p class="note">All three use one frame clock. Pause or drag Frame to inspect matching moments. C3 is the user's provisional choice and is now in the second carousel scene.</p>
+<div class="links"><a href="../../#selected-quarter">See C3 with the B person and cards</a></div>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+const canvases = [...document.querySelectorAll('canvas')];
+let images = [], generation = 0, index = 0, playing = !reduced.matches, raf = 0, last = 0;
+function state(value) {
+  document.body.dataset.state = value;
+  const locked = value === 'loading' || value === 'error';
+  $('play').disabled = value === 'loading'; $('step').disabled = locked; $('frame').disabled = locked;
+  $('play').textContent = value === 'error' ? 'Retry frames' : playing ? 'Pause' : 'Play';
+  $('status').setAttribute('role', value === 'error' ? 'alert' : 'status');
+  $('status').textContent = value === 'loading' ? 'Loading 72 frames…' : value === 'error' ? 'Frames did not load. Select Retry frames.' : playing ? 'Playing together at the same frame and speed.' : 'Paused. Select a frame or press Play.';
+}
+function draw() {
+  canvases.forEach((canvas, candidate) => {
+    const context = canvas.getContext('2d'); context.clearRect(0,0,256,256);
+    context.drawImage(images[candidate][index],0,0); canvas.dataset.frame = String(index + 1);
+  });
+  document.body.dataset.frame = String(index + 1); $('frame').value = index + 1; $('number').textContent = `${index + 1} / 24`;
+}
+function tick(now) {
+  if (!playing) return;
+  const duration = Number($('speed').value);
+  if (!last) last = now;
+  if (now - last >= duration) { const steps = Math.floor((now-last)/duration); index = (index + steps) % 24; last += steps * duration; draw(); }
+  raf = requestAnimationFrame(tick);
+}
+function setPlaying(value) { playing = value; cancelAnimationFrame(raf); last = 0; state(value ? 'ready' : 'paused'); if (value) raf = requestAnimationFrame(tick); }
+async function load() {
+  const token = ++generation; cancelAnimationFrame(raf); state('loading');
+  try {
+    const next = await Promise.all(canvases.map(canvas => Promise.all(Array.from({length:24},async (_,i) => {
+      const image = new Image(); image.src = `${canvas.dataset.candidate}/frames/${String(i+1).padStart(2,'0')}.png`; await image.decode(); return image;
+    }))));
+    if (token !== generation) return;
+    images = next; index = 0; draw(); setPlaying(playing);
+  } catch { if (token === generation) state('error'); }
+}
+$('play').onclick = () => document.body.dataset.state === 'error' ? load() : setPlaying(!playing);
+$('step').onclick = () => { setPlaying(false); index = (index + 1) % 24; draw(); };
+$('frame').oninput = () => { setPlaying(false); index = Number($('frame').value)-1; draw(); };
+$('speed').onchange = () => { last = 0; };
+$('theme').onclick = event => { const dark = document.documentElement.dataset.theme !== 'dark'; document.documentElement.dataset.theme = dark ? 'dark' : 'light'; event.target.textContent = dark ? 'Light background' : 'Dark background'; };
+reduced.onchange = event => { if (event.matches) { playing = false; if (images.length) setPlaying(false); } };
+load();
+</script>
+</body>
+</html>
