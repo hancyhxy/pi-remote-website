@@ -337,3 +337,22 @@ $('#access-form').addEventListener('submit', e => {
 
 // Expose the scene player for the review check.
 window.__siteLanding = { play, stop: () => { autoplay = false; } };
+
+// Logo wall of the model band: sharp in the middle, blurred at the edges.
+(() => {
+  const wall = document.getElementById("logo-wall");
+  if (!wall) return;
+  const mono = new Set(["openai", "xai", "githubcopilot", "openrouter", "groq", "kimi", "moonshot", "vercel", "zai", "opencode", "commandcode", "baseten", "xiaomimimo"]);
+  const sharp = ["groq", "claude", "openai", "nvidia", "deepseek", "google", "xai", "mistral", "githubcopilot", "openrouter", "qwen", "meta", "kimi", "zhipu", "minimax", "huggingface"];
+  const edge = ["together", "fireworks", "cerebras", "azure", "bedrock", "vertexai", "cloudflare", "vercel", "moonshot", "baseten", "zai", "opencode", "antgroup", "xiaomimimo", "commandcode", "together", "azure", "vercel", "bedrock", "cloudflare"];
+  const cols = window.matchMedia("(max-width: 900px)").matches ? 4 : 6, rows = 6;
+  let s = 0, e = 0;
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const inner = r > 0 && r < rows - 1 && c > 0 && c < cols - 1;
+    const name = inner ? sharp[s++ % sharp.length] : edge[e++ % edge.length];
+    const tile = document.createElement("span");
+    if (!inner) tile.className = "blur";
+    tile.innerHTML = `<img src="assets/providers/${name}.png" alt="">`;
+    wall.append(tile);
+  }
+})();

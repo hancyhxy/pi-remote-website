@@ -17,6 +17,7 @@
         <img src="assets/img/avatar-backpack.webp" alt="" width="26" height="26"><span>PI REMOTE</span>
       </a>
       <nav aria-label="Main">
+        <a href="#features">Features</a>
         <a href="#how">How it works</a>
         <a href="#security">Security</a>
         <a href="#faq">FAQ</a>
@@ -96,6 +97,90 @@
         <li><span class="px-icon" data-icon="cloud"></span>Cloudflare relay</li>
       </ul>
     </section>
+
+    <!-- What it does: three full-width bands, grey / white / grey. Each band has one
+         phone outline with one enlarged card that spills over its edge (muse.ai style). -->
+    <div class="showcase" id="features">
+
+      <!-- 1. Continue anywhere, phone first. -->
+      <section class="band band-grey">
+        <div class="band-inner">
+          <div class="vis vis-devices" aria-hidden="true">
+            <div class="ghost-mac"><i></i><i></i><i></i><span>pi · ~/studio</span><p>▸ Reading src/empty-state.ts<br>▸ Edit 2 files<br>▸ npm test … 42 passed</p></div>
+            <div class="shell">
+              <div class="atu"><img src="assets/img/atu-working.gif" alt=""><b>ATU</b><small>⌨︎ Working on your Mac…</small></div>
+              <p class="bub it">Picked up “Fix empty-state copy” from your terminal. Tests pass.</p>
+              <p class="bub me">Nice, ship it</p>
+            </div>
+            <div class="pop pop-continue">
+              <div class="pop-head"><span class="pop-ic">⌨︎</span><div><b>Fix empty-state copy</b><small>Started in Terminal · Studio Mac · 2 min ago</small></div></div>
+              <div class="hand"><span>Mac</span><i></i><span class="on">iPhone</span><i></i><span>iPad</span></div>
+              <button tabindex="-1">Continue here</button>
+            </div>
+            <img class="prop p-laptop" src="assets/img/obj-laptop.webp" alt="">
+            <img class="prop p-ipad" src="assets/img/obj-ipad.webp" alt="">
+            <img class="prop p-latte" src="assets/img/obj-latte.webp" alt="">
+          </div>
+          <div class="copy">
+            <h2>Start at your desk.<br>Keep going anywhere.</h2>
+            <p>Every Pi session on your Mac follows you to your phone. Open the one you left in the terminal, steer it on the train, finish it on the sofa. Same session, same history — anytime, anywhere.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Every model you subscribe to. -->
+      <section class="band band-white">
+        <div class="band-inner rev">
+          <div class="copy">
+            <h2>Every model<br>you pay for.<br>One app.</h2>
+            <p>Not locked to one vendor. Sign in with the subscriptions you already have — Claude, ChatGPT and Codex, Grok, Gemini and more — and switch models in the middle of a chat.</p>
+          </div>
+          <div class="vis vis-models" aria-hidden="true">
+            <div class="logo-wall" id="logo-wall"></div>
+            <div class="pop pop-model">
+              <small>Model</small>
+              <ul>
+                <li><img src="assets/providers/claude.png" alt=""><b>Claude Opus</b><span>Anthropic</span><em>✓</em></li>
+                <li><img class="mono" src="assets/providers/openai.png" alt=""><b>GPT-5 Codex</b><span>ChatGPT</span></li>
+                <li><img class="mono" src="assets/providers/xai.png" alt=""><b>Grok 4</b><span>xAI</span></li>
+                <li><img src="assets/providers/google.png" alt=""><b>Gemini 2.5 Pro</b><span>Google</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. To-Do with ATU. -->
+      <section class="band band-grey">
+        <div class="band-inner">
+          <div class="vis vis-todo" aria-hidden="true">
+            <div class="shell">
+              <div class="atu"><img src="assets/img/atu-idle.gif" alt=""><b>ATU</b><small>✓ Planning your day…</small></div>
+              <p class="bub me">Plan my day: launch email, pricing FAQ, invoice</p>
+              <div class="dock"><img src="assets/img/atu-idle.gif" alt=""><span>Ask ATU to plan your day</span><b>+</b></div>
+            </div>
+            <div class="pop pop-todo">
+              <div class="todo-top"><b>Today</b><span class="tiles"><i class="f"></i><i class="f"></i><i></i><i></i></span></div>
+              <ul>
+                <li class="done"><span class="mk"></span>Send the invoice to Studio</li>
+                <li class="done"><span class="mk"></span>Review relay PR</li>
+                <li class="sel"><span class="mk"></span>Draft launch email</li>
+                <li class="sel"><span class="mk"></span>Update pricing FAQ</li>
+              </ul>
+              <button tabindex="-1">Follow up 2 in chat →</button>
+            </div>
+            <span class="confetti"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <img class="prop p-check" src="assets/img/obj-check.webp" alt="">
+          </div>
+          <div class="copy">
+            <h2>Plan the day with ATU.<br>Get it done in the chat.</h2>
+            <p>Tell ATU what's on your mind and it sorts out today. Save any line Pi writes as a to-do, then pick a few and follow them up together in one chat.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <h2 class="section-title under">Under the hood</h2>
 
     <!-- Feature grid. -->
     <section class="features" aria-label="Features">
