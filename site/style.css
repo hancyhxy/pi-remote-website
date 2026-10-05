@@ -462,3 +462,7 @@ button { cursor: pointer; }
   .logo-wall { grid-template-columns: repeat(4, 1fr); gap: 12px; }
   .logo-wall span { width: 64px; height: 64px; }
 }
+
+/* Desktop scale: the page reads at 90 % of its drawn size, as the owner chose
+   at browser zoom 90 %. Phones keep 100 %. */
+@media (min-width: 900px) { html { zoom: .9; } }
