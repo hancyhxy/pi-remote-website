@@ -4,8 +4,8 @@ Where the dog appears, as of 2026-10-05. App source: `../pi-remote` `main`
 (`ios/native/App/`). Contact sheet of the current app files:
 [`app-current-sheet.png`](app-current-sheet.png).
 
-Two dog styles are in use: **3D plush** (Agent mascot ATU, website) and
-**watercolour beagle sticker** (onboarding). That needs one decision.
+Scope: the Agent mascot ATU in the app and the website, both 3D plush.
+Onboarding is out of scope; the app team owns it.
 
 ## App: Agent mascot ATU (3D plush, 216 px GIF, 36 frames, 12 fps)
 
@@ -28,16 +28,6 @@ One state per GIF, chosen in code (`NativeMascot.swift`).
 | To-do dock "Ask ATU to plan your day" | 30 pt | no | Idle | `NativeTodoView.swift:416` |
 | To-do ATU chat header | 32 pt | while sending | Idle/Working | `NativeTodoView.swift:1516` |
 
-## App: onboarding (watercolour beagle, 3 acts)
-
-| Act | File | Scene |
-|---|---|---|
-| 1 | `ob-a1-dog.gif` (+ `ob-a1-dog-still.png` for Reduce Motion) | Person at desk, dog waits with a lead |
-| 2 | `ob-a2-dog.webp` | Dog runs, the agent keeps working |
-| 3 | `ob-a3-dog.webp` | Dog sleeps beside the sofa |
-
-Code: `NativeOnboardingAssets.swift`. Explorations: `assets/mascot/explorations/onboarding-design-review/`.
-
 ## Website (`site/`, 3D plush)
 
 | Place | File |
@@ -53,8 +43,7 @@ Code: `NativeOnboardingAssets.swift`. Explorations: `assets/mascot/explorations/
 1. States the app has but the mascot lacks: **waiting for you** (a dialog
    waits for an answer, `docs/agent-mode` 5.3) and **error stop**
    (`ATU stopped: <reason>`). Both fall back to Working/Idle today.
-2. **First start**: ATU has no hello/intro state; onboarding uses a
-   different dog style.
+2. **First start**: ATU has no hello/intro state.
 3. Small sizes (14–38 pt) show a static first frame. Check that the first
    frame reads at 14 pt.
 4. Website: decide whether `obj-*` / `sec-*` replace the line icons.
