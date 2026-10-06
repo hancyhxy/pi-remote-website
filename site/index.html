@@ -39,9 +39,17 @@
           <button class="btn btn-primary" type="submit">Join the waitlist</button>
         </form>
         <p class="form-status" id="form-status" role="status">Preview only. Your email is not sent or saved.</p>
-        <div class="cta-row"><a class="btn btn-ghost" href="#stage">How it works</a></div>
       </div>
 
+      <div class="scene-copy" aria-live="polite">
+        <h2 id="scene-title">Scan once.</h2>
+        <p id="scene-text">Run one command on your Mac and scan the code with your phone.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="How Pi Remote works">
+        <button role="tab" data-scene="pair" aria-selected="true"><span class="step-n">1</span>Scan</button>
+        <button role="tab" data-scene="connect" aria-selected="false"><span class="step-n">2</span>Connect</button>
+        <button role="tab" data-scene="work" aria-selected="false"><span class="step-n">3</span>Work</button>
+      </div>
       <!-- Product stage: a Mac screen with the terminal Pi, and the phone in front. -->
       <div class="stage" id="stage" data-scene="pair">
         <div class="screen">
@@ -69,18 +77,9 @@
           <div class="paired" id="paired" aria-hidden="true"><span class="ok">✓</span><b>Paired with Studio Mac</b><small>Your Mac stays connected. You can leave your desk.</small><img src="assets/img/atu-idle.gif" alt=""></div>
         </div>
         <div class="stage-fade" aria-hidden="true"></div>
-        <div class="stage-dogs" aria-hidden="true"><img data-scene="pair" class="on" src="assets/img/dog-backpack.webp" alt=""><img data-scene="connect" src="assets/img/dog-latte.webp" alt=""><img data-scene="work" src="assets/img/dog-noodles.webp" alt=""></div>
       </div>
 
-      <div class="tabs" role="tablist" aria-label="How Pi Remote works">
-        <button role="tab" data-scene="pair" aria-selected="true"><span class="step-n">1</span>Scan</button>
-        <button role="tab" data-scene="connect" aria-selected="false"><span class="step-n">2</span>Connect</button>
-        <button role="tab" data-scene="work" aria-selected="false"><span class="step-n">3</span>Work</button>
-      </div>
-      <div class="scene-copy" aria-live="polite">
-        <h2 id="scene-title">Scan once.</h2>
-        <p id="scene-text">Run one command on your Mac and scan the code with your phone.</p>
-      </div>
+
     </section>
 
     <!-- Compatibility strip, in the place of the reference page's logo strip. -->

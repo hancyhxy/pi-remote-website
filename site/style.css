@@ -508,3 +508,9 @@ button { cursor: pointer; }
 .phone-island { z-index: 5; }
 .paired, .cam p { font-family: var(--sans); }
 @media (max-width: 640px) { .qr-card { display: none; } }
+/* Act 2 header: title, then step tabs, above the stage. */
+.scene-copy { margin: 120px auto 0; min-height: 0; }
+.scene-copy h2 { font-size: clamp(32px, 3.6vw, 44px); letter-spacing: -.03em; }
+.scene-copy p { margin-top: 12px; min-height: 1.6em; }
+.tabs { margin-top: 26px; }
+.stage { margin-top: 40px; }

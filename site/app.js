@@ -201,7 +201,6 @@ function resetStage(scene) {
   $('#scene-text').textContent = COPY[scene][1];
   $$('.tabs [role=tab]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.scene === scene)));
   stage.dataset.scene = scene;
-  $$('.stage-dogs img').forEach(n => n.classList.toggle('on', n.dataset.scene === scene));
   // A scene without an explicit toast step shows its toast at the start.
   if (!SCENES[scene].some(s => s.kind === 'toast')) setToast(scene);
   else { toast.style.color = 'rgba(255,255,255,.7)'; toastText.textContent = scene === 'work' ? 'Studio Mac · online' : 'Waiting for iPhone…'; }
