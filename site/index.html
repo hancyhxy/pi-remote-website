@@ -32,13 +32,17 @@
       <div class="hero-copy">
         <div class="hero-dogs" aria-hidden="true"><img class="hero-dog on" data-word="phone" src="assets/img/dog-latte.webp" alt=""><img class="hero-dog" data-word="sofa" src="assets/img/dog-switch.webp" alt=""><img class="hero-dog" data-word="iPad" src="assets/img/dog-noodles.webp" alt=""><img class="hero-dog" data-word="commute" src="assets/img/scene-commute.webp" alt=""><img class="hero-dog" data-word="garden" src="assets/img/scene-garden.webp" alt=""></div>
         <h1>Keep Pi working<br>from your <span class="accent" id="scramble" aria-label="phone">phone</span><span class="word-obj" aria-hidden="true"><img class="word-img on" data-word="phone" src="assets/img/word-phone.webp" alt=""><img class="word-img" data-word="sofa" src="assets/img/word-sofa.webp" alt=""><img class="word-img" data-word="iPad" src="assets/img/word-ipad.webp" alt=""><img class="word-img" data-word="commute" src="assets/img/word-metro.webp" alt=""><img class="word-img" data-word="garden" src="assets/img/word-plant.webp" alt=""></span></h1>
-        <p class="lede">Leave the desk. Pi keeps working on your Mac. <br>Check, reply and answer — right from your phone.</p>
+        <p class="lede">Your agent runs on your own Mac, not in someone else's cloud.<br>Your phone is the remote.</p>
         <form id="access-form" class="hero-signup" novalidate>
           <label class="sr-only" for="email">Email address</label>
           <input id="email" name="email" type="email" placeholder="Your email address" autocomplete="email" required aria-describedby="form-status">
           <button class="btn btn-primary" type="submit">Join the waitlist</button>
         </form>
         <p class="form-status" id="form-status" role="status">Preview only. Your email is not sent or saved.</p>
+        <div class="vs" aria-label="Cloud agents compared with Pi Remote">
+          <div class="vs-col"><small>Cloud agents</small><span>run on their servers</span><span>their model only</span><span>your data on their side</span></div>
+          <div class="vs-col me"><small>Pi Remote</small><span>runs on your Mac</span><span>any model you pay for</span><span>your data on your disk</span></div>
+        </div>
       </div>
 
       <div class="scene-copy" aria-live="polite">
@@ -47,7 +51,7 @@
       </div>
       <div class="tabs" role="tablist" aria-label="How Pi Remote works">
         <button role="tab" data-scene="pair" aria-selected="true"><span class="step-n">1</span>Scan</button>
-        <button role="tab" data-scene="connect" aria-selected="false"><span class="step-n">2</span>Connect</button>
+        <button role="tab" data-scene="signin" aria-selected="false"><span class="step-n">2</span>Sign in</button>
         <button role="tab" data-scene="work" aria-selected="false"><span class="step-n">3</span>Work</button>
       </div>
       <!-- Product stage: a Mac screen with the terminal Pi, and the phone in front. -->
@@ -74,6 +78,7 @@
           <div class="phone-home" aria-hidden="true"></div>
           <div class="sheet" id="sheet" aria-hidden="true"></div>
           <div class="cam" id="cam" aria-hidden="true"><div class="cam-frame"><div class="qr mini" id="qr-mini"></div><i class="scanline"></i></div><p>Point at the QR code on your Mac</p></div>
+          <div class="signin" id="signin" aria-hidden="true"><b>Add your models</b><small>Use the subscriptions you already have.</small><ul><li class="ok"><img src="assets/providers/claude.png" alt="">Claude<em>Signed in</em></li><li class="ok"><img src="assets/providers/openai.png" alt="">ChatGPT · Codex<em>Signed in</em></li><li><img src="assets/providers/xai.png" alt="">Grok<em>Sign in</em></li><li><img src="assets/providers/google.png" alt="">Gemini<em>Sign in</em></li></ul><small class="fine">Keys are stored on your Mac.</small></div>
           <div class="paired" id="paired" aria-hidden="true"><span class="ok">✓</span><b>Paired with Studio Mac</b><small>Your Mac stays connected. You can leave your desk.</small><img src="assets/img/atu-idle.gif" alt=""></div>
         </div>
         <div class="stage-fade" aria-hidden="true"></div>
@@ -99,31 +104,8 @@
          phone outline with one enlarged card that spills over its edge (muse.ai style). -->
     <div class="showcase" id="features">
 
-      <!-- 1. Continue anywhere, phone first. -->
+      <!-- 1. To-Do with ATU follow-up. -->
       <section class="band band-grey">
-        <div class="band-inner">
-          <div class="vis vis-devices" aria-hidden="true">
-            <div class="ghost-mac"><i></i><i></i><i></i><span>pi · ~/studio</span><p>▸ Reading src/empty-state.ts<br>▸ Edit 2 files<br>▸ npm test … 42 passed</p></div>
-            <div class="shell">
-              <div class="atu"><img src="assets/img/atu-working.gif" alt=""><b>ATU</b><small>⌨︎ Working on your Mac…</small></div>
-              <p class="bub it">Picked up “Fix empty-state copy” from your terminal. Tests pass.</p>
-              <p class="bub me">Nice, ship it</p>
-            </div>
-            <div class="pop pop-continue">
-              <div class="pop-head"><span class="pop-ic">⌨︎</span><div><b>Fix empty-state copy</b><small>Started in Terminal · Studio Mac · 2 min ago</small></div></div>
-              <div class="hand"><span>Mac</span><i></i><span class="on">iPhone</span><i></i><span>iPad</span></div>
-              <button tabindex="-1">Continue here</button>
-            </div>
-          </div>
-          <div class="copy">
-            <h2>Start at your desk.<br>Keep going anywhere.</h2>
-            <p>Every Pi session on your Mac follows you to your phone. Open the one you left in the terminal, steer it on the train, finish it on the sofa. Same session, same history — anytime, anywhere.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- 2. To-Do with ATU. -->
-      <section class="band band-white">
         <div class="band-inner rev">
           <div class="copy">
             <h2>Plan the day with ATU.<br>Get it done in the chat.</h2>
@@ -149,8 +131,8 @@
           </div>
         </div>
       </section>
-      <!-- 3. Updates: scheduled results arrive as tiles in two columns. -->
-      <section class="band band-grey">
+      <!-- 2. Updates: scheduled results arrive as tiles in two columns. -->
+      <section class="band band-white">
         <div class="band-inner">
           <div class="vis vis-updates" aria-hidden="true">
             <div class="shell shell-feed">
@@ -183,19 +165,12 @@
         </div>
       </section>
 
-      <!-- 4. Any model, and your data stays on your Mac. -->
-      <section class="band band-white">
+      <!-- 3. Any model you pay for. -->
+      <section class="band band-grey">
         <div class="band-inner rev">
           <div class="copy">
-            <h2>Switch models.<br>Keep your data.</h2>
-            <p>Models change every month. Your work shouldn't have to move. Sign in with the subscriptions you already have — Claude, ChatGPT and Codex, Grok, Gemini and more — and switch in the middle of a chat. Sessions, memory and files stay on your own Mac, not in someone's cloud.</p>
-            <ul class="ticks">
-              <li>Every chat stays on your Mac, whatever model wrote it</li>
-              <li>Always use the newest model — no migration</li>
-              <li>Runs on Pi, the open agent framework</li>
-            </ul>
-            <!-- Benchmark slot: Pi completion rate and token use vs other agent frameworks.
-                 Fill only with numbers and a source from the app team. -->
+            <h2>Every model<br>you pay for.<br>Switch mid-chat.</h2>
+            <p>Claude, ChatGPT and Codex, Grok, Gemini and more. Use the subscriptions you already have. A cloud agent gives you its model. Pi Remote gives you all of yours — and a new model is one tap away, with every chat still on your Mac.</p>
           </div>
           <div class="vis vis-models" aria-hidden="true">
             <div class="logo-wall" id="logo-wall"></div>
@@ -212,18 +187,44 @@
         </div>
       </section>
 
+
+      <!-- 4. Pi benchmark. Source: apache/maka, Terminal-Bench 2.1, deepseek-v4-flash, 89 tasks, one run. -->
+      <section class="band band-white">
+        <div class="band-inner">
+          <div class="vis vis-bench">
+            <div class="bench">
+              <div class="bench-block"><small>Tokens per task</small>
+                <div class="bar me"><span>Pi</span><i style="--w:50.7%"></i><b>1.48M</b></div>
+                <div class="bar"><span>Claude Code</span><i style="--w:95.2%"></i><b>2.78M</b></div>
+                <div class="bar"><span>Codex</span><i style="--w:100%"></i><b>2.92M</b></div>
+              </div>
+              <div class="bench-block"><small>Cost per solved task</small>
+                <div class="bar me"><span>Pi</span><i style="--w:36.7%"></i><b>$0.020</b></div>
+                <div class="bar"><span>Codex</span><i style="--w:53.6%"></i><b>$0.029</b></div>
+                <div class="bar"><span>Claude Code</span><i style="--w:100%"></i><b>$0.054</b></div>
+              </div>
+              <p class="bench-src">Terminal-Bench 2.1, same model (DeepSeek V4 Flash), 89 tasks, single run. Results vary by model and task. <a href="https://github.com/apache/maka/blob/main/docs/eval/terminal-bench-2.1-deepseek-v4-flash-nine-arm.md" target="_blank" rel="noopener">Source</a></p>
+            </div>
+          </div>
+          <div class="copy">
+            <h2>Same model.<br>Half the tokens.</h2>
+            <p>Pi Remote runs Pi, the open agent framework. With the same model, Pi used about half the tokens of Codex and Claude Code, and had the lowest cost per solved task of nine agents tested.</p>
+            <ul class="ticks">
+              <li>Lowest cost per solved task, out of 9 agents</li>
+              <li>35% more tasks done than Claude Code</li>
+            </ul>
+          </div>
+        </div>
+      </section>
     </div>
 
     <h2 class="section-title under">Under the hood</h2>
 
     <!-- Feature grid. -->
     <section class="features" aria-label="Features">
-      <article class="card"><span class="px-icon lg" data-icon="qr"></span><h3>Pair with one scan</h3><p>Run one command on your Mac. Scan the QR code with your camera. No account, no password.</p></article>
-      <article class="card"><span class="px-icon lg" data-icon="plug"></span><h3>No ports to open</h3><p>No Tailscale, no VPN, no inbound port. Your Mac connects out to a small relay.</p></article>
-      <article class="card"><span class="px-icon lg" data-icon="lock"></span><h3>End-to-end encrypted</h3><p>The relay forwards sealed envelopes. It never reads your prompts, code or results.</p></article>
+      <article class="card"><span class="px-icon lg" data-icon="phone"></span><h3>Desk to phone</h3><p>Start a session at your desk and keep going on the train. Same session, same history.</p></article>
       <article class="card"><span class="px-icon lg" data-icon="term"></span><h3>Terminal hand-off</h3><p>Continue the Pi session that is open in your terminal. Dialogs show on both — first answer wins.</p></article>
       <article class="card"><span class="px-icon lg" data-icon="file"></span><h3>File preview</h3><p>Open Markdown, images and HTML from links in the chat. HTML access is granted per file, for one hour.</p></article>
-      <article class="card"><span class="px-icon lg" data-icon="power"></span><h3>Always there</h3><p>A background service starts at login and restarts on exit. Pair once, then forget about it.</p></article>
       <article class="card"><span class="px-icon lg" data-icon="stack"></span><h3>Several Macs</h3><p>Switch between Macs from one menu. Each Mac accepts up to five paired devices.</p></article>
       <article class="card"><span class="px-icon lg" data-icon="puzzle"></span><h3>Extensions you choose</h3><p>Usage, scheduled tasks, mobile rules and viewers. Install only what you want. Pi itself stays unchanged.</p></article>
       <article class="card"><span class="px-icon lg" data-icon="tablet"></span><h3>Made for iPad too</h3><p>A persistent session sidebar on wide screens. A focused reading column everywhere else.</p></article>
@@ -233,8 +234,13 @@
 
     <!-- Security: one diagram of the connection. -->
     <section class="security" id="security">
-      <h2 class="section-title">The relay cannot read your work.</h2>
-      <p class="section-sub">Your phone and your Mac hold the keys. The relay only moves sealed envelopes.</p>
+      <h2 class="section-title">Your work stays on your Mac.</h2>
+      <p class="section-sub">Not on our servers, not in anyone's cloud. The relay only passes sealed messages.</p>
+      <div class="own">
+        <div class="card"><h3>Runs on your Mac</h3><p>Pi works on your own computer. Your code and files are never uploaded to us.</p></div>
+        <div class="card"><h3>Stored on your Mac</h3><p>Sessions, memory, to-dos and model keys are files on your disk. Switch models or plans and keep all of it.</p></div>
+        <div class="card"><h3>Sealed in transit</h3><p>Phone and Mac talk end-to-end encrypted. The relay forwards, and cannot read.</p></div>
+      </div>
       <div class="flow card" role="img" aria-label="Phone and Mac exchange encrypted envelopes through the relay. The relay cannot read them.">
         <div class="node"><span class="px-icon lg" data-icon="phone"></span><b>Your phone</b><small>holds a key</small></div>
         <div class="wire"><span class="packet"></span><small>sealed</small></div>
@@ -242,7 +248,7 @@
         <div class="wire"><span class="packet rev"></span><small>sealed</small></div>
         <div class="node"><span class="px-icon lg" data-icon="mac"></span><b>Your Mac</b><small>holds a key · runs Pi</small></div>
       </div>
-      <p class="note">Your model provider's data policies still apply to what Pi sends to the model.</p>
+      <p class="note">Your model provider still sees what Pi sends to it, under its own data policy.</p>
     </section>
 
     <section class="faq" id="faq">

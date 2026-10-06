@@ -123,13 +123,13 @@ const toast = $('#toast');
 const toastText = $('#toast-text');
 
 const COPY = {
-  pair: ['Scan once.', 'Run one command on your Mac and scan the code with your phone.'],
-  connect: ["That's it.", 'No VPN, no open ports, no account. Your phone and your Mac are paired.'],
+  pair: ['Scan once.', 'Run one command on your Mac and scan the code. No account, no VPN, no open ports.'],
+  signin: ['Bring your models.', 'Sign in with the subscriptions you already have. The keys stay on your Mac.'],
   work: ['Your Mac, in your pocket.', 'Pi works on your Mac. You watch, reply and decide from your phone.'],
 };
 const TOAST = {
   pair: ['rgba(255,255,255,.7)', 'Waiting for iPhone…'],
-  connect: ['var(--green)', 'iPhone connected'],
+  signin: ['var(--green)', 'Signed in: Claude, ChatGPT'],
   work: ['var(--accent)', 'Message from iPhone'],
 };
 
@@ -143,23 +143,26 @@ const pairTerm = [
 
 // Each scene is a list of steps. A step waits `at` ms, then runs.
 const SCENES = {
+  signin: [
+    ...pairTerm.map(s => ({ ...s, at: 0 })),
+    { at: 0, ...t('<b class="g">✓</b> Paired: iPhone · runs at login') },
+    { at: 0, kind: 'paired', on: true },
+    { at: 900, kind: 'paired', on: false },
+    { at: 0, kind: 'signin', on: true },
+    { at: 500, ...t('<b class="g">✓</b> Signed in: Anthropic (Claude)') },
+    { at: 500, ...t('<b class="g">✓</b> Signed in: OpenAI (ChatGPT · Codex)') },
+    { at: 0, kind: 'toast' },
+    { at: 300, ...t('<b class="g">●</b> Online — ready for work') },
+  ],
   pair: [
     ...pairTerm.map(s => ({ ...s, at: 300 })),
     { at: 200, kind: 'qr', on: true },
     { at: 500, kind: 'cam', on: true },
     { at: 900, kind: 'scan' },
-  ],
-  connect: [
-    ...pairTerm.map(s => ({ ...s, at: 0 })),
-    { at: 0, kind: 'qr', on: true },
-    { at: 0, kind: 'cam', on: true },
-    { at: 600, kind: 'qr', on: false },
+    { at: 700, kind: 'qr', on: false },
     { at: 0, kind: 'cam', on: false },
     { at: 0, kind: 'paired', on: true },
-    { at: 0, kind: 'toast' },
-    { at: 250, ...t('<b class="g">✓</b> Paired: iPhone') },
-    { at: 250, ...t('<b class="g">✓</b> Service installed · runs at login') },
-    { at: 250, ...t('<b class="g">●</b> Online — ready for work') },
+    { at: 0, ...t('<b class="g">✓</b> Paired: iPhone · runs at login') },
   ],
   work: [
     { at: 0, ...t('<b class="g">●</b> Online — ready for work') },
@@ -194,7 +197,7 @@ function setToast(scene) {
 
 function resetStage(scene) {
   term.innerHTML = ''; phone.innerHTML = '';
-  ['#qr', '#cam', '#paired'].forEach(id => $(id).classList.remove('on', 'hit'));
+  ['#qr', '#cam', '#paired', '#signin'].forEach(id => $(id).classList.remove('on', 'hit'));
   sheet.className = 'sheet'; sheet.innerHTML = '';
   composer.className = 'phone-composer'; composerText.textContent = 'Message Pi…';
   $('#scene-title').textContent = COPY[scene][0];
@@ -230,6 +233,7 @@ function runStep(step, scene, instant) {
     case 'qr': $('#qr').classList.toggle('on', step.on); break;
     case 'cam': $('#cam').classList.toggle('on', step.on); break;
     case 'scan': $('#cam').classList.add('hit'); break;
+    case 'signin': $('#signin').classList.toggle('on', step.on); break;
     case 'paired': $('#paired').classList.toggle('on', step.on); break;
     case 'doc': sheet.className = 'sheet doc open'; sheet.innerHTML = step.html; break;
   }
@@ -269,7 +273,7 @@ async function play(scene, { instant = reduced } = {}) {
 }
 
 /* Autoplay cycles the scenes while the stage is on screen. A click stops it. */
-const ORDER = ['pair', 'connect', 'work'];
+const ORDER = ['pair', 'signin', 'work'];
 let autoplay = !reduced;
 let visible = false;
 async function cycle() {
@@ -342,7 +346,7 @@ window.__siteLanding = { play, stop: () => { autoplay = false; } };
 // Scroll reveal: fade sections up as they enter. Groups stagger their children.
 (() => {
   if (reduced || !('IntersectionObserver' in window)) return;
-  const single = ['.scene-copy', '.tabs', '#stage', '.strip', '.band .copy', '.band .vis', '.section-title', '.security > :not(.section-title)', '.faq details', '.access > *'];
+  const single = ['.scene-copy', '.tabs', '#stage', '.strip', '.band .copy', '.band .vis', '.section-title', '.security > :not(.section-title)', '.own .card', '.faq details', '.access > *'];
   const groups = ['.features .card', '.todo-points li'];
   const els = [];
   single.forEach(sel => $$(sel).forEach(el => els.push(el)));
