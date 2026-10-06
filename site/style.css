@@ -662,3 +662,12 @@ button { cursor: pointer; }
   .scene-copy h2 { line-height: 1.12; min-height: 2.24em; display: flex; align-items: flex-end; justify-content: center; }
   .scene-copy p { min-height: 4.8em; }
 }
+
+/* Act 2 stage: a closed Mac screen, no fade; terminal fits inside. */
+@media (min-width: 641px) {
+  .stage { height: 600px; }
+  .screen { inset: 0 60px 30px 0; border-bottom: 12px solid #1c1a18; border-radius: 22px; }
+  .term-front { height: auto; bottom: 40px; }
+  .stage .phone { bottom: 0; }
+}
+.vs2 { margin-top: 72px; margin-bottom: 40px; }
