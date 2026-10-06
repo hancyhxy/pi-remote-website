@@ -615,3 +615,12 @@ button { cursor: pointer; }
 .own .card h3 { margin: 0 0 8px; font-size: 16px; }
 .own .card p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--muted); }
 @media (max-width: 760px) { .own { grid-template-columns: 1fr; } .vs-col { padding: 14px 16px; font-size: 13px; } .bar { grid-template-columns: 84px 1fr 56px; } }
+
+/* Under the hood: compact row of small cards. */
+.section-title.under { margin-top: 90px; font-size: clamp(24px, 2.6vw, 32px); }
+.features { max-width: 1100px; margin-top: 32px; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.features .card { padding: 18px 14px 20px; border-radius: 16px; }
+.features .px-icon.lg { width: 22px; height: 22px; padding: 5px; border-radius: 9px; }
+.features h3 { margin: 10px 0 4px; font-size: 13px; }
+.features p { font-size: 12px; line-height: 1.45; }
+@media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
