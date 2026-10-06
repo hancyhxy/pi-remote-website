@@ -1,7 +1,7 @@
 # pi-remote-website
 
 Marketing and design for Pi Remote: the public website and the pixel-dog
-visual assets. Local only, no remote. The app (iOS, relay, agent) lives in
+visual assets. Private GitHub repo `hancyhxy/pi-remote-website`. The app (iOS, relay, agent) lives in
 `../pi-remote` and is owned by the app design team.
 
 ## Layout
