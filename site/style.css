@@ -705,3 +705,15 @@ button { cursor: pointer; }
 .us span::before { content: "✓ "; color: var(--green); }
 .act2 { text-align: center; }
 @media (max-width: 640px) { .why { margin-top: 90px; } .cmp { grid-template-columns: 1fr; } .cmp-col span { font-size: 16px; } }
+
+/* Act 1.5, compact: closer to the first hero card; cloud column struck through. */
+.why { max-width: 720px; margin-top: 110px; }
+.why .section-title { font-size: clamp(28px, 3vw, 36px); }
+.why .section-sub { font-size: 15px; margin-top: 10px; }
+.cmp { gap: 12px; margin-top: 28px; }
+.cmp-col { padding: 18px 22px 6px; border-radius: 18px; }
+.cmp-col h3 { font-size: 11px; margin-bottom: 4px; }
+.cmp-col .row { padding: 10px 0; gap: 2px; }
+.cmp-col small { font-size: 11px; }
+.cmp-col span { font-size: 15px; }
+.them span { text-decoration: line-through; text-decoration-color: rgba(0,0,0,.25); }
