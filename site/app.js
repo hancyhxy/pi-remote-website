@@ -123,13 +123,11 @@ const toast = $('#toast');
 const toastText = $('#toast-text');
 
 const COPY = {
-  pair: ['Scan once.', 'Run one command on your Mac and scan the code. No account, no VPN, no open ports.'],
-  signin: ['Bring your models.', 'Sign in with the subscriptions you already have. The keys stay on your Mac.'],
+  pair: ['Scan. Sign in. Done.', 'Scan one QR code to pair your phone, then sign in with the model subscriptions you already have. Keys stay on your Mac.'],
   work: ['Your Mac, in your pocket.', 'Pi works on your Mac. You watch, reply and decide from your phone.'],
 };
 const TOAST = {
-  pair: ['rgba(255,255,255,.7)', 'Waiting for iPhone…'],
-  signin: ['var(--green)', 'Signed in: Claude, ChatGPT'],
+  pair: ['var(--green)', 'Signed in: Claude, ChatGPT'],
   work: ['var(--accent)', 'Message from iPhone'],
 };
 
@@ -143,17 +141,6 @@ const pairTerm = [
 
 // Each scene is a list of steps. A step waits `at` ms, then runs.
 const SCENES = {
-  signin: [
-    ...pairTerm.map(s => ({ ...s, at: 0 })),
-    { at: 0, ...t('<b class="g">✓</b> Paired: iPhone · runs at login') },
-    { at: 0, kind: 'paired', on: true },
-    { at: 900, kind: 'paired', on: false },
-    { at: 0, kind: 'signin', on: true },
-    { at: 500, ...t('<b class="g">✓</b> Signed in: Anthropic (Claude)') },
-    { at: 500, ...t('<b class="g">✓</b> Signed in: OpenAI (ChatGPT · Codex)') },
-    { at: 0, kind: 'toast' },
-    { at: 300, ...t('<b class="g">●</b> Online — ready for work') },
-  ],
   pair: [
     ...pairTerm.map(s => ({ ...s, at: 300 })),
     { at: 200, kind: 'qr', on: true },
@@ -163,6 +150,12 @@ const SCENES = {
     { at: 0, kind: 'cam', on: false },
     { at: 0, kind: 'paired', on: true },
     { at: 0, ...t('<b class="g">✓</b> Paired: iPhone · runs at login') },
+    { at: 1000, kind: 'paired', on: false },
+    { at: 0, kind: 'signin', on: true },
+    { at: 500, ...t('<b class="g">✓</b> Signed in: Anthropic (Claude)') },
+    { at: 500, ...t('<b class="g">✓</b> Signed in: OpenAI (ChatGPT · Codex)') },
+    { at: 0, kind: 'toast' },
+    { at: 300, ...t('<b class="g">●</b> Online — ready for work') },
   ],
   work: [
     { at: 0, ...t('<b class="g">●</b> Online — ready for work') },
@@ -273,7 +266,7 @@ async function play(scene, { instant = reduced } = {}) {
 }
 
 /* Autoplay cycles the scenes while the stage is on screen. A click stops it. */
-const ORDER = ['pair', 'signin', 'work'];
+const ORDER = ['pair', 'work'];
 let autoplay = !reduced;
 let visible = false;
 async function cycle() {
