@@ -723,3 +723,16 @@ button { cursor: pointer; }
 #stage.reveal, .band .vis.reveal { transform: translateY(10px); }
 body::after { mix-blend-mode: normal; opacity: .02; will-change: auto; }
 .nav { will-change: background; }
+
+/* Hero: Learn more */
+.learn { display: inline-flex; align-items: center; gap: 6px; margin-top: 26px; padding: 10px 20px; border-radius: 999px; border: 1px solid var(--line-2); background: #fff; font-size: 14px; color: var(--text-2); transition: transform .2s, background .2s; }
+.learn:hover { background: var(--bg-alt); transform: translateY(-1px); }
+.learn span { transition: transform .2s; }
+.learn:hover span { transform: translateY(2px); }
+
+/* Security: 3D lock and object icons */
+.security { text-align: center; }
+.sec-hero { display: block; width: 120px; height: auto; margin: 0 auto 18px; filter: drop-shadow(0 18px 24px rgba(217,128,58,.3)); }
+.own .card { text-align: left; }
+.sec-ic { display: block; width: 52px; height: 52px; object-fit: contain; margin-bottom: 14px; filter: drop-shadow(0 8px 10px rgba(90,60,30,.15)); }
+.flow .node-obj { width: 64px; height: 64px; }

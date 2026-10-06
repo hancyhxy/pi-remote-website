@@ -38,6 +38,7 @@
           <button class="btn btn-primary" type="submit">Join the waitlist</button>
         </form>
         <p class="form-status" id="form-status" role="status">Preview only. Your email is not sent or saved.</p>
+        <a class="learn" href="#why">Learn more <span aria-hidden="true">↓</span></a>
       </div>
 
     </section>
@@ -226,19 +227,20 @@
 
     <!-- Security: one diagram of the connection. -->
     <section class="security" id="security">
+      <img class="sec-hero" src="assets/img/sec-lock.webp" alt="" aria-hidden="true">
       <h2 class="section-title">Your work stays on your Mac.</h2>
       <p class="section-sub">Not on our servers, not in anyone's cloud. The relay only passes sealed messages.</p>
       <div class="own">
-        <div class="card"><h3>Runs on your Mac</h3><p>Pi works on your own computer. Your code and files are never uploaded to us.</p></div>
-        <div class="card"><h3>Stored on your Mac</h3><p>Sessions, memory, to-dos and model keys are files on your disk. Switch models or plans and keep all of it.</p></div>
-        <div class="card"><h3>Sealed in transit</h3><p>Phone and Mac talk end-to-end encrypted. The relay forwards, and cannot read.</p></div>
+        <div class="card"><img class="sec-ic" src="assets/img/sec-laptop.webp" alt=""><h3>Runs on your Mac</h3><p>Pi works on your own computer. Your code and files are never uploaded to us.</p></div>
+        <div class="card"><img class="sec-ic" src="assets/img/sec-check.webp" alt=""><h3>Stored on your Mac</h3><p>Sessions, memory, to-dos and model keys are files on your disk. Switch models or plans and keep all of it.</p></div>
+        <div class="card"><img class="sec-ic" src="assets/img/sec-envelope.webp" alt=""><h3>Sealed in transit</h3><p>Phone and Mac talk end-to-end encrypted. The relay forwards, and cannot read.</p></div>
       </div>
       <div class="flow card" role="img" aria-label="Phone and Mac exchange encrypted envelopes through the relay. The relay cannot read them.">
-        <div class="node"><span class="px-icon lg" data-icon="phone"></span><b>Your phone</b><small>holds a key</small></div>
+        <div class="node"><img class="node-obj" src="assets/img/sec-ipad.webp" alt=""><b>Your phone</b><small>holds a key</small></div>
         <div class="wire"><span class="packet"></span><small>sealed</small></div>
-        <div class="node relay"><span class="px-icon lg" data-icon="cloud"></span><b>Relay</b><small>no key · forwards only</small></div>
+        <div class="node relay"><img class="node-obj" src="assets/img/sec-cloud.webp" alt=""><b>Relay</b><small>no key · forwards only</small></div>
         <div class="wire"><span class="packet rev"></span><small>sealed</small></div>
-        <div class="node"><span class="px-icon lg" data-icon="mac"></span><b>Your Mac</b><small>holds a key · runs Pi</small></div>
+        <div class="node"><img class="node-obj" src="assets/img/sec-laptop.webp" alt=""><b>Your Mac</b><small>holds a key · runs Pi</small></div>
       </div>
       <p class="note">Your model provider still sees what Pi sends to it, under its own data policy.</p>
     </section>
