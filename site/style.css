@@ -686,3 +686,22 @@ button { cursor: pointer; }
   .vs3 { flex-direction: column; gap: 8px; margin-top: 32px; }
 }
 .vs3 i { font-style: normal; color: var(--green); }
+
+/* Act 1.5: cloud agents vs Pi Remote */
+.why { max-width: 880px; margin: 130px auto 0; padding: 0 16px; text-align: center; }
+.cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; text-align: left; }
+.cmp-col { padding: 26px 28px 10px; border-radius: 24px; }
+.cmp-col h3 { margin: 0 0 8px; font: 12px var(--pixel); letter-spacing: .1em; text-transform: uppercase; }
+.cmp-col .row { padding: 16px 0; border-top: 1px solid var(--line); display: grid; gap: 4px; }
+.cmp-col .row:first-of-type { border-top: 0; }
+.cmp-col small { font-size: 12px; color: var(--faint); }
+.cmp-col span { font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
+.them { background: #f4f2ef; }
+.them h3, .them span { color: #a39a90; }
+.them span { font-weight: 500; }
+.us { background: #fff; border: 1px solid rgba(217,128,58,.35); box-shadow: 0 24px 50px -24px rgba(217,128,58,.35); }
+.us h3 { color: var(--accent); }
+.us span { color: var(--text); }
+.us span::before { content: "✓ "; color: var(--green); }
+.act2 { text-align: center; }
+@media (max-width: 640px) { .why { margin-top: 90px; } .cmp { grid-template-columns: 1fr; } .cmp-col span { font-size: 16px; } }
