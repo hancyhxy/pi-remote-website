@@ -348,6 +348,6 @@ window.__siteLanding = { play, stop: () => { autoplay = false; } };
   const io = new IntersectionObserver(entries => entries.forEach(e => {
     if (!e.isIntersecting) return;
     e.target.classList.add('in'); io.unobserve(e.target);
-  }), { threshold: .15, rootMargin: '0px 0px -8% 0px' });
+  }), { threshold: 0, rootMargin: '0px 0px -6% 0px' });
   [...new Set(els)].forEach(el => { el.classList.add('reveal'); io.observe(el); });
 })();
