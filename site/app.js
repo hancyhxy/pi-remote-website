@@ -32,20 +32,6 @@ function bitmapSvg(rows) {
 }
 $$('.px-icon[data-icon]').forEach(el => { el.innerHTML = bitmapSvg(ICONS[el.dataset.icon].split('|')); });
 
-/* ---------- Sample QR bitmap (decorative; not scannable) ---------- */
-(function drawQr() {
-  const n = 25; let seed = 7;
-  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-  const grid = Array.from({ length: n }, () => Array.from({ length: n }, () => rnd() > .52));
-  const finder = (ox, oy) => { for (let y = 0; y < 7; y++) for (let x = 0; x < 7; x++) {
-    const edge = x === 0 || y === 0 || x === 6 || y === 6, core = x > 1 && x < 5 && y > 1 && y < 5;
-    grid[oy + y][ox + x] = edge || core;
-  } for (let i = -1; i < 8; i++) for (const [a, b] of [[i, -1], [i, 7], [-1, i], [7, i]]) {
-    const yy = oy + b, xx = ox + a; if (grid[yy] && xx >= 0 && xx < n) grid[yy][xx] = false; } };
-  finder(0, 0); finder(n - 7, 0); finder(0, n - 7);
-  $('#qr').innerHTML = bitmapSvg(grid.map(r => r.map(v => (v ? '#' : '.')).join(''))).replace('currentColor', '#111');
-})();
-
 /* ---------- Navigation background after scroll ---------- */
 const nav = $('#nav');
 const onScroll = () => nav.classList.toggle('scrolled', scrollY > 24);
@@ -116,6 +102,17 @@ function matrix(canvas, { cell = 16, alpha = .1, glyphs = '0 1 · ·  ' } = {}) 
 })();
 
 /* ---------- Product stage scenes ---------- */
+// A QR-looking pattern: three finder squares and seeded noise. It encodes nothing.
+(function drawQr() {
+  const n = 25; let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  const finder = (x, y) => [[0, 0], [n - 7, 0], [0, n - 7]].some(([fx, fy]) => x >= fx && x < fx + 7 && y >= fy && y < fy + 7);
+  const on = (x, y) => [[0, 0], [n - 7, 0], [0, n - 7]].some(([fx, fy]) => { const a = x - fx, b = y - fy; if (a < 0 || b < 0 || a > 6 || b > 6) return false; return a === 0 || b === 0 || a === 6 || b === 6 || (a > 1 && a < 5 && b > 1 && b < 5); });
+  let rects = '';
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (finder(x, y) ? on(x, y) : rnd() > .52) rects += `<rect x="${x}" y="${y}" width="1" height="1"/>`;
+  const svg = `<svg viewBox="-1 -1 ${n + 2} ${n + 2}" shape-rendering="crispEdges"><rect x="-1" y="-1" width="${n + 2}" height="${n + 2}" fill="#fff"/><g fill="#1d1a17">${rects}</g></svg>`;
+  document.getElementById('qr-code').innerHTML = svg;
+  document.getElementById('qr-mini').innerHTML = svg;
+})();
 const stage = $('#stage');
 const term = $('#term');
 const phone = $('#phone');
@@ -126,86 +123,67 @@ const toast = $('#toast');
 const toastText = $('#toast-text');
 
 const COPY = {
-  check: ['See what Pi is doing.', 'Every read, edit and command — live on your phone, as it happens on your Mac.'],
-  reply: ['Send the next step.', 'Type an instruction on your phone. Pi picks it up on your Mac and keeps going.'],
-  answer: ['Answer from anywhere.', 'When Pi needs a decision, the dialog opens on your phone and in your terminal. First answer wins.'],
-  preview: ['Read the result.', 'Open Markdown, images and HTML that Pi wrote, without going back to your desk.'],
+  pair: ['Scan once.', 'Run one command on your Mac and scan the code with your phone.'],
+  connect: ["That's it.", 'No VPN, no open ports, no account. Your phone and your Mac are paired.'],
+  work: ['Your Mac, in your pocket.', 'Pi works on your Mac. You watch, reply and decide from your phone.'],
 };
 const TOAST = {
-  check: ['var(--green)', 'iPhone watching'],
-  reply: ['var(--accent)', 'Message from iPhone'],
-  answer: ['var(--green)', 'Answered on iPhone'],
-  preview: ['var(--accent-2)', 'Opened test-report.md'],
+  pair: ['rgba(255,255,255,.7)', 'Waiting for iPhone…'],
+  connect: ['var(--green)', 'iPhone connected'],
+  work: ['var(--accent)', 'Message from iPhone'],
 };
 
 const t = (html, cls = '') => ({ kind: 'term', html, cls });
 const p = html => ({ kind: 'phone', html });
 const tool = (state, name, arg) => `<div class="tool">${state === 'run' ? '<i class="spin"></i>' : '<b class="g">✓</b>'}<span>${name}</span><em>${arg}</em></div>`;
-const baseTerm = [
-  t('<b class="o">›</b> Add an empty state to the project list.'),
-  t('<b class="g">●</b> Read(src/ProjectList.tsx)'), t('<span class="dim">  └─ 142 lines</span>'),
-  t('<b class="g">●</b> Edit(src/ProjectList.tsx)'),
-  t('<span class="dim"> 12</span>   if (!projects.length) {'),
-  t('<span class="dim"> 13</span> -   return null;', 'diff-del'),
-  t('<span class="dim"> 13</span> +   return &lt;EmptyState /&gt;;', 'diff-add'),
+const pairTerm = [
+  t('<b class="o">$</b> pi-remote pair'),
+  t('<span class="dim">Scan this code with the Pi Remote app.</span>'),
 ];
 
 // Each scene is a list of steps. A step waits `at` ms, then runs.
 const SCENES = {
-  check: [
-    ...baseTerm.map(s => ({ ...s, at: 260 })),
-    { at: 0, ...p('<div class="bubble">Add an empty state to the project list.</div>') },
-    { at: 300, ...p(tool('ok', 'read', 'src/ProjectList.tsx')) },
-    { at: 300, ...p(tool('ok', 'edit', 'ProjectList.tsx  +8 −1')) },
-    { at: 350, ...t('<b class="o">●</b> Bash(npm test)') },
-    { at: 0, ...p(tool('run', 'bash', 'npm test')) },
-    { at: 200, ...t('<span class="dim">  └─ running… </span><span class="cursor"></span>') },
-    { at: 0, ...p('<div class="working"><i></i>Working · 0:42</div>') },
+  pair: [
+    ...pairTerm.map(s => ({ ...s, at: 300 })),
+    { at: 200, kind: 'qr', on: true },
+    { at: 500, kind: 'cam', on: true },
+    { at: 900, kind: 'scan' },
   ],
-  reply: [
-    ...baseTerm.map(s => ({ ...s, at: 0 })),
-    { at: 0, ...t('<b class="g">✓</b> 11 tests passed') },
-    { at: 0, ...p('<div class="bubble">Add an empty state to the project list.</div>') },
+  connect: [
+    ...pairTerm.map(s => ({ ...s, at: 0 })),
+    { at: 0, kind: 'qr', on: true },
+    { at: 0, kind: 'cam', on: true },
+    { at: 600, kind: 'qr', on: false },
+    { at: 0, kind: 'cam', on: false },
+    { at: 0, kind: 'paired', on: true },
+    { at: 0, kind: 'toast' },
+    { at: 250, ...t('<b class="g">✓</b> Paired: iPhone') },
+    { at: 250, ...t('<b class="g">✓</b> Service installed · runs at login') },
+    { at: 250, ...t('<b class="g">●</b> Online — ready for work') },
+  ],
+  work: [
+    { at: 0, ...t('<b class="g">●</b> Online — ready for work') },
+    { at: 400, kind: 'type', text: 'Fix the empty state on the project list' },
+    { at: 400, kind: 'send' },
+    { at: 0, ...p('<div class="bubble">Fix the empty state on the project list</div>') },
+    { at: 250, ...t('<b class="o">›</b> Fix the empty state on the project list <span class="b">[iPhone]</span>') },
+    { at: 0, kind: 'toast' },
+    { at: 450, ...t('<b class="g">●</b> Read(src/ProjectList.tsx)') },
+    { at: 0, ...t('<span class="dim">  └─ 142 lines</span>') },
+    { at: 0, ...p(tool('ok', 'read', 'src/ProjectList.tsx')) },
+    { at: 450, ...t('<b class="g">●</b> Edit(src/ProjectList.tsx)') },
+    { at: 0, ...t('<span class="dim"> 13</span> -   return null;', 'diff-del') },
+    { at: 0, ...t('<span class="dim"> 13</span> +   return &lt;EmptyState /&gt;;', 'diff-add') },
     { at: 0, ...p(tool('ok', 'edit', 'ProjectList.tsx  +8 −1')) },
-    { at: 0, ...p('<p class="say">Done. The empty state shows a “Create your first project” button. 11 tests pass.</p>') },
-    { at: 500, kind: 'type', text: 'Also add a test for the empty list.' },
-    { at: 500, kind: 'send' },
-    { at: 0, ...p('<div class="bubble">Also add a test for the empty list.</div>') },
-    { at: 250, ...t('<b class="o">›</b> Also add a test for the empty list. <span class="b">[iPhone]</span>') },
-    { at: 0, kind: 'toast' },
-    { at: 500, ...t('<b class="g">●</b> Write(src/ProjectList.test.tsx)') },
-    { at: 0, ...p(tool('run', 'write', 'ProjectList.test.tsx')) },
-    { at: 0, ...p('<div class="working"><i></i>Working · 0:03</div>') },
-  ],
-  answer: [
-    { at: 0, ...t('<b class="g">●</b> Write(migrations/0007_projects.sql)') },
-    { at: 0, ...t('<span class="dim">  └─ 18 lines</span>') },
-    { at: 0, ...p(tool('ok', 'write', 'migrations/0007_projects.sql')) },
-    { at: 300, ...t('<div class="term-select"><b class="o">?</b> Run the database migration first?\n<b class="o">›</b> Yes, run it\n  No, skip for now\n  Type something…</div>') },
-    { at: 0, kind: 'sheet', html: '<h4>Run the database migration first?</h4><p class="hint">Also shown in your terminal. First answer wins.</p><span class="opt" data-o="yes">Yes, run it</span><span class="opt">No, skip for now</span><span class="opt">Type something…</span>' },
-    { at: 1400, kind: 'pick' },
-    { at: 600, kind: 'sheet-close' },
-    { at: 0, ...t('<b class="g">✓</b> Answered on iPhone: <b>Yes, run it</b>') },
-    { at: 0, kind: 'toast' },
-    { at: 0, ...p('<p class="say">You chose <b>Yes, run it</b>.</p>') },
-    { at: 350, ...t('<b class="g">●</b> Bash(npm run migrate)') },
-    { at: 0, ...p(tool('run', 'bash', 'npm run migrate')) },
-  ],
-  preview: [
-    { at: 0, ...t('<b class="g">●</b> Bash(npm test)') },
-    { at: 0, ...t('<span class="dim">  └─</span> <b class="g">✓ 12 tests passed</b>') },
-    { at: 0, ...p(tool('ok', 'bash', 'npm test')) },
-    { at: 300, ...t('<b class="g">●</b> Write(test-report.md)') },
-    { at: 0, ...t('<span class="dim">  └─ 24 lines</span>') },
-    { at: 0, ...p('<p class="say">The report is ready.</p>') },
-    { at: 0, ...p('<div class="file-link">▤ test-report.md<span style="margin-left:auto">Open ↗</span></div>') },
-    { at: 900, kind: 'doc', html: '<div class="doc-head"><span>test-report.md</span><span>Done</span></div><h5>Empty state. Covered.</h5><p class="say">The project list now has a regression test.</p><div class="pass">✓ 12 tests passed</div><ul><li>Added a test for an empty list</li><li>Checked the first-project button</li><li>Kept existing tests unchanged</li></ul><pre>Test files  3 passed\nTests      12 passed\nDuration   1.24 s</pre>' },
-    { at: 0, kind: 'toast' },
+    { at: 450, ...t('<b class="o">●</b> Bash(npm test)') },
+    { at: 0, ...p(tool('run', 'bash', 'npm test')) },
+    { at: 900, ...t('<span class="dim">  └─</span> <b class="g">✓ 11 tests passed</b>') },
+    { at: 0, ...p('<p class="say">Done. The empty list now shows a “Create your first project” button. 11 tests pass.</p>') },
   ],
 };
 
 let generation = 0;
-let current = 'check';
+let current = 'pair';
 
 function setToast(scene) {
   const [colour, text] = TOAST[scene];
@@ -216,6 +194,7 @@ function setToast(scene) {
 
 function resetStage(scene) {
   term.innerHTML = ''; phone.innerHTML = '';
+  ['#qr', '#cam', '#paired'].forEach(id => $(id).classList.remove('on', 'hit'));
   sheet.className = 'sheet'; sheet.innerHTML = '';
   composer.className = 'phone-composer'; composerText.textContent = 'Message Pi…';
   $('#scene-title').textContent = COPY[scene][0];
@@ -225,7 +204,7 @@ function resetStage(scene) {
   $$('.stage-dogs img').forEach(n => n.classList.toggle('on', n.dataset.scene === scene));
   // A scene without an explicit toast step shows its toast at the start.
   if (!SCENES[scene].some(s => s.kind === 'toast')) setToast(scene);
-  else { toast.style.color = 'rgba(255,255,255,.7)'; toastText.textContent = 'Studio Mac · online'; }
+  else { toast.style.color = 'rgba(255,255,255,.7)'; toastText.textContent = scene === 'work' ? 'Studio Mac · online' : 'Waiting for iPhone…'; }
 }
 
 function runStep(step, scene, instant) {
@@ -249,6 +228,10 @@ function runStep(step, scene, instant) {
     case 'sheet': sheet.className = 'sheet open'; sheet.innerHTML = step.html; break;
     case 'pick': $('[data-o=yes]', sheet)?.classList.add('on'); break;
     case 'sheet-close': sheet.className = 'sheet'; break;
+    case 'qr': $('#qr').classList.toggle('on', step.on); break;
+    case 'cam': $('#cam').classList.toggle('on', step.on); break;
+    case 'scan': $('#cam').classList.add('hit'); break;
+    case 'paired': $('#paired').classList.toggle('on', step.on); break;
     case 'doc': sheet.className = 'sheet doc open'; sheet.innerHTML = step.html; break;
   }
   return null;
@@ -287,7 +270,7 @@ async function play(scene, { instant = reduced } = {}) {
 }
 
 /* Autoplay cycles the scenes while the stage is on screen. A click stops it. */
-const ORDER = ['check', 'reply', 'answer', 'preview'];
+const ORDER = ['pair', 'connect', 'work'];
 let autoplay = !reduced;
 let visible = false;
 async function cycle() {
@@ -313,7 +296,7 @@ $('.tabs').addEventListener('keydown', e => {
   btn.focus(); btn.click();
 });
 
-if (reduced) play('check', { instant: true }); else cycle();
+if (reduced) play('work', { instant: true }); else cycle();
 
 /* ---------- Waitlist preview ---------- */
 $('#bottom-join').addEventListener('click', () => {

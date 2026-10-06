@@ -18,7 +18,7 @@
       </a>
       <nav aria-label="Main">
         <a href="#features">Features</a>
-        <a href="#how">How it works</a>
+        <a href="#stage">How it works</a>
         <a href="#security">Security</a>
         <a href="#faq">FAQ</a>
         <a class="btn btn-outline btn-sm" href="#access"><span class="glyph" aria-hidden="true">▯</span>Early access</a>
@@ -39,21 +39,18 @@
           <button class="btn btn-primary" type="submit">Join the waitlist</button>
         </form>
         <p class="form-status" id="form-status" role="status">Preview only. Your email is not sent or saved.</p>
-        <div class="cta-row"><a class="btn btn-ghost" href="#how">How it works</a></div>
+        <div class="cta-row"><a class="btn btn-ghost" href="#stage">How it works</a></div>
       </div>
 
       <!-- Product stage: a Mac screen with the terminal Pi, and the phone in front. -->
-      <div class="stage" id="stage" data-scene="check">
+      <div class="stage" id="stage" data-scene="pair">
         <div class="screen">
           <div class="menubar">
             <span class="apple" aria-hidden="true"></span><b>Terminal</b><span>Shell</span><span>Edit</span><span>View</span>
             <span class="menubar-right" id="clock">Thu 9:41 AM</span>
           </div>
           <div class="toast" id="toast" role="status"><i class="dot"></i><span id="toast-text">iPhone connected</span></div>
-          <div class="term term-back" aria-hidden="true">
-            <div class="term-bar"><i></i><i></i><i></i><span>pi — ~/projects/api</span></div>
-            <div class="term-body"><p><b class="g">●</b> Read(src/routes/users.ts)</p><p class="dim">└─ 88 lines</p><p><b class="g">●</b> Building the REST endpoints.</p></div>
-          </div>
+          <div class="qr-card" id="qr" aria-hidden="true"><div class="qr" id="qr-code"></div><b>Scan with Pi Remote</b><small>Valid for 120 s</small></div>
           <div class="term term-front">
             <div class="term-bar"><i></i><i></i><i></i><span>pi — ~/projects/studio</span></div>
             <div class="term-body" id="term"></div>
@@ -68,20 +65,21 @@
           <div class="phone-composer" id="composer"><span id="composer-text">Message Pi…</span><button type="button" id="send" tabindex="-1" aria-hidden="true">↑</button></div>
           <div class="phone-home" aria-hidden="true"></div>
           <div class="sheet" id="sheet" aria-hidden="true"></div>
+          <div class="cam" id="cam" aria-hidden="true"><div class="cam-frame"><div class="qr mini" id="qr-mini"></div><i class="scanline"></i></div><p>Point at the QR code on your Mac</p></div>
+          <div class="paired" id="paired" aria-hidden="true"><span class="ok">✓</span><b>Paired with Studio Mac</b><small>Your Mac stays connected. You can leave your desk.</small><img src="assets/img/atu-idle.gif" alt=""></div>
         </div>
         <div class="stage-fade" aria-hidden="true"></div>
-        <div class="stage-dogs" aria-hidden="true"><img data-scene="check" class="on" src="assets/img/dog-noodles.webp" alt=""><img data-scene="reply" src="assets/img/dog-latte.webp" alt=""><img data-scene="answer" src="assets/img/dog-switch.webp" alt=""><img data-scene="preview" src="assets/img/dog-backpack.webp" alt=""></div>
+        <div class="stage-dogs" aria-hidden="true"><img data-scene="pair" class="on" src="assets/img/dog-backpack.webp" alt=""><img data-scene="connect" src="assets/img/dog-latte.webp" alt=""><img data-scene="work" src="assets/img/dog-noodles.webp" alt=""></div>
       </div>
 
-      <div class="tabs" role="tablist" aria-label="Product scenes">
-        <button role="tab" data-scene="check" aria-selected="true"><span class="px-icon" data-icon="grid"></span>Check</button>
-        <button role="tab" data-scene="reply" aria-selected="false"><span class="px-icon" data-icon="bubble"></span>Reply</button>
-        <button role="tab" data-scene="answer" aria-selected="false"><span class="px-icon" data-icon="ask"></span>Answer</button>
-        <button role="tab" data-scene="preview" aria-selected="false"><span class="px-icon" data-icon="file"></span>Preview</button>
+      <div class="tabs" role="tablist" aria-label="How Pi Remote works">
+        <button role="tab" data-scene="pair" aria-selected="true"><span class="step-n">1</span>Scan</button>
+        <button role="tab" data-scene="connect" aria-selected="false"><span class="step-n">2</span>Connect</button>
+        <button role="tab" data-scene="work" aria-selected="false"><span class="step-n">3</span>Work</button>
       </div>
       <div class="scene-copy" aria-live="polite">
-        <h2 id="scene-title">See what Pi is doing.</h2>
-        <p id="scene-text">Every read, edit and command — live on your phone, as it happens on your Mac.</p>
+        <h2 id="scene-title">Scan once.</h2>
+        <p id="scene-text">Run one command on your Mac and scan the code with your phone.</p>
       </div>
     </section>
 
@@ -190,34 +188,7 @@
       <article class="card"><span class="px-icon lg" data-icon="tablet"></span><h3>Made for iPad too</h3><p>A persistent session sidebar on wide screens. A focused reading column everywhere else.</p></article>
     </section>
 
-    <!-- How it works, in the place of the reference page's testimonial wall. -->
-    <section class="how" id="how">
-      <h2 class="section-title">Three steps. One QR code.</h2>
-      <p class="section-sub">Set up in under a minute. Nothing to configure on your router.</p>
-      <div class="steps">
-        <article class="card step">
-          <span class="step-no">01</span><h3>Start pairing on your Mac</h3>
-          <pre class="code"><span class="dim">~/pi-remote/agent</span>
-<b class="g">$</b> node cli.js
-<span class="dim">›</span> New pair
-  Cancel pair
-  Check current pair
-<span class="dim">QR valid for 120 s</span></pre>
-        </article>
-        <article class="card step">
-          <span class="step-no">02</span><h3>Scan with your phone</h3>
-          <div class="qr-wrap"><span class="qr" id="qr" aria-hidden="true"></span><p>The app opens and pairs itself. Add it to your home screen.</p></div>
-        </article>
-        <article class="card step">
-          <span class="step-no">03</span><h3>Walk away</h3>
-          <pre class="code"><b class="g">✓</b> Paired: iPhone
-<b class="g">✓</b> Service installed
-  com.pi-remote.agent
-<b class="g">✓</b> Runs at login
-<span class="o">●</span> Online · ready for work</pre>
-        </article>
-      </div>
-    </section>
+
 
     <!-- Security: one diagram of the connection. -->
     <section class="security" id="security">
@@ -260,7 +231,7 @@
         <p class="price-value">Free<small>during the preview</small></p>
         <a class="btn btn-primary btn-block" href="#email" id="bottom-join">Join the waitlist</a>
       </div></div>
-      <p class="aside-links"><a href="#faq">Questions first?</a> · <a href="#how">See the setup</a></p>
+      <p class="aside-links"><a href="#faq">Questions first?</a> · <a href="#stage">See the setup</a></p>
     </section>
   </main>
 
@@ -271,7 +242,7 @@
         <p>Your Pi agent, from your phone</p>
       </div>
       <div class="footer-cols">
-        <div><h4>Product</h4><a href="#how">How it works</a><a href="#security">Security</a><a href="#access">Early access</a></div>
+        <div><h4>Product</h4><a href="#stage">How it works</a><a href="#security">Security</a><a href="#access">Early access</a></div>
         <div><h4>Guides</h4><a href="#faq">Pair a phone</a><a href="#faq">Continue a terminal session</a><a href="#faq">Preview files</a><a href="#faq">Add another Mac</a></div>
         <div><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a></div>
       </div>
