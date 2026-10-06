@@ -338,3 +338,19 @@ window.__siteLanding = { play, stop: () => { autoplay = false; } };
     wall.append(tile);
   }
 })();
+
+// Scroll reveal: fade sections up as they enter. Groups stagger their children.
+(() => {
+  if (reduced || !('IntersectionObserver' in window)) return;
+  const single = ['.scene-copy', '.tabs', '#stage', '.strip', '.band .copy', '.band .vis', '.section-title', '.security > :not(.section-title)', '.faq details', '.access > *'];
+  const groups = ['.features .card', '.todo-points li'];
+  const els = [];
+  single.forEach(sel => $$(sel).forEach(el => els.push(el)));
+  groups.forEach(sel => $$(sel).forEach((el, i) => { el.style.setProperty('--d', `${(i % 3) * 0.08}s`); els.push(el); }));
+  $$('.band .vis').forEach(el => el.style.setProperty('--d', '.12s'));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in'); io.unobserve(e.target);
+  }), { threshold: .15, rootMargin: '0px 0px -8% 0px' });
+  [...new Set(els)].forEach(el => { el.classList.add('reveal'); io.observe(el); });
+})();
