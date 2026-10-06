@@ -753,3 +753,8 @@ body::after { mix-blend-mode: normal; opacity: .02; will-change: auto; }
   .access .price-wrap { margin-top: 170px; }
 }
 @media (min-width: 900px) and (min-height: 700px) { .access .price-wrap { margin-top: 250px !important; } }
+/* Act 1.5 is a short interlude, not a full screen: natural height, no snap. */
+@media (min-width: 900px) and (min-height: 700px) {
+  .why { min-height: 0; scroll-snap-align: none; padding-top: 140px; padding-bottom: 140px; }
+  .why .section-title { font-size: clamp(32px, 3.4vw, 42px); }
+}
