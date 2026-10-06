@@ -95,7 +95,7 @@
       </ul>
     </section>
 
-    <!-- What it does: three full-width bands, grey / white / grey. Each band has one
+    <!-- What it does: four full-width bands, grey / white / grey / white. Each band has one
          phone outline with one enlarged card that spills over its edge (muse.ai style). -->
     <div class="showcase" id="features">
 
@@ -122,31 +122,14 @@
         </div>
       </section>
 
-      <!-- 2. Every model you subscribe to. -->
+      <!-- 2. To-Do with ATU. -->
       <section class="band band-white">
         <div class="band-inner rev">
           <div class="copy">
-            <h2>Every model<br>you pay for.<br>One app.</h2>
-            <p>Not locked to one vendor. Sign in with the subscriptions you already have — Claude, ChatGPT and Codex, Grok, Gemini and more — and switch models in the middle of a chat.</p>
+            <h2>Plan the day with ATU.<br>Get it done in the chat.</h2>
+            <p>Tell ATU what's on your mind and it sorts out today. Save any line Pi writes as a to-do, then pick a few and follow them up together in one chat.</p>
           </div>
-          <div class="vis vis-models" aria-hidden="true">
-            <div class="logo-wall" id="logo-wall"></div>
-            <div class="pop pop-model">
-              <small>Model</small>
-              <ul>
-                <li><img src="assets/providers/claude.png" alt=""><b>Claude Opus</b><span>Anthropic</span><em>✓</em></li>
-                <li><img class="mono" src="assets/providers/openai.png" alt=""><b>GPT-5 Codex</b><span>ChatGPT</span></li>
-                <li><img class="mono" src="assets/providers/xai.png" alt=""><b>Grok 4</b><span>xAI</span></li>
-                <li><img src="assets/providers/google.png" alt=""><b>Gemini 2.5 Pro</b><span>Google</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- 3. To-Do with ATU. -->
-      <section class="band band-grey">
-        <div class="band-inner">
           <div class="vis vis-todo" aria-hidden="true">
             <div class="shell">
               <div class="atu"><img src="assets/img/atu-idle.gif" alt=""><b>ATU</b><small>✓ Planning your day…</small></div>
@@ -164,12 +147,71 @@
               <button tabindex="-1">Follow up 2 in chat →</button>
             </div>
           </div>
+        </div>
+      </section>
+      <!-- 3. Updates: scheduled results arrive as tiles in two columns. -->
+      <section class="band band-grey">
+        <div class="band-inner">
+          <div class="vis vis-updates" aria-hidden="true">
+            <div class="shell shell-feed">
+              <div class="feed-head"><b>Updates</b><span class="chips"><i class="on">All</i><i>News</i><i>Repos</i><i>Inbox</i></span></div>
+              <small class="feed-day">Today · 7:00</small>
+              <div class="feed">
+                <div class="col">
+                  <div class="tile"><b>3 things need you today</b><p>Invoice due · PR waiting · flight check-in</p><em><i style="background:#7b61ff"></i>Morning brief</em></div>
+                  <div class="tile cov"><span class="cover c-code"></span><b>Build fixed overnight</b><em><i style="background:#2f9e5b"></i>Repo watch</em></div>
+                  <div class="tile"><b>Inbox: 2 replies worth reading</b><em><i style="background:#d9803a"></i>Inbox digest</em></div>
+                </div>
+                <div class="col">
+                  <div class="tile cov"><span class="cover c-garden"></span><b>Weekend: sunny, 24°</b><em><i style="background:#5b7be0"></i>Weather</em></div>
+                  <div class="tile"><b>All 12 repos are clean</b><p>2 pulled, 0 conflicts</p><em><i style="background:#2f9e5b"></i>Repo sync</em></div>
+                </div>
+              </div>
+            </div>
+            <div class="pop pop-update">
+              <span class="cover c-news"></span>
+              <b>Three model releases worth a look</b>
+              <p>What changed, what it costs and whether to switch. Five links inside.</p>
+              <div class="pop-foot"><em><i style="background:#e0533d"></i>AI news daily · 7:00</em></div>
+              <div class="ask">Ask Pi about this…<b>↑</b></div>
+            </div>
+          </div>
           <div class="copy">
-            <h2>Plan the day with ATU.<br>Get it done in the chat.</h2>
-            <p>Tell ATU what's on your mind and it sorts out today. Save any line Pi writes as a to-do, then pick a few and follow them up together in one chat.</p>
+            <h2>Wake up to<br>finished work.</h2>
+            <p>Scheduled Pi tasks run on your Mac while you sleep. Each result arrives on your phone as one tile: a cover, a title, the source. Tap to read it, then ask Pi about it right there.</p>
           </div>
         </div>
       </section>
+
+      <!-- 4. Any model, and your data stays on your Mac. -->
+      <section class="band band-white">
+        <div class="band-inner rev">
+          <div class="copy">
+            <h2>Switch models.<br>Keep your data.</h2>
+            <p>Models change every month. Your work shouldn't have to move. Sign in with the subscriptions you already have — Claude, ChatGPT and Codex, Grok, Gemini and more — and switch in the middle of a chat. Sessions, memory and files stay on your own Mac, not in someone's cloud.</p>
+            <ul class="ticks">
+              <li>Every chat stays on your Mac, whatever model wrote it</li>
+              <li>Always use the newest model — no migration</li>
+              <li>Runs on Pi, the open agent framework</li>
+            </ul>
+            <!-- Benchmark slot: Pi completion rate and token use vs other agent frameworks.
+                 Fill only with numbers and a source from the app team. -->
+          </div>
+          <div class="vis vis-models" aria-hidden="true">
+            <div class="logo-wall" id="logo-wall"></div>
+            <div class="pop pop-model">
+              <small>Model</small>
+              <ul>
+                <li><img src="assets/providers/claude.png" alt=""><b>Claude Opus</b><span>Anthropic</span><em>✓</em></li>
+                <li><img class="mono" src="assets/providers/openai.png" alt=""><b>GPT-5 Codex</b><span>ChatGPT</span></li>
+                <li><img class="mono" src="assets/providers/xai.png" alt=""><b>Grok 4</b><span>xAI</span></li>
+                <li><img src="assets/providers/google.png" alt=""><b>Gemini 2.5 Pro</b><span>Google</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
 
     <h2 class="section-title under">Under the hood</h2>
