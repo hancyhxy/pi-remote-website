@@ -639,3 +639,7 @@ button { cursor: pointer; }
 .faq-page { padding-top: 40px; min-height: 70vh; }
 .faq-page .faq { margin-top: 80px; }
 .faq-page h1.section-title { font-size: clamp(32px, 4vw, 48px); }
+.faq-page .hood { padding: 0 16px; }
+.faq-page .hood .features { margin-top: 36px; }
+.faq-page .faq { margin-top: 110px; }
+.faq-page { padding-top: 120px; }
