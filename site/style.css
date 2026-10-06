@@ -758,3 +758,6 @@ body::after { mix-blend-mode: normal; opacity: .02; will-change: auto; }
   .why { min-height: 0; scroll-snap-align: none; padding-top: 140px; padding-bottom: 140px; }
   .why .section-title { font-size: clamp(32px, 3.4vw, 42px); }
 }
+/* Comparison now lives inside Security */
+.security .cmp { max-width: 720px; margin: 36px auto 0; }
+.security .flow { max-width: 720px; margin: 16px auto 0; box-sizing: border-box; }
