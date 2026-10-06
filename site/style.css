@@ -671,3 +671,18 @@ button { cursor: pointer; }
   .stage .phone { bottom: 0; }
 }
 .vs2 { margin-top: 72px; margin-bottom: 40px; }
+
+/* Act 2 hierarchy: one bold title, one muted line, small tabs, one quiet comparison line. */
+.scene-copy h2 { font-weight: 700; }
+.scene-copy p { margin-top: 12px; font-size: 17px; font-weight: 400; color: var(--muted); min-height: 0; }
+.tabs { margin-top: 24px; }
+.tabs button { font-size: 12px; }
+.vs3 { display: flex; justify-content: center; flex-wrap: wrap; align-items: center; gap: 10px 28px; margin: 48px auto 0; padding: 0 16px; font-size: 15px; font-weight: 500; color: var(--text-2); }
+.vs3 .lead { font-size: 13px; font-weight: 400; color: var(--faint); }
+.vs3 span:not(.lead) { white-space: nowrap; }
+@media (max-width: 640px) {
+  .scene-copy h2 { min-height: 0; display: block; }
+  .scene-copy p { min-height: 2.9em; font-size: 15px; }
+  .vs3 { flex-direction: column; gap: 8px; margin-top: 32px; }
+}
+.vs3 i { font-style: normal; color: var(--green); }

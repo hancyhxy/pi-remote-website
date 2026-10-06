@@ -123,8 +123,8 @@ const toast = $('#toast');
 const toastText = $('#toast-text');
 
 const COPY = {
-  pair: ['Scan. Sign in. Done.', 'Scan one QR code to pair your phone, then sign in with the model subscriptions you already have. Keys stay on your Mac.'],
-  work: ['Your Mac, in your pocket.', 'Pi works on your Mac. You watch, reply and decide from your phone.'],
+  pair: ['Scan. Sign in. Done.', 'Pair your phone and sign in with the models you already pay for.'],
+  work: ['Your Mac, in your pocket.', 'Pi works on your Mac. You follow and reply from your phone.'],
 };
 const TOAST = {
   pair: ['var(--green)', 'Signed in: Claude, ChatGPT'],
