@@ -729,3 +729,27 @@ body::after { mix-blend-mode: normal; opacity: .02; will-change: auto; }
 .learn:hover { background: var(--bg-alt); transform: translateY(-1px); }
 .learn span { transition: transform .2s; }
 .learn:hover span { transform: translateY(2px); }
+
+/* One act per screen on desktop. html has zoom .9, so a screen is 100vh / .9.
+   Each act fills a screen and centres its content; scroll snaps gently to acts. */
+@media (min-width: 900px) and (min-height: 700px) {
+  :root { --screen: calc(100vh / .9); }
+  html { scroll-snap-type: y proximity; scroll-padding-top: 0; }
+  .hero, .why, .act2, .band, .security, .access { min-height: var(--screen); scroll-snap-align: start; box-sizing: border-box; }
+  .hero { display: flex; flex-direction: column; padding: 90px 16px 36px; }
+  .hero-copy { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .hero .learn { margin-top: auto; }
+  .hero .form-status { margin-bottom: 40px; }
+  .why, .act2, .security, .access { display: flex; flex-direction: column; justify-content: center; margin-top: 0; margin-bottom: 0; padding-top: 80px; padding-bottom: 40px; }
+  .why { max-width: none; align-items: center; }
+  .why .cmp { width: 100%; max-width: 720px; }
+  .act2 .scene-copy { margin-top: 0; }
+  .act2 .stage { width: 100%; }
+  .showcase { margin-top: 0; }
+  .band { display: flex; align-items: center; padding-top: 80px; padding-bottom: 40px; }
+  .band-inner { width: 100%; }
+  .security { max-width: none; align-items: center; }
+  .security > * { width: 100%; max-width: 960px; }
+  .access .price-wrap { margin-top: 170px; }
+}
+@media (min-width: 900px) and (min-height: 700px) { .access .price-wrap { margin-top: 250px !important; } }
