@@ -624,3 +624,13 @@ button { cursor: pointer; }
 .features h3 { margin: 10px 0 4px; font-size: 13px; }
 .features p { font-size: 12px; line-height: 1.45; }
 @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+
+/* Act 2 footer: cloud agents vs Pi Remote, three pairs. */
+.vs2 { max-width: 980px; margin: 56px auto 0; padding: 0 16px; list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+.vs2 li { display: grid; gap: 6px; padding: 4px 24px; text-align: center; }
+.vs2 li + li { border-left: 1px solid var(--line-2); }
+.vs2 s { font-size: 13px; color: var(--faint); text-decoration-color: rgba(0,0,0,.2); }
+.vs2 b { font-size: 17px; font-weight: 600; color: var(--text-2); }
+.vs2 b::before { content: "✓ "; color: var(--green); }
+@media (max-width: 760px) { .vs2 { grid-template-columns: 1fr; gap: 18px; } .vs2 li + li { border-left: 0; } }
+.vs2 { margin-top: 84px; }
