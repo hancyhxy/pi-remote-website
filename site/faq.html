@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>FAQ — Pi Remote</title>
+  <link rel="icon" href="assets/logo.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html#top" aria-label="Pi Remote home">
+        <img src="assets/img/avatar-backpack.webp" alt="" width="26" height="26"><span>PI REMOTE</span>
+      </a>
+      <nav aria-label="Main">
+        <a href="index.html#features">Features</a>
+        <a href="index.html#stage">How it works</a>
+        <a href="index.html#security">Security</a>
+        <a href="faq.html">FAQ</a>
+        <a class="btn btn-outline btn-sm" href="index.html#access"><span class="glyph" aria-hidden="true">▯</span>Early access</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="faq-page">
+    <section class="faq" id="faq">
+      <h1 class="section-title">Frequently asked questions</h1>
+      <div class="faq-list">
+        <details><summary>Does this replace Pi?</summary><p>No. Pi Remote is a remote interface for Pi. You need Pi installed and set up on your Mac. Pi itself is never patched.</p></details>
+        <details><summary>Does my Mac need to stay awake?</summary><p>Yes. Pi runs on your Mac, so the Mac must be awake and online to do work and send results.</p></details>
+        <details><summary>Do I need Tailscale or a VPN?</summary><p>No. The Mac connects out to a Cloudflare relay. You do not open any inbound port.</p></details>
+        <details><summary>What does end-to-end encryption cover?</summary><p>Session content between your phone and your Mac. The relay sees connection metadata, but not the content.</p></details>
+        <details><summary>Can I continue a session that is open in my terminal?</summary><p>Yes, with the attach extension. Your phone messages appear in the terminal, and terminal dialogs also open on the phone. The first answer wins.</p></details>
+        <details><summary>How many phones can I pair?</summary><p>Up to five devices for each Mac. You can forget one device at a time, or all of them.</p></details>
+        <details><summary>Is there an App Store app?</summary><p>Not yet. Pi Remote is a native iPhone and iPad app. Early access members get it first.</p></details>
+        <details><summary>Can I try it today?</summary><p>This page is a design preview. Join the early access list and we will tell you when it opens.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="wordmark">Pi Remote</p>
+        <p>Your Pi agent, from your phone</p>
+      </div>
+      <div class="footer-cols">
+        <div><h4>Product</h4><a href="index.html#stage">How it works</a><a href="index.html#security">Security</a><a href="index.html#access">Early access</a></div>
+        <div><h4>Guides</h4><a href="faq.html">Pair a phone</a><a href="faq.html">Continue a terminal session</a><a href="faq.html">Preview files</a><a href="faq.html">Add another Mac</a></div>
+        <div><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>Independent project for Pi · Working name · Design preview</span><span>© 2026 Pi Remote</span></div>
+  </footer>
+
+  
+</body>
+</html>

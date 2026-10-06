@@ -634,3 +634,8 @@ button { cursor: pointer; }
 .vs2 b::before { content: "✓ "; color: var(--green); }
 @media (max-width: 760px) { .vs2 { grid-template-columns: 1fr; gap: 18px; } .vs2 li + li { border-left: 0; } }
 .vs2 { margin-top: 84px; }
+
+/* FAQ page */
+.faq-page { padding-top: 40px; min-height: 70vh; }
+.faq-page .faq { margin-top: 80px; }
+.faq-page h1.section-title { font-size: clamp(32px, 4vw, 48px); }
