@@ -88,6 +88,8 @@ function matrix(canvas, { cell = 16, alpha = .1, glyphs = '0 1 · ·  ' } = {}) 
     el.setAttribute('aria-label', target);
     // Swap the mascot outfit and its floating objects with the word.
     $$('.hero-dog, .word-img').forEach(n => n.classList.toggle('on', n.dataset.word === target));
+    // Video dogs play once from the start each time they appear.
+    $$('video.hero-dog').forEach(v => { if (v.dataset.word === target) { v.currentTime = 0; v.play().catch(() => {}); } else v.pause(); });
     let frame = 0;
     const total = 16;
     const step = () => {
@@ -98,7 +100,10 @@ function matrix(canvas, { cell = 16, alpha = .1, glyphs = '0 1 · ·  ' } = {}) 
     };
     step();
   };
-  setInterval(() => { if (!document.hidden) run(); }, 3200);
+  // Per-word hold: every dog plays its full 4 s video (trims pending review).
+  const hold = () => 4000;
+  const next = () => setTimeout(() => { if (!document.hidden) run(); next(); }, hold(words[index]));
+  next();
 })();
 
 /* ---------- Product stage scenes ---------- */
