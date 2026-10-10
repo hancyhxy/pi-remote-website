@@ -40,16 +40,54 @@ The page copies its structure and style, not its assets, copy or code.
 
 Fonts are local under `fonts/` with their SIL OFL licences, including a copy of
 JetBrains Mono. The logo is `assets/logo.svg` from the `pixel-logo` branch; it is a
-proposal, not an approved logo.
+proposal, not an approved logo. `InstrumentSerif-Italic.woff2` is a WOFF2 copy of the TTF.
+
+## Page structure (v2, 2026-10-10)
+
+The content brief is the "官网内容方案草案 v2" mail of 2026-10-10.
+
+```text
+S1 Hero        your own AI, on your own computer; Mac, Linux, Windows soon
+S2 Demo        three scenes on one stage: Scan and pair, Updates, To-do follow-up
+S3 Models      30+ providers, provider wall
+S4 Cost        Composio Bench, Kimi K3 run: cost, tokens, time against
+               Codex, OpenCode and Claude Code; completion rate is not shown
+S5 Security    data stays on the computer; relay diagram
+S6 Pricing     7 days free, refund within 3 days of the first payment (draft terms)
+S7 Details     four small live pieces of the app
+S8 Call to action, footer; FAQ on faq.html
+```
+
+`v2.css` holds the v2 sections and loads after `style.css`. `style.css` still holds
+rules of the earlier bands that the page no longer uses.
+
+## Demo stage
+
+- Phone screens follow the shipped iOS app (Simulator reference, 2026-10-10):
+  Updates feed, update detail with the ask bar and its discussion sheet, Todo with
+  Select -> Follow up together, the ATU chat with reply options and the to-do change
+  card, the Pair Mac scanner. Onboarding screens are not a source; they are drafts.
+- The Mac window (pairing code, scheduled tasks, ATU work log) is a concept surface.
+  The shipped product pairs from the terminal (`pi-remote pair`). The page does not
+  show a terminal, on purpose.
+- The stage is drawn at 1080 x 660 (compact: 440 x 820 below 700 px) and scaled.
+  The phone is drawn at 390 x 844 pt.
+- Scenes play in order while the stage is on screen. A tab click or any click in
+  the phone stops autoplay. In manual use, the tab bar, cards, Back, the ask bar,
+  Select, the to-do rows, Follow up and the reply options work.
+- Reduced motion: no autoplay; a scene shows its final state at once.
+- Scripts take reused images from the hidden `.asset-bank` (`currentSrc`), so a
+  preview sandbox can rewrite their paths.
 
 ## Behaviour
 
-- Scenes play in order while the stage is on screen. A tab click stops autoplay.
-  Arrow keys move between tabs. Hidden tabs do not advance the scenes.
-- Reduced motion: no autoplay, no scramble, no matrix flicker; each tab shows its final state.
-- The hero waitlist form validates the address and states that nothing was sent or saved. The lower early-access card's Join link returns to and focuses the hero email field.
+- The hero waitlist form validates the address and states that nothing was sent
+  or saved. The Join buttons lower on the page focus the hero email field.
 
 ## Open items
 
-Final name, final logo, pricing, real waitlist endpoint, real links for Docs,
-Privacy and Terms, and a review on a physical iPhone.
+- Hero headline: option A is live; B and C are in the brief.
+- Price, refund condition and the billing channel (App Store refunds are Apple's).
+- Final name and logo, real waitlist endpoint, real Privacy and Terms pages.
+- ATU follow-up starts from the user. The page does not claim that ATU starts it.
+- Review on a physical iPhone.
