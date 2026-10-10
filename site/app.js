@@ -496,7 +496,7 @@ if (reduced) { autoplay = false; tabs.classList.add('manual'); play('pair'); } e
    State stays in memory for this page view. No network call. */
 (() => {
   const dlg = $('#waitlist'); if (!dlg) return;
-  const gBtn = $('#wl-google'), form = $('#wl-form'), input = $('#wl-email'), status = $('#wl-status');
+  const gBtn = $('#wl-google'), input = $('#wl-email'), status = $('#wl-status');
   const SAMPLE_GOOGLE = 'alex.chen@gmail.com';
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   let joined = null;            // { email, via: 'google' | 'email' }
@@ -514,6 +514,7 @@ if (reduced) { autoplay = false; tabs.classList.add('manual'); play('pair'); } e
     $('[data-step="done"] h2', dlg).textContent = 'You’re on the list';
     dlg.showModal();
     show(!joined ? 'choose' : joined.via === 'google' ? 'done' : 'check');
+    if (!joined) gBtn.focus();
   }
   const close = () => dlg.close();
   function finish(email, via) {
@@ -553,12 +554,14 @@ if (reduced) { autoplay = false; tabs.classList.add('manual'); play('pair'); } e
     if (/@(gmail|googlemail)\.com$/.test(v)) say('Tip: Continue with Google skips the confirmation email.', 'tip');
     else if (/\b(tip|err)\b/.test(status.className)) say('');
   });
-  form.addEventListener('submit', e => {
-    e.preventDefault();
+  // No <form> submit: the phone preview sandbox blocks form submission.
+  function submitEmail() {
     const v = input.value.trim().toLowerCase();
     if (!EMAIL_RE.test(v)) { say('Enter a valid email address.', 'err'); input.focus(); return; }
     finish(v, 'email');
-  });
+  }
+  $('#wl-join').addEventListener('click', submitEmail);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); submitEmail(); } });
 })();
 
 /* ---------- Model provider wall ---------- */

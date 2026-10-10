@@ -76,6 +76,7 @@ rules of the earlier bands that the page no longer uses.
   the phone stops autoplay. In manual use, the tab bar, cards, Back, the ask bar,
   Select, the to-do rows, Follow up and the reply options work.
 - Reduced motion: no autoplay; a scene shows its final state at once.
+- The film grain is `assets/img/grain.png`. The phone viewer accepts no SVG data URL.
 - Scripts take reused images from the hidden `.asset-bank` (`currentSrc`), so a
   preview sandbox can rewrite their paths.
 
@@ -100,6 +101,8 @@ same address again ──────────────► done   "You're 
   confirmation email.
 - After a join, the hero button reads "You're on the list" and the hint names the address.
 - The consent line sits under the form (Spam Act: clear consent, unsubscribe).
+- The email field is not a `<form>` and nothing uses `autofocus`: the phone preview
+  sandbox blocks form submission and autofocus. Join and Enter call the same handler.
 - Preview only: no network call. Google returns the sample `alex.chen@gmail.com`
   after 0.9 s. State stays in memory for the page view.
 - Production plan: `google.accounts.id.renderButton` (outline, large, pill,
