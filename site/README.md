@@ -56,7 +56,8 @@ S4 Cost        Composio Bench, Kimi K3 run: one race card (Speed, Cost,
 S5 Security    data stays on the computer; a sealed message crosses the relay
 S5b MCP band   short pitch for Claude and ChatGPT; links to mcp.html
 S6 Pricing     7 days free, refund within 3 days of the first payment (draft terms)
-S7 Details     thinking orb, Max thinking, running halo, reading font, send
+S7 Details     bento grid: thinking orb (2 x 2), Max thinking (dark, 1 x 2),
+               reading font, running halo, iPad (full width)
 S8 Call to action, footer; FAQ on faq.html
 ```
 
@@ -82,7 +83,10 @@ The address `pi-remote.example` and the price are placeholders.
   Updates feed, update detail with the ask bar and its discussion sheet, Todo with
   Select -> Follow up together, the ATU chat with reply options and the to-do change
   card, the Pair Mac scanner. Onboarding screens are not a source; they are drafts.
-- The Mac window (pairing code, scheduled tasks, ATU work log) is a concept surface.
+- Scene 1 shows the Mac window with the pairing code (a concept surface). Scenes 2
+  and 3 show a landscape iPad instead: scheduled tasks beside the Updates feed, and
+  the to-do list and ATU steps beside the chat. The iPad chat copies the phone
+  chat (`mirror`), so both show one session. The iPad layout is a concept.
   The shipped product pairs from the terminal (`pi-remote pair`). The page does not
   show a terminal, on purpose.
 - The stage is drawn at 1080 x 660 (compact: 440 x 820 below 700 px) and scaled.
@@ -99,6 +103,10 @@ The address `pi-remote.example` and the price are placeholders.
 - To-do scene: after the chosen time, ATU books it, the to-do is done and
   fireworks burst from the done card. This is a concept; the app does not
   have it yet.
+- Sections below the hero are denser (owner review 2026-10-10): 104 px between
+  sections; Security and the closing card no longer fill a whole screen.
+- `.demo` clips sideways: the stage scales by script and can lag a few frames
+  in a resize; the phone viewer check fails on that lag otherwise.
 - Details: the running halo ports `.cblock.beaming` from `../pi-remote/web/app.css`
   (stroke and glow a little stronger for the page). The Max aura ports
   `NativeMaxEffortAura`. The reading face is Newsreader, a Latin subset in

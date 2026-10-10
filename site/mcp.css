@@ -15,8 +15,8 @@
 .m-apps .more { border-style: dashed; background: transparent; color: var(--muted); }
 
 /* ---------- Shared section heads ---------- */
-.m-sec, .m-demo { max-width: 1040px; margin: 150px auto 0; padding: 0 20px; }
-.m-demo { margin-top: 110px; }
+.m-sec, .m-demo { max-width: 1040px; margin: 104px auto 0; padding: 0 20px; }
+.m-demo { margin-top: 90px; }
 .m-title { margin: 0; text-align: center; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.1; font-weight: 700; letter-spacing: -.03em; color: var(--text-2); }
 .m-sub { max-width: 620px; margin: 14px auto 0; text-align: center; font-size: 17px; line-height: 1.6; color: var(--muted); }
 .m-fine { margin: 16px 0 0; text-align: center; font-size: 12.5px; color: var(--faint); }
@@ -118,9 +118,12 @@
 @media (max-width: 640px) {
   .m-hero { padding-top: 120px; }
   .m-lede { font-size: 16px; }
-  .m-sec, .m-demo { margin-top: 100px; }
+  .m-sec, .m-demo { margin-top: 76px; }
   .m-ctl { grid-template-columns: minmax(0, 1fr); }
   .m-tools li { grid-template-columns: 82px 1fr; font-size: 13.5px; }
   .m-log li { grid-template-columns: 56px minmax(0, 1fr) auto; }
 }
 .m-log li.grant span { font: 12.5px var(--sans); color: var(--text-2); }
+
+.mcp-page .access { margin-top: 104px; min-height: 0; padding-top: 0; padding-bottom: 0; }
+.mcp-page .footer { margin-top: 90px; }

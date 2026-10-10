@@ -77,6 +77,14 @@
             <div class="mac-base"></div>
           </div>
 
+          <!-- iPad, landscape. Scenes 2 and 3: the same account on a bigger screen, in sync with the phone. -->
+          <div class="ipad" aria-hidden="true">
+            <div class="ipad-scr">
+              <div class="ipad-sb"><span id="pad-time">6:58</span><span>Fri 9 Oct</span><span class="r">100% <i class="batt"></i></span></div>
+              <div class="ipad-body" id="pad-body"></div>
+            </div>
+          </div>
+
           <!-- iPhone, drawn at 390 x 844 pt and scaled -->
           <div class="iph">
             <div class="iph-scr" id="iph">
@@ -92,7 +100,7 @@
           </div>
         </div>
       </div>
-      <p class="demo-note">Sample content. Phone screens follow the current iPhone app.</p>
+      <p class="demo-note">Sample content. Phone and iPad screens follow the current app.</p>
     </section>
 
     <!-- Secondary selling points: short, plain, numbers first. -->
@@ -163,9 +171,9 @@
     <section class="sp sp-mcp" id="mcp">
       <div class="mcp-band card">
         <div class="mcp-band-copy">
-          <p class="eyebrow-s">Also works with Claude and ChatGPT</p>
-          <h2>Already pay for Claude or ChatGPT?</h2>
-          <p>Add one address, and they can work on your computer too: read your files, run commands, make edits. You approve each app. Same subscription.</p>
+          <p class="eyebrow-s">Works with ChatGPT and Claude</p>
+          <h2>Control your computer from ChatGPT or Claude.</h2>
+          <p>Add one address in the AI app you already use. Then just ask it to find a file, run a command or tidy a folder, and it does it on your computer. You approve each app. Same subscription.</p>
           <a class="btn btn-outline" href="mcp.html">See how it works <span aria-hidden="true">→</span></a>
         </div>
         <div class="mcp-band-art" aria-hidden="true">
@@ -207,35 +215,37 @@
         <h2>Polished in the small places.</h2>
         <p>The parts you touch a hundred times a day get the most care.</p>
       </div>
-      <div class="details">
-        <figure class="dt dt-orb">
-          <div class="dt-stage" id="dt-orb" role="button" tabindex="0" aria-label="Thinking orb. Activate to change its form.">
-            <canvas id="dt-orb-c" aria-hidden="true"></canvas>
-            <p class="dt-orb-copy" id="dt-orb-copy">Bring the hard part.</p>
-            <span class="dt-orb-name" id="dt-orb-name">composing · 1 / 15</span>
-          </div>
-          <figcaption><b>Thinking orb</b> Fifteen dot forms, each with its own motion. It changes while your AI works. Tap it to change.</figcaption>
+      <!-- Bento grid: one large card, one tall dark card, two small cards and a wide iPad card. -->
+      <div class="bento">
+        <figure class="bx bx-orb" id="dt-orb" role="button" tabindex="0" aria-label="Thinking orb. Activate to change its form.">
+          <figcaption><b>Thinking orb</b><span>Fifteen dot forms. It changes while your AI works. Tap it.</span></figcaption>
+          <div class="orb-wrap"><canvas id="dt-orb-c" aria-hidden="true"></canvas><p class="dt-orb-copy" id="dt-orb-copy">Bring the hard part.</p></div>
+          <span class="dt-orb-name" id="dt-orb-name">composing · 1 / 15</span>
         </figure>
-        <figure class="dt dt-max" aria-hidden="true">
-          <div class="dt-stage"><canvas class="aura" id="dt-aura"></canvas>
-            <div class="mx-sheet"><div class="mx-model"><b>claude-opus</b><span>Thinking</span></div>
-              <div class="mx-track" id="mx-track"><i class="mx-thumb" id="mx-thumb"></i><span>Low</span><span>Medium</span><span>High</span><span>Max</span></div>
-              <p class="mx-level" id="mx-level">High</p></div></div>
-          <figcaption><b>Max thinking</b> Push the level to Max and the sheet glows in a slow rainbow.</figcaption>
+        <figure class="bx bx-max dark" aria-hidden="true">
+          <figcaption><b>Max thinking</b><span>Push it to Max. The sheet glows in a slow rainbow.</span></figcaption>
+          <canvas class="aura" id="dt-aura"></canvas>
+          <div class="mx-sheet"><div class="mx-model"><b>claude-opus</b><span>Thinking</span></div>
+            <div class="mx-track" id="mx-track"><i class="mx-thumb" id="mx-thumb"></i><span>Low</span><span>Med</span><span>High</span><span>Max</span></div>
+            <p class="mx-level" id="mx-level">High</p></div>
         </figure>
-        <figure class="dt dt-halo" aria-hidden="true">
-          <div class="dt-stage"><div class="hl-run"><canvas id="hl-orb"></canvas><span>Working · <b id="hl-sec">12</b> s</span></div>
-            <div class="cblock beaming"><p>Plan my week around the dentist visit</p><div class="hl-row"><span class="cplus">+</span><span class="cchip">claude-opus · Max</span><span class="hl-stop"><i></i></span></div></div></div>
-          <figcaption><b>Running</b> While your AI works, a rainbow light circles the message box.</figcaption>
+        <figure class="bx bx-read" aria-hidden="true">
+          <figcaption><b>Reading font</b><span>A book face for long answers.</span></figcaption>
+          <div class="rd-seg"><span class="on" id="rd-a">Mono</span><span id="rd-b">Reading</span></div>
+          <div class="rd-text" id="rd-text"><p class="mono">Go early in April. The blossoms peak in the first week.</p><p class="serif">Go early in April. The blossoms peak in the first week.</p></div>
         </figure>
-        <figure class="dt dt-read" aria-hidden="true">
-          <div class="dt-stage"><div class="rd-seg"><span class="on" id="rd-a">Mono</span><span id="rd-b">Reading</span></div>
-            <div class="rd-text" id="rd-text"><p class="mono">Go early in April. The blossoms peak in the first week, and fares rise from the 10th.</p><p class="serif">Go early in April. The blossoms peak in the first week, and fares rise from the 10th.</p></div></div>
-          <figcaption><b>Reading font</b> Switch long answers to a book face. Code stays in mono.</figcaption>
+        <figure class="bx bx-run" aria-hidden="true">
+          <figcaption><b>Running</b><span>A rainbow light circles the box while your AI works.</span></figcaption>
+          <div class="hl-run"><canvas id="hl-orb"></canvas><span>Working · <b id="hl-sec">12</b> s</span></div>
+          <div class="cblock beaming"><p>Plan my week around the dentist</p><div class="hl-row"><span class="cplus">+</span><span class="cchip">opus · Max</span><span class="hl-stop"><i></i></span></div></div>
         </figure>
-        <figure class="dt dt-send" aria-hidden="true">
-          <div class="dt-stage"><div class="dt-chat"><div class="dt-msg">Thanks, that works.</div><div class="dt-fly">Book the 9:30 slot</div></div><div class="dt-comp"><span>Book the 9:30 slot</span><b class="dt-btn"><i class="up"></i><i class="stop"></i></b></div></div>
-          <figcaption><b>Send</b> Your message lifts into place. Send becomes Stop.</figcaption>
+        <figure class="bx bx-ipad" aria-hidden="true">
+          <figcaption><b>iPad</b><span>The same chats, to-dos and updates on a bigger screen. Start on your phone, carry on at your iPad.</span><em class="bx-tags"><i>Same account</i><i>Live sync</i><i>Landscape and portrait</i></em></figcaption>
+          <div class="bx-pad"><div class="bx-pad-scr">
+            <div class="bx-pad-side"><b>Chats</b><i class="on">Dentist and passport</i><i>Tokyo in April</i><i>Weekly plan</i><i>Invoice for Studio</i></div>
+            <div class="bx-pad-main"><div class="m1">Help me get these done.</div><div class="m2">Here’s the plan. Passport: renew online today. Dentist: Tue 9:30 is free.</div><div class="bx-pad-comp">Message ATU</div></div>
+          </div></div>
+          <div class="bx-phone"><div class="m1">Help me get these done.</div><div class="m2">Here’s the plan…</div></div>
         </figure>
       </div>
     </section>

@@ -277,16 +277,46 @@ const macPair = () => `<div class="mw-pair"><div>
   <div><div class="mw-qr" id="mw-qr">${QR}<span class="ok"><b>✓</b></span></div><div class="mw-status" id="mw-status"><i class="spin"></i><span id="mw-count">Waiting for iPhone · 1:58</span></div></div></div>`;
 const macPaired = () => `<div class="mw-paired"><span class="big">✓</span><h4>Paired with iPhone</h4><p>You can close this window. Your computer stays connected in the background.</p>
   <div class="mw-rows"><span><i></i>Online</span><span>Starts at login</span><span>End-to-end encrypted</span></div></div>`;
-const macRuns = () => `<div class="mw-h"><b>Scheduled tasks</b><small>Results go to your iPhone</small></div><ul class="mw-list">${RUNS.map(([id, when]) => {
-  const t = TILES.find(x => x.id === id);
-  return `<li data-run="${id}">${av(t.k)}<span>${t.src}</span><em>${when}</em><span class="st">Waiting</span></li>`;
-}).join('')}</ul>`;
-const macAtu = () => `<div class="mw-h"><b>ATU</b><small>Working on this computer</small></div><div class="mw-todo" id="mw-todo"></div><ul class="mw-log" id="mw-log"><li style="background:none;color:var(--a-faint)">Waiting for a follow-up from your iPhone…</li></ul>`;
+
+/* ---------- iPad screens (scenes 2 and 3) ---------- */
+const padBody = $('#pad-body'), padTime = $('#pad-time');
+function setPad(html, time) { padBody.innerHTML = html; if (time) padTime.textContent = time; }
+const padUpdates = (all = false) => `<div class="pd">
+  <aside class="pd-side"><div class="pd-h"><b>Scheduled</b><small>on Studio Mac</small></div>
+    <ul class="mw-list pd-runs">${RUNS.map(([id, when]) => { const t = TILES.find(x => x.id === id);
+      return `<li data-run="${id}">${av(t.k)}<span>${t.src}</span><span class="st${all ? ' done' : ''}">${all ? '✓ Sent' : when}</span></li>`; }).join('')}</ul></aside>
+  <section class="pd-main"><div class="pd-top"><h3>Updates</h3>${host()}</div>
+    <div class="fchips"><span class="on">All</span><span>Morning brief</span><span>Price watch</span><span>Inbox</span><span>Weather</span></div>
+    <div class="ffeed pd-feed">${[0, 1, 2].map(c => `<div class="fcol">${TILES.filter((t, i) => i % 3 === c).map(t => tileHtml(t, !all)).join('')}</div>`).join('')}</div></section></div>`;
+const padTodo = () => `<div class="pd">
+  <aside class="pd-side"><div class="pd-h"><b>Todo</b><small>Friday</small></div>
+    <div class="pd-todos">${TODOS.map(t => `<div class="pd-todo" data-ptodo="${t.id}"><span class="box"></span>${t.t}</div>`).join('')}</div>
+    <div class="pd-h pd-h2"><b>ATU</b><small>working on Studio Mac</small></div>
+    <ul class="mw-log" id="mw-log"><li class="idle">Waiting for a follow-up…</li></ul></aside>
+  <section class="pd-main"><div class="pd-chat-h"><img src="${asset('atu')}" alt=""><b>ATU</b></div>
+    <div class="thread pd-thread" id="pad-thread"></div>
+    <div class="chat-comp"><span class="cplus">+</span>Message ATU<span class="csend" style="margin-left:auto">↑</span></div></section></div>`;
+// The iPad chat copies the phone chat, so both show the same session.
+function mirror(th) {
+  const pt = $('#pad-thread'); if (!pt) return;
+  // Copy only what changed, so a message animates in once and stays still after.
+  const sync = () => {
+    const src = [...th.children], dst = [...pt.children];
+    src.forEach((c, i) => {
+      const d = dst[i], html = c.outerHTML;
+      if (d && d._src === html) return;
+      const n = c.cloneNode(true); n._src = html;
+      if (d) { n.style.animation = 'none'; d.replaceWith(n); } else pt.append(n);
+    });
+    dst.slice(src.length).forEach(d => d.remove());
+  };
+  sync(); new MutationObserver(sync).observe(th, { childList: true, subtree: true, attributes: true, characterData: true });
+}
 
 /* ---------- Scenes ---------- */
 const COPY = {
   pair: ['One scan. You’re in.', 'Install on your computer, then scan the code with your iPhone. No account, no VPN, no ports to open.'],
-  updates: ['Wake up to finished work.', 'Scheduled tasks run on your computer while you sleep. Each result lands on your phone as a card. Tap one to ask about it.'],
+  updates: ['Wake up to finished work.', 'Scheduled tasks run on your computer while you sleep. Each result lands on your phone and iPad as a card. Tap one to ask about it.'],
   todo: ['Save it once. Pick it up together.', 'Turn any line into a to-do. Pick a few, and ATU works them through with you in one chat.'],
 };
 const LENGTH = { pair: 10400, updates: 15500, todo: 21500 };
@@ -359,18 +389,20 @@ function lockOn(sc) {
 async function sceneUpdates(tok) {
   paired = true; sbTime.textContent = '6:58';
   macClock.textContent = 'Fri 5:58 AM';
-  setMac('Pi Remote — Scheduled tasks', macRuns());
+  setPad(padUpdates(false), '6:58');
   show(updatesScreen(false)); setTab('updates');
   await wait(700, tok);
   for (const [id, , clock] of RUNS) {
-    const row = $(`[data-run=${id}] .st`);
+    const row = $(`[data-run=${id}] .st`, padBody);
     if (row) row.innerHTML = '<i class="spin"></i>Running';
     macClock.textContent = `Fri ${clock}`;
     await wait(520, tok);
     if (row) { row.classList.add('done'); row.textContent = '✓ Sent'; }
     const tile = $(`[data-tile=${id}]`, layers);
     if (tile) { tile.parentElement.prepend(tile); tile.classList.remove('hidden'); tile.classList.add('new'); }
-    sbTime.textContent = clock.replace(' AM', '');
+    const ptile = $(`[data-tile=${id}]`, padBody);
+    if (ptile) { ptile.parentElement.prepend(ptile); ptile.classList.remove('hidden'); ptile.classList.add('new'); }
+    sbTime.textContent = clock.replace(' AM', ''); padTime.textContent = sbTime.textContent;
     await wait(330, tok);
   }
   await wait(900, tok);
@@ -406,7 +438,7 @@ async function ask(tok) {
 
 async function sceneTodo(tok) {
   paired = true; sbTime.textContent = '8:12'; macClock.textContent = 'Fri 8:12 AM';
-  setMac('Pi Remote — ATU', macAtu());
+  setPad(padTodo(), '8:12');
   show(todoScreen()); setTab('todo');
   await wait(1200, tok);
   await openSelect(tok);
@@ -435,9 +467,10 @@ async function followUp(tok, auto = false) {
   await wait(250, tok);
   show(atuChat(), 'push'); setTab(null);
   const th = $('#thread', layers.lastElementChild);
-  const mwTodo = $('#mw-todo'), log = $('#mw-log');
-  if (mwTodo) mwTodo.innerHTML = picked.map(t => `<span>${t.t}</span>`).join('');
+  const log = $('#mw-log');
+  $$('[data-ptodo]', padBody).forEach(r => r.classList.toggle('picked', picked.some(p => p.id === r.dataset.ptodo)));
   if (log) log.innerHTML = '';
+  mirror(th);
   await wait(450, tok);
   th.insertAdjacentHTML('beforeend', `<div class="msg me">${picked.map(t => `<span class="tpill">✓ Todo · ${t.t}</span>`).join('')}Help me get these done.<time>8:13</time></div>`);
   await wait(400, tok);
@@ -484,6 +517,7 @@ async function chooseOption(opt, tok) {
   th.insertAdjacentHTML('beforeend', `<div class="change done"><div class="change-h"><span>Todo · Done</span><b>Undo</b></div><div class="change-r"><i>✓</i><div><s>${todo ? todo.t : choice}</s><small>Done ${dentist ? `· appointment ${when}, ${choice.replace(/^\w+ /, '')}` : when}</small></div></div></div>`);
   $('#mw-log')?.insertAdjacentHTML('beforeend', `<li><b>✓</b>${dentist ? 'Booked with Smile Dental' : 'Finished'}<em>${dentist ? choice : 'done'}</em></li>`);
   const card = th.lastElementChild;
+  const prow = todo && $(`[data-ptodo=${todo.id}]`, padBody); if (prow) { prow.classList.add('done'); $('.box', prow).textContent = '✓'; }
   await wait(250, tok);
   celebrate($('.change-r i', card));
 }
@@ -569,8 +603,8 @@ iph.addEventListener('click', async e => {
   if (tabBtn) {
     const name = tabBtn.dataset.t; paired = true;
     if (name === 'chats') show(chatsHome()); else if (name === 'updates') show(updatesScreen(true)); else { show(todoScreen()); }
-    if (name === 'todo') setMac('Pi Remote — ATU', macAtu());
-    if (name === 'updates') { setMac('Pi Remote — Scheduled tasks', macRuns()); $$('.mw-list .st').forEach(s => { s.classList.add('done'); s.textContent = '✓ Sent'; }); }
+    if (name === 'todo') setPad(padTodo(), '8:12');
+    if (name === 'updates') setPad(padUpdates(true), '7:05');
     const clock = { chats: '9:41', updates: '7:05', todo: '8:12' }[name];
     sbTime.textContent = clock; macClock.textContent = `Fri ${clock} AM`;
     setTab(name); frame(name === 'chats' ? 'pair' : name); return;
@@ -758,7 +792,7 @@ function whileSeen(el, fn, threshold = .25) {
   const stage = $('#dt-orb'); if (!stage || !window.ThinkingOrb) return;
   const states = window.ThinkingOrb.STATES, order = ['composing', ...states.filter(s => s !== 'composing')];
   const LINES = ['Bring the hard part.', 'What are we making?', 'Your move.', 'Start wherever.', 'Small fix or big plan.', 'What should Pi do?'];
-  const o = makeOrb($('#dt-orb-c'), order[0], { size: 64, scale: 2, pad: .2 });
+  const o = makeOrb($('#dt-orb-c'), order[0], { size: 64, scale: matchMedia('(max-width: 640px)').matches ? 2.4 : 3.1, pad: .15 });
   const name = $('#dt-orb-name'), copy = $('#dt-orb-copy');
   let i = 0, timer = 0, seen = false;
   function next() {
@@ -777,7 +811,8 @@ function whileSeen(el, fn, threshold = .25) {
 (() => {
   const cv = $('#dt-aura'); if (!cv) return;
   const thumb = $('#mx-thumb'), level = $('#mx-level'), track = $('#mx-track');
-  const PAL = [0xff8cc8, 0xdc94ff, 0xa9a0ff, 0x86c2ff, 0x7ee6dc, 0x9aeeb8, 0xffe08a, 0xffba94];
+  // Dark palette of NativeMaxEffortAura: the card is dark, so the glow adds light.
+  const PAL = [0xff5fb4, 0xd463ff, 0x8a74ff, 0x4aa6ff, 0x34dcd0, 0x66e896, 0xffd84e, 0xffa062];
   const COLS = [[0, 70, 1], [-60, 50, .85], [60, 50, .85], [-120, 46, .7], [120, 46, .7], [-170, 40, .55], [170, 40, .55]];
   const rainbow = q => { const n = PAL.length, p = ((q % 1) + 1) % 1 * n, a = PAL[p | 0], b = PAL[((p | 0) + 1) % n], t = p - (p | 0);
     const c = s => Math.round(((a >> s) & 255) + ((((b >> s) & 255) - ((a >> s) & 255)) * t)); return `${c(16)},${c(8)},${c(0)}`; };
@@ -793,20 +828,21 @@ function whileSeen(el, fn, threshold = .25) {
     if (cv.width !== Math.round(W * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
     if (rise < .001) return;
+    ctx.globalCompositeOperation = 'lighter';
     const sc = W / 390, br = .5 + .5 * Math.sin(2 * Math.PI * time / 3.6), swell = .5 + .5 * br, flow = time / 12;
     const cx = W / 2 + Math.sin(2 * Math.PI * time / 7.3) * W * .04, bottom = H;
     const tint = (x, a) => `rgba(${rainbow(x / W * .85 - flow)},${a})`;
     COLS.forEach(([dx, w, h], i) => {
       const ph = time * (1.1 + .23 * i) + i * 1.9, sway = Math.sin(ph * .6), pulse = .5 + .5 * Math.sin(ph + 1.3);
       const x = cx + dx * sc + sway * 14 * sc, rx = w * sc * (.85 + .25 * swell), ry = H * h * rise * (.55 + .45 * (.5 * pulse + .5 * br));
-      const a = .36 * rise * (.6 + .4 * pulse), g = ctx.createLinearGradient(0, bottom - ry, 0, bottom);
+      const a = .5 * rise * (.6 + .4 * pulse), g = ctx.createLinearGradient(0, bottom - ry, 0, bottom);
       g.addColorStop(0, tint(x, 0)); g.addColorStop(.5, tint(x, a * .6)); g.addColorStop(1, tint(x, a));
       ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(x, bottom, rx, ry, 0, 0, Math.PI * 2); ctx.fill();
     });
     const peak = 60 * sc * rise * (.55 + .45 * br) * 1.4, width = W * .3;
     const hgt = x => { const d = x - cx; return peak * (.5 * Math.exp(-((d / (width * .5)) ** 2)) + .5 * Math.exp(-((d / (width * 1.15)) ** 2))) * (1 + .1 * Math.sin(x / W * 7 + time * 1.4)) + 10 * sc * rise; };
     const g = ctx.createLinearGradient(0, 0, W, 0);
-    for (let k = 0; k <= 12; k++) g.addColorStop(k / 12, tint(k / 12 * W, .75 * rise * (.8 + .2 * br)));
+    for (let k = 0; k <= 12; k++) g.addColorStop(k / 12, tint(k / 12 * W, .85 * rise * (.8 + .2 * br)));
     ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(0, bottom);
     for (let k = 0; k <= 48; k++) { const x = W * k / 48; ctx.lineTo(x, bottom - hgt(x)); }
     ctx.lineTo(W, bottom); ctx.closePath(); ctx.fill();
@@ -827,7 +863,7 @@ function whileSeen(el, fn, threshold = .25) {
   const cycle = () => { clearTimeout(timer); if (!seen) return; const [k, ms] = SEQ[si]; setLevel(k); si = (si + 1) % SEQ.length; timer = setTimeout(cycle, ms); };
   if (reduced) { rise = 1; setLevel(3); requestAnimationFrame(() => draw(0)); return; }
   setLevel(2);
-  whileSeen(cv.closest('.dt'), on => { seen = on; if (on) { cycle(); kick(); } else clearTimeout(timer); });
+  whileSeen(cv.closest('.bx'), on => { seen = on; if (on) { cycle(); kick(); } else clearTimeout(timer); });
 })();
 
 // Running: a small working orb and a seconds counter beside the beaming message box.
@@ -835,7 +871,7 @@ function whileSeen(el, fn, threshold = .25) {
   const c = $('#hl-orb'); if (!c) return;
   makeOrb(c, 'weaving', { size: 20, scale: 1, pad: .1 });
   const sec = $('#hl-sec'); let n = 12;
-  whileSeen(c.closest('.dt'), on => { clearInterval(c._t); if (on && !reduced) c._t = setInterval(() => { n = n >= 59 ? 1 : n + 1; sec.textContent = n; }, 1000); });
+  whileSeen(c.closest('.bx'), on => { clearInterval(c._t); if (on && !reduced) c._t = setInterval(() => { n = n >= 59 ? 1 : n + 1; sec.textContent = n; }, 1000); });
 })();
 
 // Reading font: the same answer in Mono, then in the Reading face.
@@ -844,13 +880,13 @@ function whileSeen(el, fn, threshold = .25) {
   let serif = false, timer = 0;
   const flip = () => { serif = !serif; box.classList.toggle('serif-on', serif); $('#rd-a').classList.toggle('on', !serif); $('#rd-b').classList.toggle('on', serif); };
   if (reduced) { flip(); return; }
-  whileSeen(box.closest('.dt'), on => { clearInterval(timer); if (on) timer = setInterval(flip, 2800); });
+  whileSeen(box.closest('.bx'), on => { clearInterval(timer); if (on) timer = setInterval(flip, 2800); });
 })();
 
 /* ---------- Scroll reveal ---------- */
 (() => {
   if (reduced) return;
-  const els = $$('.demo-copy, .demo-tabs, .ds-wrap, .sp h2, .sp p:not(.pv-tip), .big-num, .race, .timeline, .plan, .dt, .section-title, .security > :not(.section-title), .access > *');
+  const els = $$('.demo-copy, .demo-tabs, .ds-wrap, .sp h2, .sp p:not(.pv-tip), .big-num, .race, .timeline, .plan, .bx, .section-title, .security > :not(.section-title), .access > *');
   const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } }), { rootMargin: '0px 0px -6% 0px' });
   els.forEach((el, i) => { el.classList.add('reveal'); el.style.setProperty('--d', `${(i % 3) * .06}s`); ro.observe(el); });
 })();
