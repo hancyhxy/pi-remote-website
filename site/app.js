@@ -11,6 +11,7 @@ const asset = k => { const i = document.querySelector(`.asset-bank [data-asset="
    The production engine (thinking-orb.js, from web/ in pi-remote) gives the dots and
    lines of each frame. This page draws them on its own canvas, with space around the
    orb, a scale and a cross-fade between two states. */
+const isDark = () => document.documentElement.dataset.theme === 'dark';
 const ORBS = new Set();
 const orbHandles = {};
 const orbHandle = (state, size) => (orbHandles[`${state}-${size}`] ||= window.ThinkingOrb.attach(document.createElement('canvas'), { state, size }));
@@ -27,7 +28,8 @@ function makeOrb(canvas, state, { size = 64, scale = 1, pad = .35 } = {}) {
 function paintFrame(o, frame, alpha, k) {
   const c = o.ctx, mid = o.off + o.size / 2;
   c.save(); c.translate(mid, mid); c.scale(k, k); c.translate(-o.size / 2, -o.size / 2);
-  const col = (w, a) => { const v = Math.round(Math.min(1, Math.max(0, w)) * 255); return `rgba(${v},${v},${v},${(a ?? 1) * alpha})`; };
+  const dark = isDark();
+  const col = (w, a) => { const g = Math.min(1, Math.max(0, w)), v = Math.round((dark ? 1 - g : g) * 255); return `rgba(${v},${v},${v},${(a ?? 1) * alpha})`; };
   for (const l of frame.lines) { c.strokeStyle = col(l.white, l.a); c.lineWidth = l.w; c.beginPath(); c.moveTo(l.x1, l.y1); c.lineTo(l.x2, l.y2); c.stroke(); }
   for (const d of frame.dots) { if (d.r <= 0) continue; c.fillStyle = col(d.white, d.a); c.beginPath(); c.arc(d.x, d.y, d.r, 0, 6.2832); c.fill(); }
   c.restore();
@@ -42,6 +44,8 @@ function drawOrb(o, now) {
   else o.prev = null;
   paintFrame(o, orbHandle(o.state, o.size).snapshot(t).frame, ease, .65 + .35 * ease);
 }
+// A theme change redraws the orbs at once (they also redraw on the next frame).
+addEventListener('themechange', () => ORBS.forEach(o => drawOrb(o, performance.now())));
 let orbRaf = 0;
 function orbLoop() {
   if (orbRaf || reduced) return;
@@ -278,24 +282,53 @@ const macPair = () => `<div class="mw-pair"><div>
 const macPaired = () => `<div class="mw-paired"><span class="big">✓</span><h4>Paired with iPhone</h4><p>You can close this window. Your computer stays connected in the background.</p>
   <div class="mw-rows"><span><i></i>Online</span><span>Starts at login</span><span>End-to-end encrypted</span></div></div>`;
 
-/* ---------- iPad screens (scenes 2 and 3) ---------- */
-const padBody = $('#pad-body'), padTime = $('#pad-time');
-function setPad(html, time) { padBody.innerHTML = html; if (time) padTime.textContent = time; }
-const padUpdates = (all = false) => `<div class="pd">
-  <aside class="pd-side"><div class="pd-h"><b>Scheduled</b><small>on Studio Mac</small></div>
-    <ul class="mw-list pd-runs">${RUNS.map(([id, when]) => { const t = TILES.find(x => x.id === id);
-      return `<li data-run="${id}">${av(t.k)}<span>${t.src}</span><span class="st${all ? ' done' : ''}">${all ? '✓ Sent' : when}</span></li>`; }).join('')}</ul></aside>
-  <section class="pd-main"><div class="pd-top"><h3>Updates</h3>${host()}</div>
-    <div class="fchips"><span class="on">All</span><span>Morning brief</span><span>Price watch</span><span>Inbox</span><span>Weather</span></div>
-    <div class="ffeed pd-feed">${[0, 1, 2].map(c => `<div class="fcol">${TILES.filter((t, i) => i % 3 === c).map(t => tileHtml(t, !all)).join('')}</div>`).join('')}</div></section></div>`;
-const padTodo = () => `<div class="pd">
-  <aside class="pd-side"><div class="pd-h"><b>Todo</b><small>Friday</small></div>
-    <div class="pd-todos">${TODOS.map(t => `<div class="pd-todo" data-ptodo="${t.id}"><span class="box"></span>${t.t}</div>`).join('')}</div>
-    <div class="pd-h pd-h2"><b>ATU</b><small>working on Studio Mac</small></div>
-    <ul class="mw-log" id="mw-log"><li class="idle">Waiting for a follow-up…</li></ul></aside>
-  <section class="pd-main"><div class="pd-chat-h"><img src="${asset('atu')}" alt=""><b>ATU</b></div>
-    <div class="thread pd-thread" id="pad-thread"></div>
-    <div class="chat-comp"><span class="cplus">+</span>Message ATU<span class="csend" style="margin-left:auto">↑</span></div></section></div>`;
+/* ---------- iPad screens (scenes 2 and 3) ----------
+   Drawn at 1180 x 820 pt (iPad Air 11 inch, landscape) and scaled, like the phone.
+   The layout is the one of the app from 1100 pt (NativeAppView.swift): Updates lists
+   its tasks in a 320 pt sidebar, Todo shows Later beside the focus column, and a
+   discussion or an ATU chat opens in a 400 pt pane on the right. The tab bar floats
+   at the top, and goes while a pane is open. */
+const padBody = $('#pad-body'), padTime = $('#pad-time'), padTabs = $('#pad-tabs');
+function padTab(name) {
+  padTabs.classList.toggle('hide', !name);
+  $$('span', padTabs).forEach(s => s.classList.toggle('on', s.dataset.t === name));
+}
+function setPad(html, tab, time) { padBody.innerHTML = html; if (time) padTime.textContent = time; padTab(tab); }
+// Four feed columns at this width (NativeUpdates.columns). Each tile keeps its column.
+const PAD_COL = { news: 0, brief: 1, flights: 2, energy: 3, inbox: 0, weather: 1 };
+const newest = (a, b) => b.time.localeCompare(a.time);
+const clockIc = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5H8.5"/></svg>';
+const padUpdates = (all = false) => `<div class="pu" id="pu">
+  <aside class="pu-src"><h4>Updates</h4>
+    <div class="pu-row on"><span class="pu-ic">${clockIc}</span><div><b>All</b><small>6 tasks</small></div></div>
+    <p class="pu-lbl">Tasks</p>
+    ${[...RUNS].reverse().map(([id, , clock]) => { const t = TILES.find(x => x.id === id);
+      return `<div class="pu-row" data-run="${id}">${av(t.k)}<div><b>${t.src}</b><small>${all ? 'Today' : 'Yesterday'} ${clock}</small></div></div>`; }).join('')}</aside>
+  <section class="pu-main"><div class="hd"><h3>Updates</h3>${host()}</div><div class="day">Today</div>
+    <div class="ffeed">${[0, 1, 2, 3].map(c => `<div class="fcol">${[...TILES].sort(newest).filter(t => PAD_COL[t.id] === c).map(t => tileHtml(t, !all)).join('')}</div>`).join('')}</div></section>
+  <aside class="pane"><div class="pane-in" id="pad-pane"></div></aside></div>`;
+const padDiscuss = t => `<div class="pane-h">${av(t.k)}<div><b>${t.src} · Today ${t.time} am</b><small>${t.title}</small></div><em>Open in Chats</em><span class="x">✕</span></div>
+  <div class="thread" id="pad-thread"></div><div class="chat-comp"><span class="cplus">+</span>Message your AI<span class="csend" style="margin-left:auto">↑</span></div>`;
+const LATER = [['Plan the market trip', 'Sat'], ['Call Mum', 'Sun'], ['Renew car insurance', '16 Oct'], ['Book Tokyo flights', '20 Oct'], ['Tax return', '31 Oct'], ['Send the Studio invoice', '3 Nov']];
+const padTodo = () => `<div class="pt" id="pt"><div class="pt-main"><div class="pt-row">
+  <div class="pt-col">
+    <div class="hd"><div><h3>Todo</h3><small>Friday, 9 October</small></div>${host()}</div>
+    <div class="card-a done-today"><div class="n"><b id="pad-done-n">1</b><span>done today</span></div><div class="sq"><i class="f"></i><i class="now"></i><i></i><i></i><i></i></div></div>
+    <div class="card-a recent"><div class="recent-h"><b>Recent</b><em>4</em><span class="pill-btn">Select</span><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+      ${TODOS.map(t => `<div class="trow" data-ptodo="${t.id}"><span class="box"></span><div class="t">${t.t}${t.s ? `<small>${t.s}</small>` : ''}</div><span class="chat-ic">${icon.bubble}</span></div>`).join('')}</div>
+    <div class="card-a mini-row" id="pad-done-row"><b>Done</b> 1 <span>Latest · Send the invoice to Studio</span></div>
+    <div class="pt-dock"><div class="f"><img src="${asset('atu')}" alt="">Ask ATU to plan your day</div><span class="p">+</span></div>
+  </div>
+  <aside class="pt-side"><div class="pt-later-h"><b>Later</b><small>${LATER.length}</small></div>
+    <div class="pt-later">${LATER.map(([t, d]) => `<div class="pl"><i></i><span>${t}</span><small>${d}</small></div>`).join('')}</div></aside>
+  </div></div><aside class="pane"><div class="pane-in" id="pad-pane"></div></aside></div>`;
+const padChat = title => `<div class="pane-h"><img src="${asset('atu')}" alt=""><div><b>${title}</b><small>☑ Todo · 9 Oct</small></div><em class="new">New</em><em>Open in Chats</em><span class="x">✕</span></div>
+  <div class="thread" id="pad-thread"></div><div class="chat-comp"><span class="cplus">+</span>Message ATU<span class="csend" style="margin-left:auto">↑</span></div>`;
+// Open the right pane on the iPad with a copy of the phone chat.
+function padPane(root, cls, html, th) {
+  const r = $(root, padBody); if (!r) return;
+  $('#pad-pane', r).innerHTML = html; r.classList.add(cls); padTab(null); mirror(th);
+}
 // The iPad chat copies the phone chat, so both show the same session.
 function mirror(th) {
   const pt = $('#pad-thread'); if (!pt) return;
@@ -389,15 +422,13 @@ function lockOn(sc) {
 async function sceneUpdates(tok) {
   paired = true; sbTime.textContent = '6:58';
   macClock.textContent = 'Fri 5:58 AM';
-  setPad(padUpdates(false), '6:58');
+  setPad(padUpdates(false), 'updates', '6:58');
   show(updatesScreen(false)); setTab('updates');
   await wait(700, tok);
   for (const [id, , clock] of RUNS) {
-    const row = $(`[data-run=${id}] .st`, padBody);
-    if (row) row.innerHTML = '<i class="spin"></i>Running';
     macClock.textContent = `Fri ${clock}`;
     await wait(520, tok);
-    if (row) { row.classList.add('done'); row.textContent = '✓ Sent'; }
+    const row = $(`[data-run=${id}] small`, padBody); if (row) row.textContent = `Today ${clock}`;
     const tile = $(`[data-tile=${id}]`, layers);
     if (tile) { tile.parentElement.prepend(tile); tile.classList.remove('hidden'); tile.classList.add('new'); }
     const ptile = $(`[data-tile=${id}]`, padBody);
@@ -411,7 +442,9 @@ async function sceneUpdates(tok) {
   await ask(tok);
   await wait(2200, tok);
 }
+let openId = 'flights';
 async function openDetail(id, tok) {
+  openId = id;
   await tap($(`[data-tile=${id}]`, layers), tok);
   show(detailScreen(id), 'push'); setTab(null);
   await wait(500, tok);
@@ -428,6 +461,7 @@ async function ask(tok) {
   const sheet = $('#discuss', layers.lastElementChild);
   sheet.classList.add('on');
   const th = $('#d-thread', sheet);
+  padPane('#pu', 'discussing', padDiscuss(TILES.find(x => x.id === openId)), th);
   th.insertAdjacentHTML('beforeend', '<div class="msg me">Is now a good time to book?<time>7:06</time></div>');
   await wait(500, tok);
   th.insertAdjacentHTML('beforeend', '<div class="typing"><i></i><i></i><i></i></div>');
@@ -438,7 +472,7 @@ async function ask(tok) {
 
 async function sceneTodo(tok) {
   paired = true; sbTime.textContent = '8:12'; macClock.textContent = 'Fri 8:12 AM';
-  setPad(padTodo(), '8:12');
+  setPad(padTodo(), 'todo', '8:12');
   show(todoScreen()); setTab('todo');
   await wait(1200, tok);
   await openSelect(tok);
@@ -467,10 +501,8 @@ async function followUp(tok, auto = false) {
   await wait(250, tok);
   show(atuChat(), 'push'); setTab(null);
   const th = $('#thread', layers.lastElementChild);
-  const log = $('#mw-log');
-  $$('[data-ptodo]', padBody).forEach(r => r.classList.toggle('picked', picked.some(p => p.id === r.dataset.ptodo)));
-  if (log) log.innerHTML = '';
-  mirror(th);
+  const ids0 = picked.map(t => t.id).sort().join(',');
+  padPane('#pt', 'chatting', padChat(ids0 === 'dentist,passport' ? 'Passport and dentist' : picked[0].t), th);
   await wait(450, tok);
   th.insertAdjacentHTML('beforeend', `<div class="msg me">${picked.map(t => `<span class="tpill">✓ Todo · ${t.t}</span>`).join('')}Help me get these done.<time>8:13</time></div>`);
   await wait(400, tok);
@@ -480,7 +512,7 @@ async function followUp(tok, auto = false) {
   const steps = sample
     ? [['Read the passport renewal rules', 'passports.gov.au'], ['Checked your calendar for next week', '3 free mornings'], ['Found your dentist’s booking page', 'Smile Dental']]
     : picked.map(t => ['Looked into it', t.t]);
-  for (const [a, b] of steps) { await wait(650, tok); log?.insertAdjacentHTML('beforeend', `<li><b>✓</b>${a}<em>${b}</em></li>`); }
+  await wait(650 * steps.length, tok);
   await wait(500, tok);
   th.lastElementChild.remove();
   if (sample) {
@@ -507,7 +539,6 @@ async function chooseOption(opt, tok) {
   await wait(400, tok);
   th.insertAdjacentHTML('beforeend', `<div class="msg me">${choice}<time>8:15</time></div>`);
   await wait(800, tok);
-  $('#mw-log')?.insertAdjacentHTML('beforeend', `<li><b>✓</b>${dentist ? 'Sent the booking request' : 'Started on it'}<em>${dentist ? choice : 'now'}</em></li>`);
   th.insertAdjacentHTML('beforeend', `<div class="msg">${dentist ? `${choice} it is. Booking it now.` : 'On it.'}<time>8:15</time></div>`);
   await wait(900, tok);
   // Concept: the to-do is done, so the chat celebrates it. Not in the app yet.
@@ -515,9 +546,14 @@ async function chooseOption(opt, tok) {
   th.insertAdjacentHTML('beforeend', `<div class="msg">${dentist ? `Booked for ${choice}. Smile Dental confirmed it.` : 'Done.'} That one is off your list.<time>8:16</time></div>`);
   await wait(500, tok);
   th.insertAdjacentHTML('beforeend', `<div class="change done"><div class="change-h"><span>Todo · Done</span><b>Undo</b></div><div class="change-r"><i>✓</i><div><s>${todo ? todo.t : choice}</s><small>Done ${dentist ? `· appointment ${when}, ${choice.replace(/^\w+ /, '')}` : when}</small></div></div></div>`);
-  $('#mw-log')?.insertAdjacentHTML('beforeend', `<li><b>✓</b>${dentist ? 'Booked with Smile Dental' : 'Finished'}<em>${dentist ? choice : 'done'}</em></li>`);
   const card = th.lastElementChild;
-  const prow = todo && $(`[data-ptodo=${todo.id}]`, padBody); if (prow) { prow.classList.add('done'); $('.box', prow).textContent = '✓'; }
+  // The iPad gets the same change: the to-do is ticked, and Done counts it.
+  const prow = todo && $(`[data-ptodo=${todo.id}]`, padBody);
+  if (prow) {
+    prow.classList.add('checked'); $('.box', prow).textContent = '✓';
+    $('#pad-done-n', padBody).textContent = '2'; $('.done-today .now', padBody)?.classList.replace('now', 'f');
+    $('#pad-done-row', padBody).innerHTML = `<b>Done</b> 2 <span>Latest · ${todo.t}</span>`;
+  }
   await wait(250, tok);
   celebrate($('.change-r i', card));
 }
@@ -603,8 +639,8 @@ iph.addEventListener('click', async e => {
   if (tabBtn) {
     const name = tabBtn.dataset.t; paired = true;
     if (name === 'chats') show(chatsHome()); else if (name === 'updates') show(updatesScreen(true)); else { show(todoScreen()); }
-    if (name === 'todo') setPad(padTodo(), '8:12');
-    if (name === 'updates') setPad(padUpdates(true), '7:05');
+    if (name === 'todo') setPad(padTodo(), 'todo', '8:12');
+    if (name === 'updates') setPad(padUpdates(true), 'updates', '7:05');
     const clock = { chats: '9:41', updates: '7:05', todo: '8:12' }[name];
     sbTime.textContent = clock; macClock.textContent = `Fri ${clock} AM`;
     setTab(name); frame(name === 'chats' ? 'pair' : name); return;
@@ -811,8 +847,11 @@ function whileSeen(el, fn, threshold = .25) {
 (() => {
   const cv = $('#dt-aura'); if (!cv) return;
   const thumb = $('#mx-thumb'), level = $('#mx-level'), track = $('#mx-track');
-  // Dark palette of NativeMaxEffortAura: the card is dark, so the glow adds light.
-  const PAL = [0xff5fb4, 0xd463ff, 0x8a74ff, 0x4aa6ff, 0x34dcd0, 0x66e896, 0xffd84e, 0xffa062];
+  // The two palettes of NativeMaxEffortAura. On a dark page the glow adds light;
+  // on a light page it is a soft tint.
+  const LIGHT = [0xff8cc8, 0xdc94ff, 0xa9a0ff, 0x86c2ff, 0x7ee6dc, 0x9aeeb8, 0xffe08a, 0xffba94];
+  const DARK = [0xff5fb4, 0xd463ff, 0x8a74ff, 0x4aa6ff, 0x34dcd0, 0x66e896, 0xffd84e, 0xffa062];
+  let PAL = LIGHT;
   const COLS = [[0, 70, 1], [-60, 50, .85], [60, 50, .85], [-120, 46, .7], [120, 46, .7], [-170, 40, .55], [170, 40, .55]];
   const rainbow = q => { const n = PAL.length, p = ((q % 1) + 1) % 1 * n, a = PAL[p | 0], b = PAL[((p | 0) + 1) % n], t = p - (p | 0);
     const c = s => Math.round(((a >> s) & 255) + ((((b >> s) & 255) - ((a >> s) & 255)) * t)); return `${c(16)},${c(8)},${c(0)}`; };
@@ -828,21 +867,23 @@ function whileSeen(el, fn, threshold = .25) {
     if (cv.width !== Math.round(W * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
     if (rise < .001) return;
-    ctx.globalCompositeOperation = 'lighter';
+    const dark = isDark(); PAL = dark ? DARK : LIGHT;
+    ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over';
+    const A1 = dark ? .5 : .36, A2 = dark ? .85 : .75;
     const sc = W / 390, br = .5 + .5 * Math.sin(2 * Math.PI * time / 3.6), swell = .5 + .5 * br, flow = time / 12;
     const cx = W / 2 + Math.sin(2 * Math.PI * time / 7.3) * W * .04, bottom = H;
     const tint = (x, a) => `rgba(${rainbow(x / W * .85 - flow)},${a})`;
     COLS.forEach(([dx, w, h], i) => {
       const ph = time * (1.1 + .23 * i) + i * 1.9, sway = Math.sin(ph * .6), pulse = .5 + .5 * Math.sin(ph + 1.3);
       const x = cx + dx * sc + sway * 14 * sc, rx = w * sc * (.85 + .25 * swell), ry = H * h * rise * (.55 + .45 * (.5 * pulse + .5 * br));
-      const a = .5 * rise * (.6 + .4 * pulse), g = ctx.createLinearGradient(0, bottom - ry, 0, bottom);
+      const a = A1 * rise * (.6 + .4 * pulse), g = ctx.createLinearGradient(0, bottom - ry, 0, bottom);
       g.addColorStop(0, tint(x, 0)); g.addColorStop(.5, tint(x, a * .6)); g.addColorStop(1, tint(x, a));
       ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(x, bottom, rx, ry, 0, 0, Math.PI * 2); ctx.fill();
     });
     const peak = 60 * sc * rise * (.55 + .45 * br) * 1.4, width = W * .3;
     const hgt = x => { const d = x - cx; return peak * (.5 * Math.exp(-((d / (width * .5)) ** 2)) + .5 * Math.exp(-((d / (width * 1.15)) ** 2))) * (1 + .1 * Math.sin(x / W * 7 + time * 1.4)) + 10 * sc * rise; };
     const g = ctx.createLinearGradient(0, 0, W, 0);
-    for (let k = 0; k <= 12; k++) g.addColorStop(k / 12, tint(k / 12 * W, .85 * rise * (.8 + .2 * br)));
+    for (let k = 0; k <= 12; k++) g.addColorStop(k / 12, tint(k / 12 * W, A2 * rise * (.8 + .2 * br)));
     ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(0, bottom);
     for (let k = 0; k <= 48; k++) { const x = W * k / 48; ctx.lineTo(x, bottom - hgt(x)); }
     ctx.lineTo(W, bottom); ctx.closePath(); ctx.fill();

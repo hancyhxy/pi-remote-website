@@ -7,6 +7,8 @@
   --a-bg: #f7f7f8; --a-surface: #fff; --a-text: #18181b; --a-dim: #4f4f58; --a-faint: #74747e;
   --a-border: #dedee3; --a-secondary: #eeeef0; --a-bubble: #e3edf8; --a-accent: #242421;
   --a-clay: #d97757; --a-green: #218739; --a-red: #d14343; --a-link: #3a6fb0;
+  /* Hairline, selected row, glass fill and text on the accent fill. */
+  --a-hair: rgba(24, 24, 27, .08); --a-sel: rgba(24, 24, 27, .055); --a-glass: rgba(255, 255, 255, .92); --a-on: #fff;
 }
 
 /* ---------- Hero ---------- */
@@ -638,62 +640,91 @@
   .mcp-band-art { height: 140px; }
 }
 
-/* ---------- iPad (scenes 2 and 3). The Mac shows only in scene 1. ---------- */
+/* ---------- iPad (scenes 2 and 3). The Mac shows only in scene 1. ----------
+   The screen is drawn at 1180 x 820 pt (iPad Air 11 inch, landscape) and scaled by .64,
+   so the app classes of the phone apply at their real sizes. */
 .mac, .ipad { transition: opacity .45s ease, transform .55s cubic-bezier(.2, .8, .2, 1); }
-.ipad { position: absolute; left: 10px; top: 46px; width: 780px; height: 576px; padding: 14px; border-radius: 40px; background: #1b1b1d; box-shadow: 0 0 0 2px #3a3a3e, 0 50px 80px -40px rgba(60, 40, 20, .5); opacity: 0; transform: translateY(16px) scale(.98); pointer-events: none; }
+.ipad { position: absolute; left: 6px; top: 56px; width: 781px; height: 551px; padding: 13px; border-radius: 38px; background: #1b1b1d; box-shadow: 0 0 0 2px #3a3a3e, 0 50px 80px -40px rgba(60, 40, 20, .5); opacity: 0; transform: translateY(16px) scale(.98); pointer-events: none; }
 .ds:not([data-scene="pair"]) .ipad { opacity: 1; transform: none; pointer-events: auto; }
 .ds:not([data-scene="pair"]) .mac { opacity: 0; transform: translateY(16px) scale(.98); pointer-events: none; }
-.ipad-scr { position: relative; height: 100%; border-radius: 27px; overflow: hidden; background: var(--a-bg); }
-.ipad-sb { position: absolute; z-index: 3; inset: 0 0 auto; display: flex; gap: 10px; align-items: center; height: 26px; padding: 0 22px; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.ipad-sb .r { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; }
-.ipad-sb .batt { width: 22px; height: 10px; border-radius: 3px; }
-.ipad-body { position: absolute; inset: 26px 0 0; }
-.ipad-body > * { animation: fade-in .4s ease both; }
-.pd { display: grid; grid-template-columns: 236px minmax(0, 1fr); height: 100%; }
-.pd-side { padding: 18px 16px; border-right: 1px solid var(--a-border); background: #fbfbfc; overflow: hidden; }
-.pd-h { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
-.pd-h b { font-size: 17px; } .pd-h small { font-size: 11.5px; color: var(--a-faint); }
-.pd-h2 { margin-top: 20px; }
-.pd-runs li { grid-template-columns: 22px minmax(0, 1fr) auto; height: 40px; gap: 8px; font-size: 12.5px; }
-.pd-runs li span:nth-of-type(1) { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pd-main { position: relative; min-width: 0; overflow: hidden; }
-.pd-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px 0; }
-.pd-top h3 { margin: 0; font-size: 28px; letter-spacing: -.02em; }
-.pd-top .host { width: 42px; height: 42px; font-size: 15px; }
-.pd-main .fchips { padding-top: 10px; }
-.pd-main .fchips span { padding: 6px 12px; font-size: 13px; }
-.pd-feed { grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 14px 16px 0; gap: 10px; }
-.pd-feed .ftile b { font-size: 14px; } .pd-feed .ftile p { font-size: 12.5px; } .pd-feed .fcover { height: 74px; }
-.pd-feed .ftile .in { padding: 10px 11px 9px; } .pd-feed .ftile .src { font-size: 11px; margin-top: 8px; }
-.pd-todos { display: grid; gap: 6px; }
-.pd-todo { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 12px; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .05); font-size: 12.5px; line-height: 1.3; transition: background .3s, color .3s; }
-.pd-todo .box { flex: none; display: grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid #c7c7cc; font-size: 9px; color: #fff; }
-.pd-todo.picked { box-shadow: 0 0 0 1.5px var(--a-accent); }
-.pd-todo.done { color: var(--a-faint); text-decoration: line-through; }
-.pd-todo.done .box { background: var(--a-green); border-color: var(--a-green); }
-.pd-side .mw-log li { padding: 7px 9px; margin-bottom: 6px; font-size: 11.5px; }
-.pd-side .mw-log li em { display: none; }
-.pd-side .mw-log li.idle { background: none; color: var(--a-faint); padding-left: 0; }
-.pd-chat-h { display: flex; align-items: center; justify-content: center; gap: 8px; height: 50px; font-size: 15px; border-bottom: 1px solid var(--a-border); }
-.pd-chat-h img { width: 28px; height: 28px; border-radius: 50%; }
-.pd-thread { inset: 50px 0 76px; padding: 0 40px; gap: 8px; }
-.pd-thread .msg { font-size: 13.5px; max-width: 76%; }
-.pd-thread .opts { width: 60%; padding: 10px; } .pd-thread .ropt { padding: 8px 10px; font-size: 13px; }
-.pd-thread .change { margin: 0 34% 0 0; } .pd-thread .change-r { font-size: 13.5px; }
-.pd-main .chat-comp { left: 40px; right: 40px; bottom: 16px; height: 46px; font-size: 14px; }
-.ds.compact .ipad { left: 0; top: 4px; transform: scale(.555); transform-origin: 0 0; }
-.ds.compact:not([data-scene="pair"]) .ipad { transform: scale(.555); }
+.ipad-scr { position: relative; width: 755px; height: 525px; border-radius: 25px; overflow: hidden; background: var(--a-bg); }
+.pad { position: absolute; left: 0; top: 0; width: 1180px; height: 820px; transform: scale(.64); transform-origin: 0 0; background: var(--a-bg); font-family: var(--ios); color: var(--a-text); -webkit-font-smoothing: antialiased; }
+.pad-sb { position: absolute; z-index: 8; inset: 0 0 auto; display: flex; align-items: center; justify-content: space-between; height: 26px; padding: 2px 24px 0; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; pointer-events: none; }
+.pad-sb b { margin-right: 6px; font-weight: 600; }
+.pad-sb .r { display: flex; align-items: center; gap: 6px; }
+.pad-sb svg { width: 16px; height: 12px; }
+.pad-sb .batt { width: 25px; height: 12px; }
+/* iPadOS tab bar: a floating capsule at the top centre. */
+.pad-tabs { position: absolute; z-index: 8; left: 50%; top: 30px; display: flex; gap: 2px; padding: 4px; transform: translateX(-50%); border-radius: 999px; background: rgba(255, 255, 255, .92); box-shadow: 0 10px 26px -12px rgba(0, 0, 0, .25), 0 0 0 1px rgba(0, 0, 0, .05); transition: opacity .3s, transform .35s; }
+.pad-tabs span { padding: 9px 20px; border-radius: 999px; font-size: 15px; font-weight: 500; transition: background .25s, color .25s; }
+.pad-tabs .on { background: var(--a-secondary); color: var(--a-clay); font-weight: 600; }
+.pad-tabs.hide { opacity: 0; transform: translate(-50%, -14px); pointer-events: none; }
+.pad-body { position: absolute; inset: 0; }
+.pad-body > * { animation: fade-in .4s ease both; }
+/* The right pane: an Updates discussion or an ATU chat, 400 pt. */
+.pane { position: relative; min-width: 0; overflow: hidden; background: var(--a-surface); box-shadow: inset 1px 0 0 var(--a-hair); }
+.pane-in { position: absolute; top: 0; bottom: 0; left: 0; width: 400px; background: var(--a-bg); }
+.pane-h { position: absolute; z-index: 2; inset: 0 0 auto; display: flex; align-items: center; gap: 10px; padding: 34px 12px 10px 16px; background: var(--a-surface); box-shadow: 0 1px 0 var(--a-hair); }
+.pane-h > img, .pane-h > .av { flex: none; width: 32px; height: 32px; border-radius: 50%; font-size: 10px; box-shadow: 0 0 0 1px var(--a-border); }
+.pane-h div { min-width: 0; flex: 1; }
+.pane-h b { display: block; font-size: 13.5px; font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pane-h small { display: block; margin-top: 2px; font-size: 10.5px; color: var(--a-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pane-h em { flex: none; font-style: normal; font-size: 12.5px; font-weight: 650; }
+.pane-h em.new { color: #2e70d6; }
+.pane-h .x { flex: none; display: grid; place-items: center; width: 32px; height: 32px; font-size: 14px; color: var(--a-dim); }
+.pane .thread { inset: 86px 0 86px; }
+.pane .chat-comp { bottom: 20px; }
+/* Updates: the task sidebar (320 pt) and a four-column feed. */
+.pu { position: absolute; inset: 0; display: grid; grid-template-columns: 320px minmax(0, 1fr) 0; transition: grid-template-columns .5s cubic-bezier(.2, .8, .2, 1); }
+.pu.discussing { grid-template-columns: 0 minmax(0, 1fr) 400px; }
+.pu-src { min-width: 0; overflow: hidden; padding-top: 80px; white-space: nowrap; background: var(--a-surface); box-shadow: inset -1px 0 0 var(--a-hair); }
+.pu-src h4 { margin: 0; padding: 14px 20px 10px; font-size: 20px; font-weight: 700; }
+.pu-row { display: flex; align-items: center; gap: 10px; width: 304px; margin: 0 8px 4px; padding: 8px 12px; border-radius: 14px; }
+.pu-row.on { background: var(--a-sel); }
+.pu-row b { display: block; font-size: 13.5px; font-weight: 500; } .pu-row.on b { font-weight: 650; }
+.pu-row small { display: block; margin-top: 1px; font-size: 11px; color: var(--a-faint); }
+.pu-row .av { width: 30px; height: 30px; font-size: 10px; }
+.pu-ic { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--a-secondary); }
+.pu-ic svg { width: 16px; height: 16px; fill: none; stroke: var(--a-dim); stroke-width: 1.8; stroke-linecap: round; }
+.pu-lbl { margin: 0; padding: 12px 20px 4px; font-size: 11.5px; font-weight: 650; color: var(--a-faint); }
+.pu-main { position: relative; min-width: 0; overflow: hidden; padding-top: 80px; }
+.pu-main .hd { padding: 6px 16px 0 22px; }
+.pu-main .ffeed { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding: 0 10px; }
+.pu-main .fcol { gap: 8px; }
+/* Todo: the focus column (600 pt) with Later beside it (300 pt). */
+.pt { position: absolute; inset: 0; display: grid; grid-template-columns: minmax(0, 1fr) 0; transition: grid-template-columns .5s cubic-bezier(.2, .8, .2, 1); }
+.pt.chatting { grid-template-columns: minmax(0, 1fr) 400px; }
+.pt-main { position: relative; min-width: 0; overflow: hidden; }
+.pt-row { position: absolute; inset: 0; display: flex; justify-content: center; gap: 28px; padding: 80px 12px 0; }
+.pt-col { position: relative; flex: 0 1 600px; min-width: 0; }
+.pt-col .hd { padding: 6px 0 0 8px; }
+.pt-col .card-a { margin: 0 0 12px; }
+.pt-col .done-today { margin-top: 14px; }
+.pt-side { flex: none; width: 300px; padding-top: 56px; overflow: hidden; transition: width .5s cubic-bezier(.2, .8, .2, 1), opacity .3s, margin .5s; }
+.pt.chatting .pt-side { width: 0; margin-left: -28px; opacity: 0; }
+.pt-later-h { display: flex; align-items: baseline; justify-content: space-between; padding: 0 6px 10px; white-space: nowrap; }
+.pt-later-h b { font-size: 14px; font-weight: 700; } .pt-later-h small { font-size: 11px; color: var(--a-faint); }
+.pt-later { width: 300px; border-radius: 16px; background: var(--a-surface); box-shadow: inset 0 0 0 1px var(--a-hair); }
+.pl { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 14px; font-size: 14px; }
+.pl + .pl { box-shadow: 0 -1px 0 var(--a-hair); }
+.pl i { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--a-border); }
+.pl span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pl small { font-size: 11.5px; color: var(--a-faint); }
+.pt-dock { position: absolute; left: 0; right: 0; bottom: 28px; display: flex; align-items: center; gap: 8px; }
+.pt-dock .f { flex: 1; display: flex; align-items: center; gap: 8px; height: 50px; padding: 0 9px; border-radius: 25px; background: var(--a-glass); box-shadow: 0 8px 24px -12px rgba(0, 0, 0, .3), inset 0 0 0 1px var(--a-hair); font-size: 14px; color: var(--a-faint); }
+.pt-dock img { width: 30px; height: 30px; border-radius: 50%; box-shadow: 0 0 0 1px var(--a-border); }
+.pt-dock .p { display: grid; place-items: center; width: 50px; height: 50px; border-radius: 50%; background: var(--a-glass); box-shadow: 0 8px 24px -12px rgba(0, 0, 0, .3), inset 0 0 0 1px var(--a-hair); font-size: 26px; font-weight: 300; }
+.ds.compact .ipad { left: 0; top: 4px; transform: scale(.563); transform-origin: 0 0; }
+.ds.compact:not([data-scene="pair"]) .ipad { transform: scale(.563); }
 
 /* ---------- S7 Details: bento grid ----------
-   4 columns. Orb 2 x 2, Max 1 x 2 (dark), Reading and Running 1 x 1, iPad 4 x 1.
+   4 columns. Orb 2 x 2, Max 1 x 2, Reading and Running 1 x 1, iPad 4 x 2.
    Each card holds its own title, as on apple.com. */
 .bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 218px; gap: 14px; margin: 40px 0 0; }
 .bx { position: relative; margin: 0; border-radius: 28px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; font-family: var(--ios); color: var(--a-text); }
 .bx figcaption { position: relative; z-index: 3; padding: 20px 22px 0; }
 .bx figcaption b { display: block; font: 600 17px var(--sans); color: var(--text); letter-spacing: -.01em; }
 .bx figcaption span { display: block; margin-top: 4px; max-width: 300px; font: 13.5px/1.45 var(--sans); color: var(--muted); }
-.bx.dark { background: #121214; box-shadow: none; }
-.bx.dark figcaption b { color: #fff; } .bx.dark figcaption span { color: rgba(255, 255, 255, .62); }
 /* Orb */
 .bx-orb { grid-column: span 2; grid-row: span 2; cursor: pointer; background: radial-gradient(70% 60% at 50% 55%, #fff 0%, #f6f5f2 100%); }
 .orb-wrap { position: absolute; inset: 70px 0 30px; display: grid; place-items: center; align-content: center; }
@@ -701,16 +732,8 @@
 .dt-orb-copy { margin: -4px 0 0; font: 700 19px var(--code); color: var(--a-text); white-space: nowrap; overflow: hidden; }
 .dt-orb-copy.type { animation: type-in .9s steps(22, end); }
 @keyframes type-in { from { max-width: 0; } to { max-width: 100%; } }
-/* Max (dark) */
 .bx-max { grid-row: span 2; }
 .bx-max .aura { position: absolute; left: -20px; right: auto; bottom: 0; width: calc(100% + 40px); height: 62%; filter: blur(16px); pointer-events: none; }
-.bx-max .mx-sheet { left: 14px; right: 14px; top: 104px; background: rgba(44, 44, 48, .78); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #fff; }
-.bx-max .mx-model span { color: rgba(255, 255, 255, .55); }
-.bx-max .mx-track { background: rgba(255, 255, 255, .1); }
-.bx-max .mx-track span { color: rgba(255, 255, 255, .55); font-size: 11.5px; }
-.bx-max .mx-track span.on { color: #111; }
-.bx-max .mx-level { color: #fff; }
-.bx-max .mx-level.max { color: transparent; background-image: linear-gradient(90deg, #eb5f57, #f58b57, #fac35f, #91c882, #82aadc, #9b82c8, #c882b4, #eb5f57, #f58b57, #fac35f, #91c882, #82aadc, #9b82c8, #c882b4, #eb5f57); }
 /* Reading */
 .bx-read .rd-seg { left: 22px; top: auto; bottom: 18px; transform: none; }
 .bx-read .rd-text { left: 22px; right: 22px; top: 92px; }
@@ -729,38 +752,16 @@
 .bx-ipad figcaption span { max-width: 360px; font-size: 14.5px; }
 .bx-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; font-style: normal; }
 .bx-tags i { padding: 4px 10px; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px var(--line-2); font: normal 12px var(--sans); color: var(--text-2); }
-.bx-pad { position: absolute; right: 120px; top: 30px; width: 400px; height: 300px; padding: 10px; border-radius: 26px; background: #1b1b1d; box-shadow: 0 0 0 1.5px #3a3a3e, 0 30px 50px -24px rgba(60, 40, 20, .45); }
-.bx-pad-scr { display: grid; grid-template-columns: 112px 1fr; height: 100%; border-radius: 17px; overflow: hidden; background: var(--a-bg); }
-.bx-pad-side { padding: 14px 10px; background: #fbfbfc; border-right: 1px solid var(--a-border); font-size: 10.5px; }
-.bx-pad-side b { display: block; margin-bottom: 8px; font-size: 13px; }
-.bx-pad-side i { display: block; padding: 6px 8px; margin-bottom: 3px; border-radius: 8px; font-style: normal; color: var(--a-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.bx-pad-side i.on { background: var(--a-secondary); color: var(--a-text); font-weight: 600; }
-.bx-pad-main { position: relative; padding: 16px 16px 0; display: flex; flex-direction: column; gap: 8px; font-size: 11px; line-height: 1.4; }
-.bx-pad-main .m1, .bx-phone .m1 { align-self: flex-end; max-width: 80%; padding: 6px 9px; border-radius: 12px; background: var(--a-bubble); }
-.bx-pad-main .m2, .bx-phone .m2 { align-self: flex-start; max-width: 86%; padding: 6px 9px; border-radius: 12px; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .04); }
-.bx-pad-comp { position: absolute; left: 14px; right: 14px; bottom: 34px; padding: 9px 12px; border-radius: 16px; background: #fff; box-shadow: 0 4px 12px -6px rgba(0, 0, 0, .25); color: var(--a-faint); }
-.bx-phone { position: absolute; right: 44px; top: 96px; display: flex; flex-direction: column; gap: 6px; width: 132px; height: 250px; padding: 40px 8px 8px; border-radius: 26px; background: var(--a-bg); box-shadow: 0 0 0 6px #1b1b1d, 0 0 0 7.5px #3a3a3e, 0 30px 50px -20px rgba(60, 40, 20, .5); font-size: 9.5px; line-height: 1.35; }
-.bx-phone::before { content: ""; position: absolute; left: 50%; top: 10px; width: 40px; height: 12px; margin-left: -20px; border-radius: 8px; background: #000; }
 
 @media (max-width: 900px) {
   .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 210px; }
   .bx-orb { grid-column: span 2; }
   .bx-max { grid-row: span 2; }
-  .bx-ipad { grid-column: span 2; grid-row: span 2; grid-template-columns: 1fr; }
-  .bx-ipad figcaption { align-self: start; }
-  .bx-pad { right: auto; left: 22px; top: 200px; }
-  .bx-phone { right: 22px; top: 236px; }
 }
 @media (max-width: 640px) {
   .bento { grid-template-columns: minmax(0, 1fr); grid-auto-rows: auto; }
   .bx { grid-column: auto !important; grid-row: auto !important; }
   .bx-orb { height: 340px; } .bx-max { height: 330px; } .bx-read, .bx-run { height: 210px; }
-  .bx-ipad { height: 430px; }
-  .bx-ipad figcaption { padding: 20px 22px 0; }
-  .bx-ipad figcaption b { font-size: 17px; } .bx-ipad figcaption span { font-size: 13.5px; }
-  .bx-pad { left: 16px; top: 190px; width: calc(100% - 40px); max-width: 300px; height: 225px; }
-  .bx-pad-scr { grid-template-columns: 86px 1fr; }
-  .bx-phone { right: 14px; top: 240px; width: 104px; height: 186px; padding-top: 34px; }
 }
 
 /* ---------- Denser sections below the hero (owner review 2026-10-10) ----------
@@ -789,3 +790,146 @@
 .ds.compact:not([data-scene="pair"]) .mac { transform: scale(.52); }
 /* The stage scales by script; in a resize it can lag a few frames. Never let it widen the page. */
 .demo { overflow-x: clip; }
+
+/* ---------- Hero peek (owner review 2026-10-11) ----------
+   The hero is a little shorter than the screen, so the top of the Mac and the iPhone
+   shows under it. The stage comes first in the demo; the tabs and the copy follow it. */
+.demo { margin-top: 28px; }
+.ds-wrap { margin-top: 0; }
+.demo-tabs { margin-top: 30px; }
+.demo-copy { margin-top: 20px; }
+.demo-copy h2 { font-size: clamp(26px, 3vw, 38px); }
+.demo-copy p { margin-top: 10px; min-height: 2.9em; }
+.demo-note { margin-top: 6px; }
+@media (min-width: 900px) and (min-height: 700px) {
+  .hero { min-height: calc(var(--screen) - clamp(130px, 18vh, 190px)); padding-bottom: 24px; }
+  .hero .form-status { margin-bottom: 0; }
+}
+@media (max-width: 640px) {
+  .demo { margin-top: 36px; }
+  .demo-copy h2 { min-height: 0; display: block; }
+  .demo-copy p { min-height: 4.4em; }
+}
+
+/* ---------- Left-right sections (owner review 2026-10-11) ----------
+   Cost, Security and Pricing: the words on the left, the proof on the right. */
+.split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 20px 56px; align-items: center; }
+.split > .src { grid-column: 1 / -1; margin-top: 0; }
+.split .sp-head { max-width: none; }
+.split-l > p { margin: 16px 0 0; }
+/* Cost */
+.sp-cost .race-big { margin-top: 26px; }
+.sp-cost .race-big b { font-size: clamp(64px, 7vw, 96px); }
+.sp-cost .race-big span { max-width: 300px; }
+.sp-cost .race { margin: 0; }
+.sp-cost .lanes { margin-top: 20px; }
+/* Security */
+.security.split { max-width: 1080px; padding: 0 20px; }
+.security.split .section-title, .security.split .section-sub { text-align: left; }
+.security.split .section-sub { margin: 14px 0 0; }
+.security.split .cmp { max-width: none; margin: 26px 0 0; }
+.security.split .seal { margin-top: 0; }
+.security.split .note { text-align: left; }
+.cmp-logos { display: flex; align-items: center; gap: 6px; margin: 2px 0 6px; min-height: 30px; }
+.cmp-logos span { display: grid; place-items: center; flex: none; width: 30px; height: 30px; border-radius: 9px; background: #fff; box-shadow: 0 0 0 1px var(--line), 0 4px 10px -6px rgba(90, 60, 30, .35); }
+.cmp-logos img { width: 18px; height: 18px; }
+.cmp-logos .me img { width: 26px; height: 26px; border-radius: 50%; }
+.cmp-logos small { margin-left: 4px; font-size: 11.5px !important; line-height: 1.3; }
+.them .cmp-logos span { filter: grayscale(.2); }
+/* Pricing: the trial steps run down the left. */
+.sp-price.split { align-items: start; }
+.split .timeline { grid-template-columns: minmax(0, 1fr); max-width: none; margin: 28px 0 0; }
+.split .timeline li { padding: 0 0 22px 36px; text-align: left; }
+.split .timeline li::before { left: 7px; right: auto; top: 4px; bottom: -4px; width: 2px; height: auto; }
+.split .timeline li:first-child::before { left: 7px; top: 9px; }
+.split .timeline li:last-child::before { display: none; }
+.split .timeline li::after { left: 0; top: 2px; margin-left: 0; }
+.split .timeline b { display: inline; margin-right: 10px; }
+.split .timeline span { display: inline; }
+.split .timeline span br { display: none; }
+.sp-price .plan { margin: 0; max-width: none; }
+/* MCP band: keyword tags */
+.mcp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: -8px 0 20px; padding: 0; list-style: none; }
+.mcp-tags li { padding: 4px 10px; border-radius: 999px; background: var(--bg-alt); font-size: 12.5px; color: var(--text-2); }
+.mcp-tags li:nth-child(-n + 2) { background: rgba(217, 128, 58, .12); color: var(--accent); font-weight: 600; }
+@media (max-width: 900px) {
+  .split { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .sp-cost .race-big { margin-top: 18px; }
+}
+
+/* ---------- Bento: Max on a light card, iPad card with the real app (owner review 2026-10-11) ---------- */
+.bx-max .mx-sheet { top: 104px; }
+.bx-ipad { grid-row: span 2; display: block; background: linear-gradient(120deg, var(--card) 0%, var(--bg-alt) 100%); }
+.bx-ipad figcaption { position: absolute; left: 0; top: 50%; width: 40%; padding: 0 30px 0 36px; transform: translateY(-50%); }
+/* A device: a bezel round a screen of --s times its point size. */
+.dev { position: absolute; z-index: 2; background: #1b1b1d; box-shadow: 0 0 0 1.5px #3a3a3e, 0 30px 50px -24px rgba(60, 40, 20, .45); }
+.dev .scr { position: relative; overflow: hidden; background: var(--a-bg); }
+.dev-pad { --s: .38; right: 150px; top: 58px; padding: 9px; border-radius: 26px; }
+.dev-pad .scr { width: calc(1180px * var(--s)); height: calc(820px * var(--s)); border-radius: 17px; }
+.dev .pad { transform: scale(var(--s)); }
+.dev-ph { --s: .34; right: 46px; top: 110px; padding: 5px; border-radius: 27px; }
+.dev-ph::before { content: ""; position: absolute; z-index: 3; left: 50%; top: 9px; width: 40px; height: 12px; margin-left: -20px; border-radius: 8px; background: #000; }
+.dev-ph .scr { width: calc(390px * var(--s)); height: calc(844px * var(--s)); border-radius: 22px; }
+.ph { position: absolute; left: 0; top: 0; width: 390px; height: 844px; transform: scale(var(--s)); transform-origin: 0 0; background: var(--a-bg); font-family: var(--ios); color: var(--a-text); }
+/* Chats on a wide iPad: the chat list stays open beside the chat (NativeAppView.swift, 1024 pt and up). */
+.pc-side { position: absolute; left: 0; top: 0; bottom: 0; width: 320px; padding: 40px 14px 0; background: var(--a-surface); box-shadow: inset -1px 0 0 var(--a-hair); }
+.pc-sh { display: flex; align-items: center; justify-content: space-between; padding: 0 2px 0 4px; }
+.pc-sh b { font-size: 26px; font-weight: 700; } .pc-sh small { margin-left: 8px; font-size: 12.5px; color: var(--a-faint); }
+.pc-sh .host, .pc-top .host, .pc-top .round { width: 44px; height: 44px; font-size: 16px; }
+.pc-sh .host::after, .pc-top .host::after { right: 3px; bottom: 3px; }
+.pc-search { display: flex; align-items: center; gap: 8px; height: 40px; margin-top: 14px; padding: 0 12px; border-radius: 12px; background: var(--a-secondary); font-size: 15px; color: var(--a-faint); }
+.pc-search svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.pc-seg { display: flex; margin: 12px 0 8px; padding: 3px; border-radius: 12px; background: var(--a-secondary); }
+.pc-seg span { flex: 1; padding: 8px 0; border-radius: 9px; text-align: center; font-size: 14px; color: var(--a-dim); }
+.pc-seg .on { background: var(--a-surface); color: var(--a-text); font-weight: 600; box-shadow: 0 1px 4px -1px rgba(0, 0, 0, .2); }
+.pc-row { padding: 10px 10px; border-radius: 12px; }
+.pc-row.on { background: var(--a-sel); }
+.pc-row b { display: block; font-size: 15px; font-weight: 500; }
+.pc-row small { display: block; margin-top: 2px; font-size: 11.5px; color: var(--a-faint); }
+.pc-new { position: absolute; left: 14px; bottom: 28px; padding: 12px 22px; border-radius: 999px; background: var(--a-accent); color: var(--a-on); font-size: 17px; font-weight: 600; }
+.pc-main { position: absolute; left: 320px; right: 0; top: 0; bottom: 0; }
+.pc-top { position: absolute; z-index: 2; left: 0; right: 0; top: 76px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; }
+.pc-top b { font-size: 16px; font-weight: 600; }
+.pc-thread { position: absolute; left: 50%; top: 136px; bottom: 156px; width: 600px; margin-left: -300px; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; overflow: hidden; }
+.pc-thread > * { flex-shrink: 0; animation: none !important; }
+.pc-main .composer { left: 50%; right: auto; bottom: 26px; width: 660px; margin-left: -330px; }
+.ph .pc-top { top: 56px; padding: 0 14px; }
+.ph .pc-thread { left: 0; right: 0; width: auto; margin: 0; padding: 0 14px; top: 120px; bottom: 100px; }
+.ph .chat-comp { bottom: 24px; }
+@media (max-width: 900px) {
+  .bento .bx-ipad { grid-column: span 2; grid-row: span 2; }
+  .bx-ipad figcaption { width: 42%; padding: 0 16px 0 24px; }
+  .dev-pad { --s: .3; right: 96px; top: 70px; }
+  .dev-ph { --s: .28; right: 20px; top: 130px; }
+}
+@media (max-width: 640px) {
+  .bento .bx-ipad { height: 500px; }
+  .bx-ipad figcaption { position: relative; top: auto; width: auto; padding: 20px 22px 0; transform: none; }
+  .bx-ipad figcaption b { font-size: 17px; } .bx-ipad figcaption span { font-size: 13.5px; }
+  .dev-pad { --s: .225; left: 14px; right: auto; top: 222px; padding: 6px; border-radius: 16px; }
+  .dev-pad .scr { border-radius: 11px; }
+  .dev-ph { --s: .2; right: 12px; top: 300px; padding: 4px; border-radius: 18px; }
+  .dev-ph::before { top: 6px; width: 24px; height: 8px; margin-left: -12px; }
+  .dev-ph .scr { border-radius: 15px; }
+}
+.security.split .section-title { font-size: clamp(30px, 3.8vw, 48px); line-height: 1.08; }
+.cmp-logos { flex-wrap: wrap; }
+.cmp-logos small { flex-basis: 100%; margin: 6px 0 0; }
+.us .cmp-logos span::before { content: none; }
+.them .cmp-logos span { text-decoration: none; }
+.split .timeline span br { display: inline; }
+
+/* Theme switch in the navigation bar. */
+.theme-btn { display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--line-2); border-radius: 50%; background: transparent; color: var(--text-2); transition: background .15s; }
+.theme-btn:hover { background: var(--bg-alt); }
+.theme-btn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.theme-btn .moon { display: none; }
+[data-theme="dark"] .theme-btn .sun { display: none; }
+[data-theme="dark"] .theme-btn .moon { display: block; }
+/* Short desktop windows: the hero shrinks with the window height, so the stage still peeks. */
+@media (min-width: 900px) {
+  .hero-dogs { height: clamp(130px, 25vh, 240px); width: clamp(120px, 23vh, 220px); }
+  .hero h1 { font-size: clamp(38px, min(6.4vw, 8.4vh), 76px); }
+  .lede { margin-top: clamp(14px, 3vh, 28px); }
+  .hero-cta { margin-top: clamp(18px, 3.6vh, 34px); }
+}

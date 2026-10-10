@@ -8,6 +8,8 @@
   <link rel="icon" href="assets/logo.svg">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="v2.css">
+  <link rel="stylesheet" href="dark.css">
+  <script src="theme.js"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -23,6 +25,7 @@
         <a href="#pricing">Pricing</a>
         <a href="#security">Security</a>
         <a href="mcp.html">Claude &amp; ChatGPT</a>
+        <button class="theme-btn" type="button" id="theme-btn" aria-label="Switch to dark mode"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
         <a class="btn btn-outline btn-sm" href="#access" data-join><span class="glyph" aria-hidden="true">▯</span>Early access</a>
       </nav>
     </div>
@@ -45,23 +48,12 @@
           <button class="btn btn-primary btn-lg" type="button" id="hero-join" data-join>Join the waitlist</button>
         </div>
         <p class="form-status" id="hero-hint" role="status">One tap with Google, or use any email.</p>
-        <a class="learn" href="#how">See it work <span aria-hidden="true">↓</span></a>
       </div>
     </section>
 
-    <!-- S2 Three core scenes. One stage: the computer and the phone.
-         Phone screens follow the shipped iOS app (Oct 2026). The Mac window is a concept surface. -->
+    <!-- S2 Three core scenes. One stage: the computer (scene 1) or the iPad (scenes 2 and 3), and the phone.
+         Phone and iPad screens follow the shipped iOS app (Oct 2026). The Mac window is a concept surface. -->
     <section class="demo" id="how" aria-labelledby="demo-title">
-      <div class="demo-copy" aria-live="polite">
-        <h2 id="demo-title">One scan. You’re in.</h2>
-        <p id="demo-text">Install on your computer, then scan the code with your iPhone. No account, no VPN, no ports to open.</p>
-      </div>
-      <div class="demo-tabs" role="tablist" aria-label="Product scenes">
-        <button role="tab" id="tab-pair" data-scene="pair" aria-selected="true" aria-controls="ds"><span class="n">1</span>Scan and pair<i class="bar"><i></i></i></button>
-        <button role="tab" id="tab-updates" data-scene="updates" aria-selected="false" aria-controls="ds"><span class="n">2</span>Updates<i class="bar"><i></i></i></button>
-        <button role="tab" id="tab-todo" data-scene="todo" aria-selected="false" aria-controls="ds"><span class="n">3</span>To-do follow-up<i class="bar"><i></i></i></button>
-      </div>
-
       <div class="ds-wrap" id="ds-wrap">
         <div class="ds" id="ds" role="tabpanel" aria-label="Interactive product demo. It plays by itself; click inside to take over.">
 
@@ -79,10 +71,11 @@
 
           <!-- iPad, landscape. Scenes 2 and 3: the same account on a bigger screen, in sync with the phone. -->
           <div class="ipad" aria-hidden="true">
-            <div class="ipad-scr">
-              <div class="ipad-sb"><span id="pad-time">6:58</span><span>Fri 9 Oct</span><span class="r">100% <i class="batt"></i></span></div>
-              <div class="ipad-body" id="pad-body"></div>
-            </div>
+            <div class="ipad-scr"><div class="pad" id="pad">
+              <div class="pad-sb"><span><b id="pad-time">6:58</b> Fri 9 Oct</span><span class="r"><svg viewBox="0 0 16 12"><path d="M8 11.2l2.3-2.6a3.3 3.3 0 0 0-4.6 0zM3.4 6.4l1.4 1.5a4.6 4.6 0 0 1 6.4 0l1.4-1.5a6.6 6.6 0 0 0-9.2 0zM.6 3.6L2 5.1a8.6 8.6 0 0 1 12 0l1.4-1.5a10.6 10.6 0 0 0-14.8 0z" fill="currentColor"/></svg>100% <i class="batt"></i></span></div>
+              <nav class="pad-tabs" id="pad-tabs"><span data-t="chats">Chats</span><span data-t="updates">Updates</span><span data-t="todo">Todo</span></nav>
+              <div class="pad-body" id="pad-body"></div>
+            </div></div>
           </div>
 
           <!-- iPhone, drawn at 390 x 844 pt and scaled -->
@@ -99,6 +92,16 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="demo-tabs" role="tablist" aria-label="Product scenes">
+        <button role="tab" id="tab-pair" data-scene="pair" aria-selected="true" aria-controls="ds"><span class="n">1</span>Scan and pair<i class="bar"><i></i></i></button>
+        <button role="tab" id="tab-updates" data-scene="updates" aria-selected="false" aria-controls="ds"><span class="n">2</span>Updates<i class="bar"><i></i></i></button>
+        <button role="tab" id="tab-todo" data-scene="todo" aria-selected="false" aria-controls="ds"><span class="n">3</span>To-do follow-up<i class="bar"><i></i></i></button>
+      </div>
+
+      <div class="demo-copy" aria-live="polite">
+        <h2 id="demo-title">One scan. You’re in.</h2>
+        <p id="demo-text">Install on your computer, then scan the code with your iPhone. No account, no VPN, no ports to open.</p>
       </div>
       <p class="demo-note">Sample content. Phone and iPad screens follow the current app.</p>
     </section>
@@ -117,10 +120,11 @@
     </section>
 
     <!-- S4 Cost. Source: Composio Bench, Kimi K3 run, Aug 2026. -->
-    <section class="sp sp-cost" id="cost">
-      <div class="sp-head">
+    <section class="sp sp-cost split" id="cost">
+      <div class="split-l">
         <h2>Same model.<br>A third of the cost.</h2>
         <p>Your AI runs on Pi, a lean open agent framework. On the same model and the same tasks, it spends less and finishes sooner than the popular coding agents.</p>
+        <div class="race-big" aria-live="polite"><b id="race-num">2×</b><span id="race-line">faster than Claude Code</span></div>
       </div>
       <!-- One race instead of three equal charts. All meters run at the same rate; Pi stops first. -->
       <div class="race card" id="race">
@@ -129,51 +133,55 @@
           <button role="tab" data-m="cost" aria-selected="false">Cost</button>
           <button role="tab" data-m="tokens" aria-selected="false">Tokens</button>
         </div>
-        <div class="race-body">
-          <div class="race-big" aria-live="polite"><b id="race-num">2×</b><span id="race-line">faster than Claude Code</span></div>
-          <div class="lanes" id="lanes"></div>
-        </div>
+        <div class="lanes" id="lanes"></div>
         <p class="race-cap" id="race-cap">Median time per task.</p>
       </div>
       <p class="src">Composio Bench, August 2026. Same model (Kimi K3) for every agent, 25 real-app tasks, one run per task. Costs use the model prices of that month. Results vary by model and task. <a href="https://composio.dev/content/best-ai-agent-harnesses" target="_blank" rel="noopener">Source</a></p>
     </section>
 
     <!-- S5 Data and security -->
-    <section class="security" id="security">
-      <h2 class="section-title">Your data stays on your computer.</h2>
-      <p class="section-sub">Change models as often as you like. Your chats, to-dos and files do not move.</p>
-      <div class="cmp">
-        <div class="cmp-col them">
-          <h3>Cloud agents</h3>
-          <div class="row"><small>Where it runs</small><span>On their servers</span></div>
-          <div class="row"><small>Models</small><span>The one they pick</span></div>
-          <div class="row"><small>Your data</small><span>Stored on their side</span></div>
-        </div>
-        <div class="cmp-col us">
-          <h3>Pi Remote</h3>
-          <div class="row"><small>Where it runs</small><span>On your own computer</span></div>
-          <div class="row"><small>Models</small><span>Any model you pay for</span></div>
-          <div class="row"><small>Your data</small><span>On your disk, always yours</span></div>
+    <section class="security split" id="security">
+      <div class="split-l">
+        <h2 class="section-title">Your data stays on your computer.</h2>
+        <p class="section-sub">Change models as often as you like. Your chats, to-dos and files do not move.</p>
+        <div class="cmp">
+          <div class="cmp-col them">
+            <h3>Cloud agents</h3>
+            <p class="cmp-logos"><span><img src="assets/providers/xai.png" alt="Grok"></span><span><img src="assets/providers/openai.png" alt="ChatGPT"></span><span><img src="assets/providers/meta.png" alt="Meta Muse"></span><small>Grok · ChatGPT agents · Meta Muse</small></p>
+            <div class="row"><small>Where it runs</small><span>On their servers</span></div>
+            <div class="row"><small>Models</small><span>The one they pick</span></div>
+            <div class="row"><small>Your data</small><span>Stored on their side</span></div>
+          </div>
+          <div class="cmp-col us">
+            <h3>Pi Remote</h3>
+            <p class="cmp-logos"><span class="me"><img src="assets/img/avatar-backpack.webp" alt=""></span><small>Your computer, your models</small></p>
+            <div class="row"><small>Where it runs</small><span>On your own computer</span></div>
+            <div class="row"><small>Models</small><span>Any model you pay for</span></div>
+            <div class="row"><small>Your data</small><span>On your disk, always yours</span></div>
+          </div>
         </div>
       </div>
-      <!-- A real sentence is sealed on the phone, crosses the relay as noise, and opens on the computer. -->
-      <div class="seal card" id="seal" role="img" aria-label="A message is sealed on your phone, passes the relay as unreadable text, and opens on your computer. The relay has no key.">
-        <div class="seal-track" aria-hidden="true"><i class="seal-line"></i><i class="seal-glow" id="seal-glow"></i></div>
-        <div class="seal-node" data-n="phone"><span class="seal-ic"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.6"/><path d="M10.5 18.5h3"/></svg></span><b>Your phone</b><small>has the key</small></div>
-        <div class="seal-node relay" data-n="relay"><span class="seal-ic"><svg viewBox="0 0 24 24"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.6 9.3 4.6 4.6 0 0 0 7 18.5z"/></svg></span><b>Relay</b><small>no key · only forwards</small><em class="seal-blind" id="seal-blind">Can’t read this</em></div>
-        <div class="seal-node" data-n="mac"><span class="seal-ic"><svg viewBox="0 0 24 24"><rect x="4" y="4.5" width="16" height="11" rx="1.6"/><path d="M2.5 19.5h19"/></svg></span><b>Your computer</b><small>has the key</small></div>
-        <div class="seal-msg" id="seal-msg" aria-hidden="true"><svg class="lk" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9.5" rx="2.2"/><path class="shackle" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span id="seal-text">Book the dentist, Tue 9:30</span></div>
+      <div class="split-r">
+        <!-- A real sentence is sealed on the phone, crosses the relay as noise, and opens on the computer. -->
+        <div class="seal card" id="seal" role="img" aria-label="A message is sealed on your phone, passes the relay as unreadable text, and opens on your computer. The relay has no key.">
+          <div class="seal-track" aria-hidden="true"><i class="seal-line"></i><i class="seal-glow" id="seal-glow"></i></div>
+          <div class="seal-node" data-n="phone"><span class="seal-ic"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.6"/><path d="M10.5 18.5h3"/></svg></span><b>Your phone</b><small>has the key</small></div>
+          <div class="seal-node relay" data-n="relay"><span class="seal-ic"><svg viewBox="0 0 24 24"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.6 9.3 4.6 4.6 0 0 0 7 18.5z"/></svg></span><b>Relay</b><small>no key · only forwards</small><em class="seal-blind" id="seal-blind">Can’t read this</em></div>
+          <div class="seal-node" data-n="mac"><span class="seal-ic"><svg viewBox="0 0 24 24"><rect x="4" y="4.5" width="16" height="11" rx="1.6"/><path d="M2.5 19.5h19"/></svg></span><b>Your computer</b><small>has the key</small></div>
+          <div class="seal-msg" id="seal-msg" aria-hidden="true"><svg class="lk" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9.5" rx="2.2"/><path class="shackle" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span id="seal-text">Book the dentist, Tue 9:30</span></div>
+        </div>
+        <p class="note">Your model provider still sees what your AI sends to it, under its own data policy.</p>
       </div>
-      <p class="note">Your model provider still sees what your AI sends to it, under its own data policy.</p>
     </section>
 
     <!-- S5b The MCP gateway in short. Its own page is mcp.html. -->
     <section class="sp sp-mcp" id="mcp">
       <div class="mcp-band card">
         <div class="mcp-band-copy">
-          <p class="eyebrow-s">Works with ChatGPT and Claude</p>
+          <p class="eyebrow-s">Remote MCP server · Works with Skills</p>
           <h2>Control your computer from ChatGPT or Claude.</h2>
-          <p>Add one address in the AI app you already use. Then just ask it to find a file, run a command or tidy a folder, and it does it on your computer. You approve each app. Same subscription.</p>
+          <p>Pi Remote turns your computer into a remote MCP server. Add its address as a connector in ChatGPT or Claude, then just ask: find a file, run a command, tidy a folder. Your Skills can use it too: a Skill tells the AI what to do, and Pi Remote lets it do it on your computer.</p>
+          <ul class="mcp-tags" aria-label="Key facts"><li>MCP connector</li><li>Works with Skills</li><li>8 tools</li><li>You approve each app</li><li>Same subscription</li></ul>
           <a class="btn btn-outline" href="mcp.html">See how it works <span aria-hidden="true">→</span></a>
         </div>
         <div class="mcp-band-art" aria-hidden="true">
@@ -186,16 +194,18 @@
     </section>
 
     <!-- S6 Pricing. Price and refund terms are drafts. -->
-    <section class="sp sp-price" id="pricing">
-      <div class="sp-head center">
+    <section class="sp sp-price split" id="pricing">
+      <div class="split-l">
+      <div class="sp-head">
         <h2>Try it free for 7 days.</h2>
         <p>No surprises. If it is not for you, you get your money back.</p>
       </div>
       <ol class="timeline" aria-label="Trial and refund timeline">
-        <li><b>Day 0</b><span>Start free.<br>Everything included.</span></li>
-        <li><b>Day 7</b><span>Your first payment.<br>Cancel before, pay nothing.</span></li>
-        <li class="refund"><b>Day 7–10</b><span>Changed your mind?<br>Full refund.</span></li>
+        <li><b>Day 0</b><span>Start free. Everything included.</span></li>
+        <li><b>Day 7</b><span>Your first payment. Cancel before, pay nothing.</span></li>
+        <li class="refund"><b>Day 7–10</b><span>Changed your mind? Full refund.</span></li>
       </ol>
+      </div>
       <div class="plan card">
         <p class="plan-name">Pi Remote</p>
         <p class="plan-price">7 days free<small>then the launch price</small></p>
@@ -215,14 +225,14 @@
         <h2>Polished in the small places.</h2>
         <p>The parts you touch a hundred times a day get the most care.</p>
       </div>
-      <!-- Bento grid: one large card, one tall dark card, two small cards and a wide iPad card. -->
+      <!-- Bento grid: one large card, one tall card, two small cards and a wide iPad card. -->
       <div class="bento">
         <figure class="bx bx-orb" id="dt-orb" role="button" tabindex="0" aria-label="Thinking orb. Activate to change its form.">
           <figcaption><b>Thinking orb</b><span>Fifteen dot forms. It changes while your AI works. Tap it.</span></figcaption>
           <div class="orb-wrap"><canvas id="dt-orb-c" aria-hidden="true"></canvas><p class="dt-orb-copy" id="dt-orb-copy">Bring the hard part.</p></div>
           <span class="dt-orb-name" id="dt-orb-name">composing · 1 / 15</span>
         </figure>
-        <figure class="bx bx-max dark" aria-hidden="true">
+        <figure class="bx bx-max" aria-hidden="true">
           <figcaption><b>Max thinking</b><span>Push it to Max. The sheet glows in a slow rainbow.</span></figcaption>
           <canvas class="aura" id="dt-aura"></canvas>
           <div class="mx-sheet"><div class="mx-model"><b>claude-opus</b><span>Thinking</span></div>
@@ -241,11 +251,41 @@
         </figure>
         <figure class="bx bx-ipad" aria-hidden="true">
           <figcaption><b>iPad</b><span>The same chats, to-dos and updates on a bigger screen. Start on your phone, carry on at your iPad.</span><em class="bx-tags"><i>Same account</i><i>Live sync</i><i>Landscape and portrait</i></em></figcaption>
-          <div class="bx-pad"><div class="bx-pad-scr">
-            <div class="bx-pad-side"><b>Chats</b><i class="on">Dentist and passport</i><i>Tokyo in April</i><i>Weekly plan</i><i>Invoice for Studio</i></div>
-            <div class="bx-pad-main"><div class="m1">Help me get these done.</div><div class="m2">Here’s the plan. Passport: renew online today. Dentist: Tue 9:30 is free.</div><div class="bx-pad-comp">Message ATU</div></div>
-          </div></div>
-          <div class="bx-phone"><div class="m1">Help me get these done.</div><div class="m2">Here’s the plan…</div></div>
+          <!-- The iPad app at 1180 x 820 pt and the iPhone at 390 x 844 pt, both scaled. One chat on both. -->
+          <div class="dev dev-pad"><div class="scr"><div class="pad">
+            <div class="pad-sb"><span><b>8:16</b> Fri 9 Oct</span><span class="r"><svg viewBox="0 0 16 12"><path d="M8 11.2l2.3-2.6a3.3 3.3 0 0 0-4.6 0zM3.4 6.4l1.4 1.5a4.6 4.6 0 0 1 6.4 0l1.4-1.5a6.6 6.6 0 0 0-9.2 0zM.6 3.6L2 5.1a8.6 8.6 0 0 1 12 0l1.4-1.5a10.6 10.6 0 0 0-14.8 0z" fill="currentColor"/></svg>100% <i class="batt"></i></span></div>
+            <nav class="pad-tabs"><span class="on">Chats</span><span>Updates</span><span>Todo</span></nav>
+            <aside class="pc-side">
+              <div class="pc-sh"><div><b>Chats</b><small>Studio Mac</small></div><span class="host">S</span></div>
+              <div class="pc-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>Search chats…</div>
+              <div class="pc-seg"><span class="on">Recent</span><span>Projects</span></div>
+              <div class="pc-row on"><b>Passport and dentist</b><small>Todo · now</small></div><div class="pc-row"><b>Tokyo flights in April</b><small>Updates · 7:06</small></div><div class="pc-row"><b>Fix the failing test</b><small>pi-remote · 2h</small></div><div class="pc-row"><b>Weekly plan</b><small>Home · 1d</small></div><div class="pc-row"><b>Invoice for Studio</b><small>Work · 2d</small></div><div class="pc-row"><b>Rename holiday photos</b><small>Photos · 3d</small></div>
+              <span class="pc-new">+ Chat</span>
+            </aside>
+            <section class="pc-main">
+              <div class="pc-top"><span class="round"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><b>Passport and dentist</b><span class="host">S</span></div>
+              <div class="pc-thread">
+            <div class="msg me"><span class="tpill">✓ Todo · Renew passport before booking flights</span><span class="tpill">✓ Todo · Book a dentist appointment</span>Help me get these done.<time>8:13</time></div>
+            <div class="msg">Here’s the plan.<ul><li><b>Passport:</b> renew online today. It is back in about 3 weeks.</li><li><b>Dentist:</b> you are free Tue 9:30, Wed 2:00 pm and Fri 11:15.</li></ul><time>8:14</time></div>
+            <div class="msg me">Tue 9:30<time>8:15</time></div>
+            <div class="msg">Booked for Tue 9:30. Smile Dental confirmed it.<time>8:16</time></div>
+            <div class="change done"><div class="change-h"><span>Todo · Done</span><b>Undo</b></div><div class="change-r"><i>✓</i><div><s>Book a dentist appointment</s><small>Done · appointment Tue 13 Oct, 9:30</small></div></div></div>
+              </div>
+              <div class="composer"><div class="ph">Message your AI…</div><div class="row"><span class="cplus">+</span><span class="cchip">claude-opus · High ⌄</span><span class="cchip">~/Home</span><span class="csend">↑</span></div></div>
+            </section>
+          </div></div></div>
+          <div class="dev dev-ph"><div class="scr"><div class="ph">
+            <div class="sb"><span>8:16</span><span class="sb-r"><svg viewBox="0 0 16 12"><path d="M8 11.2l2.3-2.6a3.3 3.3 0 0 0-4.6 0zM3.4 6.4l1.4 1.5a4.6 4.6 0 0 1 6.4 0l1.4-1.5a6.6 6.6 0 0 0-9.2 0zM.6 3.6L2 5.1a8.6 8.6 0 0 1 12 0l1.4-1.5a10.6 10.6 0 0 0-14.8 0z" fill="currentColor"/></svg><i class="batt"></i></span></div>
+            <div class="pc-top"><span class="round"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><b>Passport and dentist</b><span class="host">S</span></div>
+            <div class="pc-thread">
+            <div class="msg me"><span class="tpill">✓ Todo · Renew passport before booking flights</span><span class="tpill">✓ Todo · Book a dentist appointment</span>Help me get these done.<time>8:13</time></div>
+            <div class="msg">Here’s the plan.<ul><li><b>Passport:</b> renew online today. It is back in about 3 weeks.</li><li><b>Dentist:</b> you are free Tue 9:30, Wed 2:00 pm and Fri 11:15.</li></ul><time>8:14</time></div>
+            <div class="msg me">Tue 9:30<time>8:15</time></div>
+            <div class="msg">Booked for Tue 9:30. Smile Dental confirmed it.<time>8:16</time></div>
+            <div class="change done"><div class="change-h"><span>Todo · Done</span><b>Undo</b></div><div class="change-r"><i>✓</i><div><s>Book a dentist appointment</s><small>Done · appointment Tue 13 Oct, 9:30</small></div></div></div>
+            </div>
+            <div class="chat-comp"><span class="cplus">+</span>Message your AI<span class="csend" style="margin-left:auto">↑</span></div>
+          </div></div></div>
         </figure>
       </div>
     </section>

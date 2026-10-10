@@ -17,7 +17,8 @@ Open <http://localhost:8093/>. Stop the server after review.
 
 - Deploy this folder on its own origin, apart from the relay. The relay serves
   `web/` at `/`. Scripts on this page must not share an origin with pairing credentials.
-- Deploy only with an explicit user request. No deployment is set up yet.
+- Deploy only with an explicit user request. A push to `main` publishes the site
+  through `.github/workflows/pages.yml`; work stays on its branch until then.
 
 ## Design source
 
@@ -47,17 +48,23 @@ proposal, not an approved logo. `InstrumentSerif-Italic.woff2` is a WOFF2 copy o
 The content brief is the "官网内容方案草案 v2" mail of 2026-10-10.
 
 ```text
-S1 Hero        your own AI, on your own computer; Mac, Linux, Windows soon
-S2 Demo        three scenes on one stage: Scan and pair, Updates, To-do follow-up
+S1 Hero        your own AI, on your own computer; Mac, Linux, Windows soon.
+               A little shorter than the screen: the stage peeks under it
+S2 Demo        three scenes on one stage: Scan and pair, Updates, To-do follow-up;
+               the stage first, then the tabs and the scene copy
 S3 Models      30+ providers on a turning 3D logo sphere
 S4 Cost        Composio Bench, Kimi K3 run: one race card (Speed, Cost,
                Tokens) against Codex, OpenCode and Claude Code, with their
                logos; completion rate is not shown
-S5 Security    data stays on the computer; a sealed message crosses the relay
-S5b MCP band   short pitch for Claude and ChatGPT; links to mcp.html
+S5 Security    data stays on the computer: cloud agents (Grok, ChatGPT agents,
+               Meta Muse) against Pi Remote; a sealed message crosses the relay
+S5b MCP band   remote MCP server, works with Skills; links to mcp.html
 S6 Pricing     7 days free, refund within 3 days of the first payment (draft terms)
-S7 Details     bento grid: thinking orb (2 x 2), Max thinking (dark, 1 x 2),
-               reading font, running halo, iPad (full width)
+S7 Details     bento grid: thinking orb (2 x 2), Max thinking (1 x 2),
+               reading font, running halo, iPad (4 x 2, the real app layout)
+
+S4, S5 and S6 are left-right (`.split`): the words left, the proof right.
+One column below 900 px.
 S8 Call to action, footer; FAQ on faq.html
 ```
 
@@ -84,9 +91,15 @@ The address `pi-remote.example` and the price are placeholders.
   Select -> Follow up together, the ATU chat with reply options and the to-do change
   card, the Pair Mac scanner. Onboarding screens are not a source; they are drafts.
 - Scene 1 shows the Mac window with the pairing code (a concept surface). Scenes 2
-  and 3 show a landscape iPad instead: scheduled tasks beside the Updates feed, and
-  the to-do list and ATU steps beside the chat. The iPad chat copies the phone
-  chat (`mirror`), so both show one session. The iPad layout is a concept.
+  and 3 show a landscape iPad instead. The iPad is drawn at 1180 x 820 pt (iPad Air
+  11 inch) and scaled by .64. It follows the app's layout from 1100 pt
+  (`NativeAppView.swift`, `NativeUpdatesView.swift`, `NativeTodoView.swift`):
+  the floating tab bar at the top; Updates with its 320 pt task sidebar and four
+  feed columns; Todo with Later beside the 600 pt focus column; a discussion or
+  an ATU chat in a 400 pt pane on the right, which hides the sidebar and the tab
+  bar. The pane copies the phone chat (`mirror`), so both show one session.
+  The iPad is not at true physical size against the phone: at true size it
+  would not fit the stage.
   The shipped product pairs from the terminal (`pi-remote pair`). The page does not
   show a terminal, on purpose.
 - The stage is drawn at 1080 x 660 (compact: 440 x 820 below 700 px) and scaled.
@@ -111,6 +124,11 @@ The address `pi-remote.example` and the price are placeholders.
   (stroke and glow a little stronger for the page). The Max aura ports
   `NativeMaxEffortAura`. The reading face is Newsreader, a Latin subset in
   `fonts/` (OFL).
+- Dark mode: `theme.js` (in `<head>`) sets `html[data-theme]` from a saved
+  choice, else the system setting; the nav button switches and saves it.
+  `dark.css` holds the dark tokens and overrides. Device screens use the app's
+  night palette. Logo tiles stay light, as most provider logos are dark marks.
+  The thinking orb and the Max aura read the theme as they draw.
 - The phone viewer accepts at most 64 supported files in the folder. Keep
   unused assets out of `site/`.
 - The film grain is `assets/img/grain.png`. The phone viewer accepts no SVG data URL.
@@ -156,3 +174,5 @@ same address again ──────────────► done   "You're 
   email for typed addresses; the confirm step is a proposal, not a decision.
 - ATU follow-up starts from the user. The page does not claim that ATU starts it.
 - Review on a physical iPhone.
+- The MCP band and the MCP FAQ say "works with Skills": a Skill in the AI app can
+  use the eight tools. Pi Remote adds no Skills. Confirm this wording before launch.

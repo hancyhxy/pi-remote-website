@@ -1,0 +1,128 @@
+/* Dark mode (2026-10-11). theme.js sets html[data-theme]: the saved choice,
+   else the system setting. The device screens use the night palette of the
+   app (NativeAppearance.swift), so they look as the app does in dark mode.
+   Logo tiles stay light: most provider logos are dark marks. */
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #121110; --bg-alt: #1f1c19; --text: #f3efe9; --text-2: #e2dcd4; --muted: #a39a8f; --faint: #7c746b;
+  --card: #1b1917; --line: rgba(255, 236, 214, .08); --line-2: rgba(255, 236, 214, .15);
+  --shadow: 0 18px 40px -18px rgba(0, 0, 0, .7);
+  --accent: #e8954f; --green: #3fb950;
+  --a-bg: #0e0e10; --a-surface: #1a1a1e; --a-text: #ececf1; --a-dim: #adadb8; --a-faint: #81818c;
+  --a-border: #2e2e35; --a-secondary: #232329; --a-bubble: #2b3a4d; --a-accent: #f0efeb;
+  --a-green: #3fb950; --a-red: #e5534b; --a-link: #6ea3e0;
+  --a-hair: rgba(236, 236, 241, .07); --a-sel: rgba(236, 236, 241, .065); --a-glass: rgba(30, 30, 34, .92); --a-on: #171715;
+}
+
+/* ---------- Page ---------- */
+[data-theme="dark"] .nav.scrolled { background: rgba(18, 17, 16, .82); }
+[data-theme="dark"] .btn-primary { background: var(--text); color: var(--bg); }
+[data-theme="dark"] .btn-primary:hover { background: #fff; }
+[data-theme="dark"] .btn-ghost, [data-theme="dark"] .btn-outline { background: var(--card); }
+[data-theme="dark"] .platforms li { background: var(--card); }
+[data-theme="dark"] .platforms .soon { background: transparent; }
+[data-theme="dark"] .demo-tabs { background: var(--card); box-shadow: 0 10px 30px -18px rgba(0, 0, 0, .8); }
+[data-theme="dark"] .demo-tabs button[aria-selected="true"] { color: var(--bg); }
+[data-theme="dark"] .demo-tabs [aria-selected="true"] .n { background: rgba(0, 0, 0, .12); color: var(--bg); }
+[data-theme="dark"] .demo-tabs .bar { background: rgba(0, 0, 0, .15); }
+[data-theme="dark"] .demo-tabs .bar i { background: var(--bg); }
+[data-theme="dark"] .race, [data-theme="dark"] .seal, [data-theme="dark"] .seal-ic, [data-theme="dark"] .mcp-band,
+[data-theme="dark"] .plan, [data-theme="dark"] .us, [data-theme="dark"] .pv-tip, [data-theme="dark"] .bx, [data-theme="dark"] .bx-tags i { background: var(--card); }
+[data-theme="dark"] .race-tabs button[aria-selected="true"] { background: #2c2925; box-shadow: none; }
+[data-theme="dark"] .track .bar { background: #3a352f; }
+[data-theme="dark"] .seal-blind { color: var(--bg); }
+[data-theme="dark"] .seal-msg.sealed { background: #2a2622; }
+[data-theme="dark"] .them { background: #1a1816; }
+[data-theme="dark"] .them span { text-decoration-color: rgba(255, 255, 255, .25); }
+[data-theme="dark"] .us { box-shadow: 0 24px 50px -24px rgba(232, 149, 79, .25); }
+[data-theme="dark"] .pv-node { background: #f4f1ec; border-color: transparent; }
+[data-theme="dark"] .timeline li::after { background: var(--bg); }
+[data-theme="dark"] .ticks li::before { color: var(--bg); }
+[data-theme="dark"] .price { background: rgba(27, 25, 23, .9); box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .8); }
+[data-theme="dark"] .mcp-tags li:nth-child(-n + 2) { background: rgba(232, 149, 79, .16); }
+[data-theme="dark"] .access-dog, [data-theme="dark"] .hero-dog { filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .5)); }
+[data-theme="dark"] body::after { opacity: .03; }
+
+/* ---------- Waitlist sheet ---------- */
+[data-theme="dark"] .wl-form { background: var(--card); }
+[data-theme="dark"] .wl::backdrop { background: rgba(0, 0, 0, .55); }
+/* Google button, dark theme of renderButton. */
+[data-theme="dark"] .gbtn { background: #131314; border-color: #8e918f; color: #e3e3e3; }
+[data-theme="dark"] .gbtn:hover { background: #1f1f20; }
+
+/* ---------- Details (bento) ---------- */
+[data-theme="dark"] .bx-orb, [data-theme="dark"] .bx-run { background: radial-gradient(70% 60% at 50% 55%, #201e1b 0%, #171513 100%); }
+[data-theme="dark"] .bx-ipad { background: linear-gradient(120deg, #1b1917 0%, #221e1a 100%); }
+[data-theme="dark"] .dt-orb-name { background: var(--a-surface); box-shadow: 0 0 0 1px var(--a-hair); }
+[data-theme="dark"] .mx-sheet { background: rgba(34, 34, 38, .86); box-shadow: inset 0 0 0 1px var(--a-hair), 0 10px 26px -14px rgba(0, 0, 0, .6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+[data-theme="dark"] .mx-thumb { background: #3a3a40; }
+[data-theme="dark"] .mx-level.max { background-image: linear-gradient(90deg, #eb5f57, #f58b57, #fac35f, #91c882, #82aadc, #9b82c8, #c882b4, #eb5f57, #f58b57, #fac35f, #91c882, #82aadc, #9b82c8, #c882b4, #eb5f57); }
+[data-theme="dark"] .rd-seg span.on { background: #3a3a40; }
+[data-theme="dark"] .cblock { background: rgba(26, 26, 30, .92); box-shadow: 0 10px 30px -14px rgba(0, 0, 0, .6), inset 0 0 0 1px var(--a-hair); --beam-ink: 255, 255, 255; --beam-inner-shadow: rgba(255, 255, 255, .1); }
+[data-theme="dark"] .hl-stop i { background: var(--a-on); }
+
+/* ---------- Devices: Mac ---------- */
+[data-theme="dark"] .mac-screen { background: radial-gradient(120% 90% at 20% 10%, #3b352f 0%, #2a2622 45%, #1b1917 100%); }
+[data-theme="dark"] .mac-bar { background: rgba(30, 30, 32, .6); color: #f2f2f2; }
+[data-theme="dark"] .mac-bar .apple { background: #f2f2f2; }
+[data-theme="dark"] .mac-base { background: linear-gradient(#5d5d62, #3c3c40); }
+[data-theme="dark"] .mac-base::before { background: #2e2e32; }
+[data-theme="dark"] .mac-win { background: #1e1e20; border-color: rgba(255, 255, 255, .1); }
+[data-theme="dark"] .mac-title { background: #2a2a2c; border-bottom-color: rgba(255, 255, 255, .06); }
+[data-theme="dark"] .mac-title span { color: #d8d8dc; }
+[data-theme="dark"] .spin { border-color: rgba(255, 255, 255, .2); border-top-color: var(--a-text); }
+[data-theme="dark"] .mw-list, [data-theme="dark"] .mw-list li { border-color: var(--a-hair); }
+[data-theme="dark"] .mw-log li { background: #232326; }
+
+/* ---------- Devices: app screens (phone and iPad) ---------- */
+[data-theme="dark"] .batt { background: var(--a-text); }
+[data-theme="dark"] .batt::after { background: rgba(255, 255, 255, .4); }
+[data-theme="dark"] .host, [data-theme="dark"] .round { background: var(--a-surface); box-shadow: 0 6px 18px -6px rgba(0, 0, 0, .6), inset 0 0 0 1px var(--a-hair); }
+[data-theme="dark"] .host::after { border-color: var(--a-surface); }
+[data-theme="dark"] .tabbar { background: rgba(30, 30, 34, .94); border-color: var(--a-hair); }
+[data-theme="dark"] .tabbar .on { background: #2c2c32; }
+[data-theme="dark"] .tabbar .on svg path { stroke: var(--a-bg); }
+[data-theme="dark"] .tabbar [data-t="chats"].on svg path { stroke: var(--a-clay); }
+[data-theme="dark"] .pad-tabs { background: rgba(34, 34, 38, .92); box-shadow: 0 10px 26px -12px rgba(0, 0, 0, .6), 0 0 0 1px var(--a-hair); }
+[data-theme="dark"] .menu { background: rgba(30, 30, 34, .97); }
+[data-theme="dark"] .composer, [data-theme="dark"] .chat-comp, [data-theme="dark"] .askbar, [data-theme="dark"] .atu-ask .f { background: var(--a-glass); box-shadow: 0 10px 30px -14px rgba(0, 0, 0, .6), inset 0 0 0 1px var(--a-hair); }
+[data-theme="dark"] .composer .ph, [data-theme="dark"] .chat-comp, [data-theme="dark"] .askbar, [data-theme="dark"] .atu-ask .f { color: var(--a-faint); }
+[data-theme="dark"] .composer .ph.typed, [data-theme="dark"] .askbar.typed { color: var(--a-text); }
+[data-theme="dark"] .cplus, [data-theme="dark"] .atu-ask .p, [data-theme="dark"] .ptoast, [data-theme="dark"] .bsheet-h .x,
+[data-theme="dark"] .bsheet .list, [data-theme="dark"] .chat-hd .who span, [data-theme="dark"] .msg, [data-theme="dark"] .opts,
+[data-theme="dark"] .change, [data-theme="dark"] .typing, [data-theme="dark"] .ftile, [data-theme="dark"] .fcover.chart,
+[data-theme="dark"] .detail .chart2, [data-theme="dark"] .discuss .ref { background: var(--a-surface); }
+[data-theme="dark"] .msg.me { background: var(--a-bubble); }
+[data-theme="dark"] .csend { background: #2e2e35; }
+[data-theme="dark"] .csend.ready, [data-theme="dark"] .fchips .on, [data-theme="dark"] .trow .box, [data-theme="dark"] .srow .c,
+[data-theme="dark"] .fu-btn, [data-theme="dark"] .change-r i { color: var(--a-on); }
+[data-theme="dark"] .change.done .change-r i { color: #fff; }
+[data-theme="dark"] .fu-btn svg { stroke: var(--a-on); }
+[data-theme="dark"] .card-a, [data-theme="dark"] .ftile { box-shadow: 0 0 0 1px var(--a-hair); }
+[data-theme="dark"] .fcover.chart, [data-theme="dark"] .change-h { border-color: var(--a-hair); }
+[data-theme="dark"] .grab, [data-theme="dark"] .bsheet .grab, [data-theme="dark"] .discuss .grab { background: #3a3a40; }
+[data-theme="dark"] .srow .c { border-color: #4a4a52; }
+[data-theme="dark"] .tpill { background: rgba(255, 255, 255, .08); }
+[data-theme="dark"] .ropt { border-color: #3a3a42; }
+[data-theme="dark"] .ropt.pick { background: #26262c; }
+[data-theme="dark"] .change.done .change-r s { text-decoration-color: rgba(255, 255, 255, .35); }
+[data-theme="dark"] .typing i { background: #5a5a62; }
+[data-theme="dark"] .detail .chart2 i { background: #33465e; }
+[data-theme="dark"] .scrim { background: rgba(0, 0, 0, .5); }
+[data-theme="dark"] .pc-seg .on { background: #34343a; }
+
+/* ---------- MCP page ---------- */
+[data-theme="dark"] .m-eyebrow, [data-theme="dark"] .m-apps li, [data-theme="dark"] .m-win, [data-theme="dark"] .m-tool,
+[data-theme="dark"] .m-ask, [data-theme="dark"] .m-steps li, [data-theme="dark"] .m-addr span, [data-theme="dark"] .m-codes span,
+[data-theme="dark"] .m-tools .card, [data-theme="dark"] .m-ctl li { background: var(--card); }
+[data-theme="dark"] .m-apps .more { background: transparent; }
+[data-theme="dark"] .m-apps img { padding: 2px; border-radius: 5px; background: #f4f1ec; }
+[data-theme="dark"] .m-eyebrow span, [data-theme="dark"] .m-ask-b .ok, [data-theme="dark"] .m-no { color: var(--bg); }
+[data-theme="dark"] .m-bar, [data-theme="dark"] .m-input { border-color: var(--line); }
+[data-theme="dark"] .m-bar img { padding: 2px; border-radius: 5px; background: #f4f1ec; }
+[data-theme="dark"] .m-thread, [data-theme="dark"] .m-log li { background: #161513; }
+[data-theme="dark"] .m-log li.grant { background: rgba(63, 185, 80, .1); }
+[data-theme="dark"] .m-me { background: #2a2622; }
+[data-theme="dark"] .m-ai { color: var(--text-2); }
+[data-theme="dark"] .m-tool { border-color: var(--line-2); color: var(--muted); }
