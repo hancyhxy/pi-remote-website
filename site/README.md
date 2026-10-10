@@ -49,17 +49,32 @@ The content brief is the "官网内容方案草案 v2" mail of 2026-10-10.
 ```text
 S1 Hero        your own AI, on your own computer; Mac, Linux, Windows soon
 S2 Demo        three scenes on one stage: Scan and pair, Updates, To-do follow-up
-S3 Models      30+ providers, provider wall
-S4 Cost        Composio Bench, Kimi K3 run: cost, tokens, time against
-               Codex, OpenCode and Claude Code; completion rate is not shown
-S5 Security    data stays on the computer; relay diagram
+S3 Models      30+ providers on a turning 3D logo sphere
+S4 Cost        Composio Bench, Kimi K3 run: one race card (Speed, Cost,
+               Tokens) against Codex, OpenCode and Claude Code, with their
+               logos; completion rate is not shown
+S5 Security    data stays on the computer; a sealed message crosses the relay
+S5b MCP band   short pitch for Claude and ChatGPT; links to mcp.html
 S6 Pricing     7 days free, refund within 3 days of the first payment (draft terms)
-S7 Details     four small live pieces of the app
+S7 Details     thinking orb, Max thinking, running halo, reading font, send
 S8 Call to action, footer; FAQ on faq.html
 ```
 
 `v2.css` holds the v2 sections and loads after `style.css`. `style.css` still holds
 rules of the earlier bands that the page no longer uses.
+
+## MCP page (`mcp.html`)
+
+The MCP gateway is also a product on its own: an AI app (Claude, ChatGPT,
+Claude Code, Cursor, Codex) gets Pi's eight tools on the user's computer. It
+needs no iPhone app. Thus it has its own page and a nav item, and the home page
+keeps one short band that links to it. The nav label is "Claude & ChatGPT",
+the same as the app's Settings entry; "MCP" is the page's eyebrow.
+
+Source: `../pi-remote/docs/mcp-gateway/index.md`, `app-entry.md`, ADR 0013 and
+0014. The page states that this channel is not end-to-end encrypted (ADR 0013).
+The address `pi-remote.example` and the price are placeholders.
+`mcp.js` runs its demo; `waitlist.js` drives the sheet on both pages.
 
 ## Demo stage
 
@@ -76,6 +91,20 @@ rules of the earlier bands that the page no longer uses.
   the phone stops autoplay. In manual use, the tab bar, cards, Back, the ask bar,
   Select, the to-do rows, Follow up and the reply options work.
 - Reduced motion: no autoplay; a scene shows its final state at once.
+- Scan: the code is centred in the camera, then the reticle locks onto the
+  code's measured box (`lockOn`), so the two always line up.
+- The empty chat draws the production thinking orb, state `composing`.
+  `thinking-orb.js` is a copy of `../pi-remote/web/thinking-orb.js` (MIT);
+  refresh it from there.
+- To-do scene: after the chosen time, ATU books it, the to-do is done and
+  fireworks burst from the done card. This is a concept; the app does not
+  have it yet.
+- Details: the running halo ports `.cblock.beaming` from `../pi-remote/web/app.css`
+  (stroke and glow a little stronger for the page). The Max aura ports
+  `NativeMaxEffortAura`. The reading face is Newsreader, a Latin subset in
+  `fonts/` (OFL).
+- The phone viewer accepts at most 64 supported files in the folder. Keep
+  unused assets out of `site/`.
 - The film grain is `assets/img/grain.png`. The phone viewer accepts no SVG data URL.
 - Scripts take reused images from the hidden `.asset-bank` (`currentSrc`), so a
   preview sandbox can rewrite their paths.

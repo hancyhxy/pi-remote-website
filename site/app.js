@@ -7,6 +7,56 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Reuse a rendered image from the asset bank (keeps preview path rewriting intact).
 const asset = k => { const i = document.querySelector(`.asset-bank [data-asset="${k}"]`); return i ? (i.currentSrc || i.src) : ''; };
 
+/* ---------- Thinking orb ----------
+   The production engine (thinking-orb.js, from web/ in pi-remote) gives the dots and
+   lines of each frame. This page draws them on its own canvas, with space around the
+   orb, a scale and a cross-fade between two states. */
+const ORBS = new Set();
+const orbHandles = {};
+const orbHandle = (state, size) => (orbHandles[`${state}-${size}`] ||= window.ThinkingOrb.attach(document.createElement('canvas'), { state, size }));
+function makeOrb(canvas, state, { size = 64, scale = 1, pad = .35 } = {}) {
+  if (!window.ThinkingOrb) return null;
+  const dpr = Math.min(2, devicePixelRatio || 1), box = size * (1 + pad * 2) * scale;
+  canvas.width = Math.round(box * dpr); canvas.height = Math.round(box * dpr);
+  canvas.style.width = canvas.style.height = `${box}px`;
+  const o = { canvas, ctx: canvas.getContext('2d'), size, scale, dpr, off: size * pad, state, prev: null, t0: 0 };
+  o.to = next => { if (next === o.state) return; o.prev = o.state; o.state = next; o.t0 = performance.now(); if (reduced) drawOrb(o, performance.now()); };
+  ORBS.add(o); drawOrb(o, 2400); orbLoop();
+  return o;
+}
+function paintFrame(o, frame, alpha, k) {
+  const c = o.ctx, mid = o.off + o.size / 2;
+  c.save(); c.translate(mid, mid); c.scale(k, k); c.translate(-o.size / 2, -o.size / 2);
+  const col = (w, a) => { const v = Math.round(Math.min(1, Math.max(0, w)) * 255); return `rgba(${v},${v},${v},${(a ?? 1) * alpha})`; };
+  for (const l of frame.lines) { c.strokeStyle = col(l.white, l.a); c.lineWidth = l.w; c.beginPath(); c.moveTo(l.x1, l.y1); c.lineTo(l.x2, l.y2); c.stroke(); }
+  for (const d of frame.dots) { if (d.r <= 0) continue; c.fillStyle = col(d.white, d.a); c.beginPath(); c.arc(d.x, d.y, d.r, 0, 6.2832); c.fill(); }
+  c.restore();
+}
+function drawOrb(o, now) {
+  const t = reduced ? 2400 : now;
+  const c = o.ctx; c.setTransform(o.dpr * o.scale, 0, 0, o.dpr * o.scale, 0, 0);
+  c.clearRect(0, 0, o.size * 3, o.size * 3);
+  const p = o.prev && !reduced ? Math.min(1, (now - o.t0) / 900) : 1;
+  const ease = 1 - (1 - p) ** 3;
+  if (p < 1) paintFrame(o, orbHandle(o.prev, o.size).snapshot(t).frame, 1 - ease, 1 - .35 * ease);
+  else o.prev = null;
+  paintFrame(o, orbHandle(o.state, o.size).snapshot(t).frame, ease, .65 + .35 * ease);
+}
+let orbRaf = 0;
+function orbLoop() {
+  if (orbRaf || reduced) return;
+  const tick = now => {
+    orbRaf = 0;
+    for (const o of ORBS) {
+      if (!o.canvas.isConnected) { ORBS.delete(o); continue; }
+      const r = o.canvas.getBoundingClientRect();
+      if (r.bottom > 0 && r.top < innerHeight && !document.hidden) drawOrb(o, now);
+    }
+    if (ORBS.size) orbRaf = requestAnimationFrame(tick);
+  };
+  orbRaf = requestAnimationFrame(tick);
+}
+
 /* ---------- Pixel icons for the security diagram: 9 x 9 bitmaps ---------- */
 const ICONS = {
   mac: '.........|.#######.|.#.....#.|.#.....#.|.#.....#.|.#######.|#########|.........|.........',
@@ -135,6 +185,7 @@ function setTab(name) {
 function show(html, how = 'none') {
   const el = document.createElement('div');
   el.className = 'layer'; el.innerHTML = html;
+  $$('canvas[data-orb]', el).forEach(c => makeOrb(c, c.dataset.orb, { size: 64, scale: 1.8 }));
   const prev = layers.lastElementChild;
   if (how === 'none' || !prev) { layers.replaceChildren(el); return el; }
   if (how === 'push') {
@@ -172,7 +223,7 @@ function setMac(title, html, app = 'Pi Remote') {
 /* ---------- Screens ---------- */
 const chatsHome = () => `
   <div class="hd" style="padding-top:62px"><div class="round" data-act="none">${icon.menu}</div>${host()}</div>
-  <div class="empty"><i class="orb"></i><p>Bring the hard part.</p></div>
+  <div class="empty"><canvas class="orb-c" data-orb="composing" aria-hidden="true"></canvas><p>Bring the hard part.</p></div>
   <div class="composer"><div class="ph" id="c-ph">Message your AI…</div>
     <div class="row"><span class="cplus">+</span><span class="cchip">claude-opus · High ⌄</span><span class="cchip">~/Home</span><span class="csend" id="c-send">↑</span></div></div>`;
 
@@ -238,7 +289,7 @@ const COPY = {
   updates: ['Wake up to finished work.', 'Scheduled tasks run on your computer while you sleep. Each result lands on your phone as a card. Tap one to ask about it.'],
   todo: ['Save it once. Pick it up together.', 'Turn any line into a to-do. Pick a few, and ATU works them through with you in one chat.'],
 };
-const LENGTH = { pair: 9800, updates: 15500, todo: 17500 };
+const LENGTH = { pair: 10400, updates: 15500, todo: 21500 };
 
 function frame(scene) {
   $('#demo-title').textContent = COPY[scene][0];
@@ -274,9 +325,9 @@ async function scenePair(tok) {
   requestAnimationFrame(() => requestAnimationFrame(() => sc.classList.remove('down')));
   await wait(1300, tok);
   $('#cam', sc).classList.add('near');
-  await wait(700, tok);
-  $('#ret', sc).classList.add('lock');
-  await wait(550, tok);
+  await wait(1250, tok);
+  lockOn(sc);
+  await wait(650, tok);
   clearInterval(timer);
   $('#mw-qr')?.classList.add('used');
   const st = $('#mw-status'); if (st) st.innerHTML = '<span style="color:var(--a-green)">✓ iPhone connected</span>';
@@ -293,6 +344,16 @@ async function scenePair(tok) {
   await typeInto($('#c-ph'), 'What should I do first today?', tok);
   $('#c-send')?.classList.add('ready');
   await wait(1400, tok);
+}
+
+// Move the reticle onto the code as it is drawn now, so the two always line up.
+function lockOn(sc) {
+  const q = $('.q', sc), ret = $('#ret', sc); if (!q || !ret) return;
+  const a = q.getBoundingClientRect(), b = sc.getBoundingClientRect(), s = iph.getBoundingClientRect().width / 390;
+  const pad = 12, size = Math.max(a.width, a.height) / s + pad * 2;
+  const cx = (a.left + a.width / 2 - b.left) / s, cy = (a.top + a.height / 2 - b.top) / s;
+  Object.assign(ret.style, { left: `${cx - size / 2}px`, top: `${cy - size / 2}px`, width: `${size}px`, height: `${size}px`, margin: '0' });
+  ret.classList.add('lock');
 }
 
 async function sceneUpdates(tok) {
@@ -413,11 +474,52 @@ async function chooseOption(opt, tok) {
   await wait(400, tok);
   th.insertAdjacentHTML('beforeend', `<div class="msg me">${choice}<time>8:15</time></div>`);
   await wait(800, tok);
-  $('#mw-log')?.insertAdjacentHTML('beforeend', `<li><b>✓</b>${dentist ? 'Drafted the booking request' : 'Started on it'}<em>${dentist ? choice : 'now'}</em></li>`);
-  th.insertAdjacentHTML('beforeend', `<div class="msg">${dentist ? `${choice} it is. The booking request is ready; send it when you like.` : 'On it. I’ll report back in this chat.'}<time>8:15</time></div>`);
+  $('#mw-log')?.insertAdjacentHTML('beforeend', `<li><b>✓</b>${dentist ? 'Sent the booking request' : 'Started on it'}<em>${dentist ? choice : 'now'}</em></li>`);
+  th.insertAdjacentHTML('beforeend', `<div class="msg">${dentist ? `${choice} it is. Booking it now.` : 'On it.'}<time>8:15</time></div>`);
+  await wait(900, tok);
+  // Concept: the to-do is done, so the chat celebrates it. Not in the app yet.
+  const when = dentist ? (choice.startsWith('Tue') ? 'Tue 13 Oct' : choice.startsWith('Wed') ? 'Wed 14 Oct' : 'Fri 16 Oct') : 'today';
+  th.insertAdjacentHTML('beforeend', `<div class="msg">${dentist ? `Booked for ${choice}. Smile Dental confirmed it.` : 'Done.'} That one is off your list.<time>8:16</time></div>`);
   await wait(500, tok);
-  const when = dentist ? (choice.startsWith('Tue') ? 'Tue 13 Oct' : choice.startsWith('Wed') ? 'Wed 14 Oct' : 'Fri 16 Oct') : 'Today';
-  th.insertAdjacentHTML('beforeend', `<div class="change"><div class="change-h"><span>Todo</span><b>Undo</b></div><div class="change-r"><i>✓</i><div>${todo ? todo.t : choice}<small>Moved to ${when}</small></div></div></div>`);
+  th.insertAdjacentHTML('beforeend', `<div class="change done"><div class="change-h"><span>Todo · Done</span><b>Undo</b></div><div class="change-r"><i>✓</i><div><s>${todo ? todo.t : choice}</s><small>Done ${dentist ? `· appointment ${when}, ${choice.replace(/^\w+ /, '')}` : when}</small></div></div></div>`);
+  $('#mw-log')?.insertAdjacentHTML('beforeend', `<li><b>✓</b>${dentist ? 'Booked with Smile Dental' : 'Finished'}<em>${dentist ? choice : 'done'}</em></li>`);
+  const card = th.lastElementChild;
+  await wait(250, tok);
+  celebrate($('.change-r i', card));
+}
+
+/* Fireworks over the phone, from a point on screen. Reduced motion: no particles. */
+const fx = (() => { const c = document.createElement('canvas'); c.className = 'fx'; c.width = 390 * 2; c.height = 844 * 2; iph.append(c); return c; })();
+const FX_COLOURS = ['#ff5fb4', '#d463ff', '#8a74ff', '#4aa6ff', '#34dcd0', '#66e896', '#ffd84e', '#ffa062'];
+let sparks = [], fxRaf = 0;
+function burst(x, y, n, power) {
+  for (let i = 0; i < n; i++) {
+    const a = Math.random() * Math.PI * 2, v = power * (.45 + Math.random() * .75);
+    sparks.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - power * .25, life: 1, decay: .012 + Math.random() * .014, r: 1.6 + Math.random() * 2.2, c: FX_COLOURS[(Math.random() * FX_COLOURS.length) | 0], px: x, py: y });
+  }
+}
+function celebrate(el) {
+  const card = el?.closest('.change'); card?.classList.add('glow');
+  if (reduced || !el) return;
+  const [x, y] = centre(el);
+  burst(x, y, 70, 7);
+  setTimeout(() => burst(x + 120, y - 150, 50, 5.5), 260);
+  setTimeout(() => burst(x + 30, y - 260, 55, 6), 520);
+  setTimeout(() => burst(x + 200, y - 40, 40, 5), 780);
+  if (!fxRaf) fxRaf = requestAnimationFrame(fxTick);
+}
+function fxTick() {
+  const c = fx.getContext('2d');
+  c.setTransform(2, 0, 0, 2, 0, 0); c.clearRect(0, 0, 390, 844);
+  sparks = sparks.filter(p => p.life > 0);
+  for (const p of sparks) {
+    p.px = p.x; p.py = p.y; p.vx *= .965; p.vy = p.vy * .965 + .16; p.x += p.vx; p.y += p.vy; p.life -= p.decay;
+    c.globalAlpha = Math.max(0, p.life); c.strokeStyle = p.c; c.lineWidth = p.r; c.lineCap = 'round';
+    c.beginPath(); c.moveTo(p.px - p.vx * 1.6, p.py - p.vy * 1.6); c.lineTo(p.x, p.y); c.stroke();
+    if (Math.random() < .08) { c.fillStyle = '#fff'; c.beginPath(); c.arc(p.x, p.y, p.r * .9, 0, 6.3); c.fill(); }
+  }
+  c.globalAlpha = 1;
+  fxRaf = sparks.length ? requestAnimationFrame(fxTick) : 0;
 }
 
 const SCENES = { pair: scenePair, updates: sceneUpdates, todo: sceneTodo };
@@ -490,103 +592,268 @@ iph.addEventListener('click', async e => {
 
 if (reduced) { autoplay = false; tabs.classList.add('manual'); play('pair'); } else cycle();
 
-/* ---------- Waitlist sheet (preview) ----------
-   Steps: choose -> done (Google, or an address already on the list)
-                 -> check (new typed address: confirm link by email).
-   State stays in memory for this page view. No network call. */
+/* Run fn only while el is on screen. fn(true) starts, fn(false) stops. */
+function whileSeen(el, fn, threshold = .25) {
+  let on = false;
+  new IntersectionObserver(([e]) => { if (e.isIntersecting !== on) { on = e.isIntersecting; fn(on); } }, { threshold }).observe(el);
+}
+
+/* ---------- S3 Models: a 3D sphere of provider logos ----------
+   Fibonacci sphere with billboard nodes, after the tool sphere of the
+   knowledge_monetization landing (landing-a.html). Logos fly in from the sides. */
 (() => {
-  const dlg = $('#waitlist'); if (!dlg) return;
-  const gBtn = $('#wl-google'), input = $('#wl-email'), status = $('#wl-status');
-  const SAMPLE_GOOGLE = 'alex.chen@gmail.com';
-  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  let joined = null;            // { email, via: 'google' | 'email' }
-  let busy = false;
-
-  const say = (text, cls = '') => { status.className = `wl-status ${cls}`; status.textContent = text; };
-  function show(step) {
-    $$('.wl-step', dlg).forEach(s => { s.hidden = s.dataset.step !== step; });
-    if (joined) $$('.wl-addr', dlg).forEach(b => { b.textContent = joined.email; });
-    $('.wl-via', dlg).hidden = !(joined && joined.via === 'google');
-    if (step !== 'choose') $(`[data-step="${step}"] h2`, dlg).focus();
-  }
-  function open() {
-    say('');
-    $('[data-step="done"] h2', dlg).textContent = 'You’re on the list';
-    dlg.showModal();
-    show(!joined ? 'choose' : joined.via === 'google' ? 'done' : 'check');
-    if (!joined) gBtn.focus();
-  }
-  const close = () => dlg.close();
-  function finish(email, via) {
-    const again = !!joined && joined.email === email;
-    joined = { email, via: again ? joined.via : via };
-    show(via === 'google' || again ? 'done' : 'check');
-    if (again) $('[data-step="done"] h2', dlg).textContent = 'You’re already on the list';
-    $('#hero-join').textContent = '✓ You’re on the list';
-    $('#hero-hint').textContent = joined.via === 'google' || again
-      ? `We will email ${email} when your invite is ready.`
-      : `Tap the link we sent to ${email} to confirm.`;
-  }
-
-  $$('[data-join]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); open(); }));
-  $$('[data-close]', dlg).forEach(b => b.addEventListener('click', close));
-  $('[data-restart]', dlg).addEventListener('click', () => {
-    joined = null; input.value = ''; say(''); show('choose'); input.focus();
-    $('#hero-join').textContent = 'Join the waitlist';
-    $('#hero-hint').textContent = 'One tap with Google, or use any email.';
+  const stage = $('#pv-sphere'), tip = $('#pv-tip'); if (!stage) return;
+  const P = [['claude', 'Anthropic Claude'], ['openai', 'OpenAI'], ['google', 'Google Gemini'], ['xai', 'xAI Grok'], ['deepseek', 'DeepSeek'], ['kimi', 'Kimi'],
+    ['qwen', 'Qwen'], ['mistral', 'Mistral'], ['meta', 'Meta Llama'], ['githubcopilot', 'GitHub Copilot'], ['openrouter', 'OpenRouter'], ['groq', 'Groq'],
+    ['nvidia', 'NVIDIA'], ['minimax', 'MiniMax'], ['zhipu', 'Zhipu GLM'], ['huggingface', 'Hugging Face'], ['together', 'Together AI'], ['fireworks', 'Fireworks AI'],
+    ['cerebras', 'Cerebras'], ['azure', 'Azure OpenAI'], ['bedrock', 'Amazon Bedrock'], ['vertexai', 'Google Vertex AI'], ['cloudflare', 'Cloudflare Workers AI'],
+    ['vercel', 'Vercel AI Gateway'], ['moonshot', 'Moonshot'], ['baseten', 'Baseten'], ['zai', 'Z.ai'], ['opencode', 'OpenCode Zen'], ['antgroup', 'Ant Group'], ['xiaomimimo', 'Xiaomi MiMo']];
+  const N = P.length, GOLD = Math.PI * (3 - Math.sqrt(5));
+  const pts = P.map(([k, name], i) => {
+    const el = document.createElement('span');
+    el.className = 'pv-node'; el.dataset.name = name; el.style.opacity = 0;
+    el.innerHTML = `<img src="${asset(k)}" alt="">`;
+    stage.append(el);
+    const y = 1 - (i + .5) * 2 / N, r = Math.sqrt(1 - y * y), th = i * GOLD;
+    return { el, x: Math.cos(th) * r, y, z: Math.sin(th) * r, delay: (i * 137) % 500, sx: 0, sy: 0 };
   });
-  // A click on the backdrop closes the sheet.
-  dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
-
-  // Production: Google returns an ID token; the Worker checks it and keeps the verified address.
-  gBtn.addEventListener('click', () => {
-    if (busy) return; busy = true;
-    gBtn.classList.add('busy'); $('.glabel', gBtn).textContent = 'Connecting to Google…';
-    setTimeout(() => {
-      busy = false; gBtn.classList.remove('busy'); $('.glabel', gBtn).textContent = 'Continue with Google';
-      finish(SAMPLE_GOOGLE, 'google');
-    }, reduced ? 0 : 900);
-  });
-
-  // A Gmail address typed by hand: point to the one-tap path, which needs no confirmation email.
-  input.addEventListener('input', () => {
-    const v = input.value.trim().toLowerCase();
-    if (/@(gmail|googlemail)\.com$/.test(v)) say('Tip: Continue with Google skips the confirmation email.', 'tip');
-    else if (/\b(tip|err)\b/.test(status.className)) say('');
-  });
-  // No <form> submit: the phone preview sandbox blocks form submission.
-  function submitEmail() {
-    const v = input.value.trim().toLowerCase();
-    if (!EMAIL_RE.test(v)) { say('Enter a valid email address.', 'err'); input.focus(); return; }
-    finish(v, 'email');
+  let ang = 0, last = 0, paused = false, raf = 0, t0 = null;
+  const INTRO = 1300, TILT = -.32, SPEED = .22, ct = Math.cos(TILT), st = Math.sin(TILT);
+  stage.addEventListener('pointerover', e => { const n = e.target.closest('.pv-node'); if (!n) return; paused = true; tip.textContent = n.dataset.name; tip.classList.add('show'); });
+  stage.addEventListener('pointerout', e => { if (e.target.closest('.pv-node')) { paused = false; tip.classList.remove('show'); } });
+  function frame(ts) {
+    raf = 0;
+    if (!last) last = ts;
+    const dt = Math.min((ts - last) / 1000, .05); last = ts;
+    if (t0 === null) t0 = ts;
+    if (!paused && !reduced && ts - t0 > INTRO + 300) ang += dt * SPEED;
+    const R = Math.min(stage.clientWidth, stage.clientHeight) * .42, ca = Math.cos(ang), sa = Math.sin(ang);
+    let moving = !reduced && ts - t0 < INTRO + 800;
+    for (const p of pts) {
+      const x = p.x * ca - p.z * sa, z0 = p.x * sa + p.z * ca;
+      const y = p.y * ct - z0 * st, z = p.y * st + z0 * ct, d = (z + 1) / 2;
+      const tx = x * R * 1.12, ty = y * R * .9, k = .55 + d * .6, o = .2 + d * .8;
+      let e = 1;
+      if (!reduced) { const raw = (ts - t0 - p.delay) / INTRO; e = raw >= 1 ? 1 : raw <= 0 ? 0 : 1 - (1 - raw) ** 3; }
+      p.el.style.transform = `translate(${p.sx + (tx - p.sx) * e}px, ${p.sy + (ty - p.sy) * e}px) scale(${.3 + (k - .3) * e})`;
+      p.el.style.opacity = o * e; p.el.style.zIndex = Math.round(d * 100);
+      p.el.style.filter = d < .35 ? `blur(${(.35 - d) * 4}px)` : 'none';
+    }
+    if (!reduced || moving) raf = requestAnimationFrame(frame);
   }
-  $('#wl-join').addEventListener('click', submitEmail);
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); submitEmail(); } });
-})();
-
-/* ---------- Model provider wall ---------- */
-(() => {
-  const wall = $('#logo-wall'); if (!wall) return;
-  const names = ['claude', 'openai', 'google', 'xai', 'deepseek', 'kimi', 'qwen', 'mistral', 'meta', 'githubcopilot', 'openrouter', 'groq', 'nvidia', 'minimax', 'zhipu', 'huggingface',
-    'together', 'fireworks', 'cerebras', 'azure', 'bedrock', 'vertexai', 'cloudflare', 'vercel', 'moonshot', 'baseten', 'zai', 'opencode', 'antgroup', 'xiaomimimo'];
-  const narrow = matchMedia('(max-width: 900px)').matches;
-  names.slice(0, narrow ? 20 : 30).forEach((n, i) => {
-    const s = document.createElement('span');
-    s.style.setProperty('--dl', `${-(i * 0.37) % 6}s`);
-    s.innerHTML = `<img src="${asset(n)}" alt="">`;
-    wall.append(s);
+  whileSeen(stage, on => {
+    if (on && t0 === null) {
+      const w = stage.clientWidth, h = stage.clientHeight;
+      pts.forEach((p, i) => { const side = i % 2 ? 1 : -1; p.sx = side * (w * .55 + ((i * 53) % 100) / 100 * w * .4); p.sy = (((i * 71) % 100) / 100 - .5) * h; });
+    }
+    if (on && !raf) { last = 0; raf = requestAnimationFrame(frame); }
+    if (!on && raf) { cancelAnimationFrame(raf); raf = 0; }
   });
 })();
 
-/* ---------- Charts fill when seen; scroll reveal ---------- */
+/* ---------- S4 Cost: one race ----------
+   Every meter fills at the same rate. A lane stops at its own result, so Pi
+   stops first. Tabs switch the measure; autoplay cycles until a tab is used. */
 (() => {
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .3 });
-  $$('.chart').forEach(c => (reduced ? c.classList.add('in') : io.observe(c)));
+  const race = $('#race'); if (!race) return;
+  const LANES = [['pi', 'Pi', 1], ['openai', 'Codex'], ['opencode', 'OpenCode'], ['claude', 'Claude Code']];
+  const M = {
+    time: { v: [156, 233, 271, 331], f: v => `${Math.round(v)} s`, big: '2×', line: 'faster than', cap: 'Median time per task. Every bar runs at the same speed; a bar stops when its agent finishes.', win: 'Finished first' },
+    cost: { v: [.57, .66, .72, 1.96], f: v => `$${v.toFixed(2)}`, big: '3.4×', line: 'cheaper per finished task than', cap: 'Cost per finished task, at the model prices of August 2026.', win: 'Cheapest' },
+    tokens: { v: [7.6, 9.2, 9.5, 15.1], f: v => `${v.toFixed(1)}M`, big: '50%', line: 'fewer tokens than', cap: 'Tokens for all 25 tasks.', win: 'Fewest tokens' },
+  };
+  const lanesEl = $('#lanes', race);
+  lanesEl.innerHTML = LANES.map(([k, n, me]) => `<div class="lane${me ? ' me' : ''}"><div class="who"><span class="logo"><img src="${asset(k)}" alt=""></span><b>${n}</b></div>
+    <div class="track"><i class="bar"></i><span class="val">–</span><em class="win"></em></div></div>`).join('');
+  const lanes = $$('.lane', lanesEl);
+  const num = $('#race-num'), line = $('#race-line'), cap = $('#race-cap');
+  let metric = 'time', auto = !reduced, raf = 0, timer = 0, seen = false;
+  function run(m) {
+    metric = m; cancelAnimationFrame(raf); clearTimeout(timer);
+    $$('[role=tab]', race).forEach(b => b.setAttribute('aria-selected', String(b.dataset.m === m)));
+    const d = M[m], max = Math.max(...d.v), D = 2600;
+    num.textContent = d.big; num.classList.remove('num-in'); void num.offsetWidth; num.classList.add('num-in');
+    line.innerHTML = `${d.line} <img src="${asset('claude')}" alt=""> Claude Code`;
+    cap.textContent = d.cap;
+    lanes.forEach(l => { l.classList.remove('stop'); $('.win', l).textContent = ''; });
+    const t0 = performance.now();
+    const step = now => {
+      const p = reduced ? 1 : Math.min(1, (now - t0) / D), cur = max * p;
+      lanes.forEach((l, i) => {
+        const v = Math.min(cur, d.v[i]);
+        $('.bar', l).style.width = `${(v / max) * 100}%`;
+        $('.val', l).textContent = d.f(v);
+        if (cur >= d.v[i] && !l.classList.contains('stop')) { l.classList.add('stop'); if (i === 0) $('.win', l).textContent = d.win; }
+      });
+      if (p < 1) raf = requestAnimationFrame(step);
+      else if (auto && seen) timer = setTimeout(() => run(m === 'time' ? 'cost' : m === 'cost' ? 'tokens' : 'time'), 2600);
+    };
+    raf = requestAnimationFrame(step);
+  }
+  $$('[role=tab]', race).forEach(b => b.addEventListener('click', () => { auto = false; run(b.dataset.m); }));
+  whileSeen(race, on => { seen = on; if (on) run(metric); else { cancelAnimationFrame(raf); clearTimeout(timer); } }, .4);
+})();
+
+/* ---------- S5 Security: a sealed message ----------
+   A sentence is sealed on the phone (scrambled, lock closes), crosses the
+   relay as noise, and opens on the computer. Then the answer goes back. */
+(() => {
+  const box = $('#seal'); if (!box) return;
+  const msg = $('#seal-msg'), text = $('#seal-text'), blind = $('#seal-blind'), glow = $('#seal-glow');
+  const node = n => $(`[data-n=${n}]`, box);
+  const HEX = '0123456789abcdef';
+  const noise = len => Array.from({ length: len }, (_, i) => (i % 5 === 4 ? ' ' : HEX[(Math.random() * 16) | 0])).join('');
+  let tok = 0;
+  const sleep = (ms, t) => new Promise((res, rej) => setTimeout(() => (t === tok ? res() : rej(STOP)), ms));
+  function at(n) {
+    const a = node(n).querySelector('.seal-ic').getBoundingClientRect(), b = box.getBoundingClientRect();
+    // Keep the whole message inside the card on narrow screens.
+    const half = msg.offsetWidth / 2 + 8;
+    const x = Math.min(b.width - half, Math.max(half, a.left + a.width / 2 - b.left));
+    return [x, a.top - b.top - 30];
+  }
+  function place(n, ms = 0) {
+    const [x, y] = at(n);
+    msg.style.transition = ms ? `transform ${ms}ms cubic-bezier(.45,.05,.25,1)` : 'none';
+    msg.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+  }
+  async function morph(to, t, ms = 520) {
+    const from = text.textContent, n = Math.max(from.length, to.length), steps = 14;
+    for (let k = 1; k <= steps; k++) {
+      const done = Math.floor((k / steps) * n);
+      text.textContent = Array.from({ length: n }, (_, i) => (i < done ? to[i] || '' : HEX[(Math.random() * 16) | 0])).join('').trimEnd();
+      await sleep(ms / steps, t);
+    }
+    text.textContent = to;
+  }
+  async function trip(from, to, plain, t) {
+    box.dataset.dir = from === 'phone' ? 'out' : 'back';
+    msg.className = 'seal-msg open'; text.textContent = plain; place(from); node(from).classList.add('on');
+    await sleep(900, t);
+    msg.className = 'seal-msg sealed'; await morph(noise(plain.length), t);
+    await sleep(350, t);
+    glow.className = `seal-glow go ${from === 'phone' ? 'ltr' : 'rtl'}`;
+    place('relay', 1100); await sleep(1150, t);
+    node('relay').classList.add('on'); blind.classList.add('show');
+    for (let i = 0; i < 4; i++) { text.textContent = noise(plain.length); await sleep(160, t); }
+    await sleep(500, t); blind.classList.remove('show'); node('relay').classList.remove('on');
+    place(to, 1100); await sleep(1150, t);
+    glow.className = 'seal-glow';
+    node(to).classList.add('on'); msg.className = 'seal-msg open'; await morph(plain, t);
+    await sleep(1500, t); node(from).classList.remove('on'); node(to).classList.remove('on');
+  }
+  async function loop(t) {
+    try {
+      for (;;) { await trip('phone', 'mac', 'Book the dentist, Tue 9:30', t); await trip('mac', 'phone', 'Booked. Smile Dental, 9:30', t); }
+    } catch (e) { if (e !== STOP) throw e; }
+  }
+  if (reduced) { msg.className = 'seal-msg sealed'; text.textContent = noise(26); requestAnimationFrame(() => place('relay')); blind.classList.add('show'); return; }
+  whileSeen(box, on => { tok++; if (on) loop(tok); }, .35);
+  addEventListener('resize', () => { if (msg.style.transform) place(box.dataset.dir === 'back' ? 'phone' : 'mac'); });
+})();
+
+/* ---------- S7 Details ---------- */
+// Thinking orb: the fifteen production forms, one after another. Tap for the next.
+(() => {
+  const stage = $('#dt-orb'); if (!stage || !window.ThinkingOrb) return;
+  const states = window.ThinkingOrb.STATES, order = ['composing', ...states.filter(s => s !== 'composing')];
+  const LINES = ['Bring the hard part.', 'What are we making?', 'Your move.', 'Start wherever.', 'Small fix or big plan.', 'What should Pi do?'];
+  const o = makeOrb($('#dt-orb-c'), order[0], { size: 64, scale: 2, pad: .2 });
+  const name = $('#dt-orb-name'), copy = $('#dt-orb-copy');
+  let i = 0, timer = 0, seen = false;
+  function next() {
+    i = (i + 1) % order.length; o.to(order[i]);
+    name.textContent = `${order[i]} · ${i + 1} / ${order.length}`;
+    copy.classList.remove('type'); void copy.offsetWidth; copy.textContent = LINES[i % LINES.length]; copy.classList.add('type');
+  }
+  const schedule = () => { clearTimeout(timer); if (seen && !reduced) timer = setTimeout(() => { next(); schedule(); }, 3200); };
+  stage.addEventListener('click', () => { next(); schedule(); });
+  stage.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); next(); schedule(); } });
+  whileSeen(stage, on => { seen = on; schedule(); });
+})();
+
+// Max thinking: the level steps up to Max, the label turns rainbow and the aura rises.
+// Aura after NativeMaxEffortAura (NativeAppearance.swift): columns and a hump, blurred by CSS.
+(() => {
+  const cv = $('#dt-aura'); if (!cv) return;
+  const thumb = $('#mx-thumb'), level = $('#mx-level'), track = $('#mx-track');
+  const PAL = [0xff8cc8, 0xdc94ff, 0xa9a0ff, 0x86c2ff, 0x7ee6dc, 0x9aeeb8, 0xffe08a, 0xffba94];
+  const COLS = [[0, 70, 1], [-60, 50, .85], [60, 50, .85], [-120, 46, .7], [120, 46, .7], [-170, 40, .55], [170, 40, .55]];
+  const rainbow = q => { const n = PAL.length, p = ((q % 1) + 1) % 1 * n, a = PAL[p | 0], b = PAL[((p | 0) + 1) % n], t = p - (p | 0);
+    const c = s => Math.round(((a >> s) & 255) + ((((b >> s) & 255) - ((a >> s) & 255)) * t)); return `${c(16)},${c(8)},${c(0)}`; };
+  let rise = 0, target = 0, raf = 0, seen = false, step = 2, timer = 0;
+  const NAMES = ['Low', 'Medium', 'High', 'Max'];
+  function setLevel(k) {
+    step = k; thumb.style.left = `${k * 25}%`;
+    $$('span', track).forEach((s, j) => s.classList.toggle('on', j === k));
+    level.textContent = NAMES[k]; level.classList.toggle('max', k === 3); target = k === 3 ? 1 : 0; kick();
+  }
+  function draw(time) {
+    const ctx = cv.getContext('2d'), W = cv.clientWidth, H = cv.clientHeight, dpr = Math.min(2, devicePixelRatio || 1);
+    if (cv.width !== Math.round(W * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+    if (rise < .001) return;
+    const sc = W / 390, br = .5 + .5 * Math.sin(2 * Math.PI * time / 3.6), swell = .5 + .5 * br, flow = time / 12;
+    const cx = W / 2 + Math.sin(2 * Math.PI * time / 7.3) * W * .04, bottom = H;
+    const tint = (x, a) => `rgba(${rainbow(x / W * .85 - flow)},${a})`;
+    COLS.forEach(([dx, w, h], i) => {
+      const ph = time * (1.1 + .23 * i) + i * 1.9, sway = Math.sin(ph * .6), pulse = .5 + .5 * Math.sin(ph + 1.3);
+      const x = cx + dx * sc + sway * 14 * sc, rx = w * sc * (.85 + .25 * swell), ry = H * h * rise * (.55 + .45 * (.5 * pulse + .5 * br));
+      const a = .36 * rise * (.6 + .4 * pulse), g = ctx.createLinearGradient(0, bottom - ry, 0, bottom);
+      g.addColorStop(0, tint(x, 0)); g.addColorStop(.5, tint(x, a * .6)); g.addColorStop(1, tint(x, a));
+      ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(x, bottom, rx, ry, 0, 0, Math.PI * 2); ctx.fill();
+    });
+    const peak = 60 * sc * rise * (.55 + .45 * br) * 1.4, width = W * .3;
+    const hgt = x => { const d = x - cx; return peak * (.5 * Math.exp(-((d / (width * .5)) ** 2)) + .5 * Math.exp(-((d / (width * 1.15)) ** 2))) * (1 + .1 * Math.sin(x / W * 7 + time * 1.4)) + 10 * sc * rise; };
+    const g = ctx.createLinearGradient(0, 0, W, 0);
+    for (let k = 0; k <= 12; k++) g.addColorStop(k / 12, tint(k / 12 * W, .75 * rise * (.8 + .2 * br)));
+    ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(0, bottom);
+    for (let k = 0; k <= 48; k++) { const x = W * k / 48; ctx.lineTo(x, bottom - hgt(x)); }
+    ctx.lineTo(W, bottom); ctx.closePath(); ctx.fill();
+  }
+  function kick() {
+    if (raf) return;
+    let last = performance.now();
+    const tick = now => {
+      raf = 0; const dt = (now - last) / 1000; last = now;
+      rise = target > rise ? Math.min(1, rise + dt / 1.4) : Math.max(0, rise - dt / .6);
+      draw(reduced ? 0 : now / 1000);
+      if (seen && (rise > 0 || target > 0) && !reduced) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+  }
+  const SEQ = [[1, 900], [2, 900], [3, 4200], [2, 1600]];
+  let si = 0;
+  const cycle = () => { clearTimeout(timer); if (!seen) return; const [k, ms] = SEQ[si]; setLevel(k); si = (si + 1) % SEQ.length; timer = setTimeout(cycle, ms); };
+  if (reduced) { rise = 1; setLevel(3); requestAnimationFrame(() => draw(0)); return; }
+  setLevel(2);
+  whileSeen(cv.closest('.dt'), on => { seen = on; if (on) { cycle(); kick(); } else clearTimeout(timer); });
+})();
+
+// Running: a small working orb and a seconds counter beside the beaming message box.
+(() => {
+  const c = $('#hl-orb'); if (!c) return;
+  makeOrb(c, 'weaving', { size: 20, scale: 1, pad: .1 });
+  const sec = $('#hl-sec'); let n = 12;
+  whileSeen(c.closest('.dt'), on => { clearInterval(c._t); if (on && !reduced) c._t = setInterval(() => { n = n >= 59 ? 1 : n + 1; sec.textContent = n; }, 1000); });
+})();
+
+// Reading font: the same answer in Mono, then in the Reading face.
+(() => {
+  const box = $('#rd-text'); if (!box) return;
+  let serif = false, timer = 0;
+  const flip = () => { serif = !serif; box.classList.toggle('serif-on', serif); $('#rd-a').classList.toggle('on', !serif); $('#rd-b').classList.toggle('on', serif); };
+  if (reduced) { flip(); return; }
+  whileSeen(box.closest('.dt'), on => { clearInterval(timer); if (on) timer = setInterval(flip, 2800); });
+})();
+
+/* ---------- Scroll reveal ---------- */
+(() => {
   if (reduced) return;
-  const els = $$('.demo-copy, .demo-tabs, .ds-wrap, .sp h2, .sp p, .big-num, .stat, .chart, .timeline, .plan, .dt, .section-title, .security > :not(.section-title), .access > *');
+  const els = $$('.demo-copy, .demo-tabs, .ds-wrap, .sp h2, .sp p:not(.pv-tip), .big-num, .race, .timeline, .plan, .dt, .section-title, .security > :not(.section-title), .access > *');
   const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } }), { rootMargin: '0px 0px -6% 0px' });
   els.forEach((el, i) => { el.classList.add('reveal'); el.style.setProperty('--d', `${(i % 3) * .06}s`); ro.observe(el); });
 })();
 
-window.__site = { play, stop: () => { autoplay = false; } };
+window.__site = { play, stop: () => { autoplay = false; }, celebrate: () => celebrate($$('.change-r i', layers).pop()) };
 })();

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Pi Remote for Claude and ChatGPT — give your AI app hands on your computer</title>
+  <link rel="icon" href="assets/logo.svg">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="v2.css">
+  <link rel="stylesheet" href="mcp.css">
+</head>
+<body class="mcp-page">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="Pi Remote home">
+        <img src="assets/img/avatar-backpack.webp" alt="" width="26" height="26"><span>PI REMOTE</span>
+      </a>
+      <nav aria-label="Main">
+        <a href="index.html#how">How it works</a>
+        <a href="index.html#models">Models</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="index.html#security">Security</a>
+        <a href="mcp.html" aria-current="page">Claude &amp; ChatGPT</a>
+        <a class="btn btn-outline btn-sm" href="#join" data-join><span class="glyph" aria-hidden="true">▯</span>Early access</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- M1 Hero. The product: an MCP address that gives an AI app Pi's tools on the user's computer.
+         Source: pi-remote docs/mcp-gateway/index.md, ADR 0013 and 0014. -->
+    <section class="m-hero">
+      <p class="m-eyebrow"><span>MCP</span> Works with the AI app you already pay for</p>
+      <h1>Give Claude and ChatGPT<br>hands on your computer.</h1>
+      <p class="m-lede">Add one address to your AI app. It can then read your files, run commands and make edits on your own computer. You approve every app, and you can switch it off at any time.</p>
+      <div class="hero-cta"><button class="btn btn-primary btn-lg" type="button" id="hero-join" data-join>Join the waitlist</button></div>
+      <p class="form-status" id="hero-hint">No new chat app to learn. It works from Claude on your phone, too.</p>
+      <ul class="m-apps" aria-label="Supported AI apps">
+        <li><img src="assets/providers/claude.png" alt="">Claude</li>
+        <li><img src="assets/providers/openai.png" alt="">ChatGPT</li>
+        <li>Claude Code</li><li>Cursor</li><li>Codex</li>
+        <li class="more">any app with remote MCP</li>
+      </ul>
+    </section>
+
+    <!-- M2 Demo: the AI app on the left, the user's computer on the right. Sample content. -->
+    <section class="m-demo" aria-labelledby="m-demo-title">
+      <h2 class="m-title" id="m-demo-title">Your AI app thinks. Your computer does the work.</h2>
+      <p class="m-sub">The AI app uses its own model. Pi Remote gives it eight tools on your computer, nothing more.</p>
+      <div class="m-stage" id="m-stage" aria-label="Demo: Claude asks to use the computer, the owner approves, then Claude lists a folder, reads git history and a file, and answers.">
+        <div class="m-win m-chat">
+          <div class="m-bar"><img src="assets/providers/claude.png" alt=""><b>Claude</b><span>Connector: Pi Remote</span></div>
+          <div class="m-thread" id="m-thread"></div>
+          <div class="m-input">Reply to Claude…</div>
+        </div>
+        <div class="m-arrow" aria-hidden="true"><i></i><small>tool calls</small></div>
+        <div class="m-win m-mac">
+          <div class="m-bar m-bar-mac"><i></i><i></i><i></i><b>Studio Mac</b><span id="m-state">Ready</span></div>
+          <div class="m-ask" id="m-ask">
+            <p><b>Claude</b> asks to use this Mac.</p>
+            <p class="code">Code <span>K7QD2M</span></p>
+            <div class="m-ask-b"><span>Deny</span><span class="ok" id="m-allow">Allow</span></div>
+          </div>
+          <ul class="m-log" id="m-log" aria-label="Recent tool calls"></ul>
+        </div>
+      </div>
+      <p class="demo-note">Sample content. The approval also works on your paired iPhone.</p>
+    </section>
+
+    <!-- M3 Set up -->
+    <section class="m-sec" id="setup" aria-labelledby="setup-title">
+      <h2 class="m-title" id="setup-title">Set up once. Three steps.</h2>
+      <ol class="m-steps">
+        <li class="card">
+          <span class="m-no">1</span><h3>Turn it on</h3>
+          <p>On your phone: Settings → Claude &amp; ChatGPT → Allow AI apps. It is off until you do this.</p>
+          <div class="m-toggle" aria-hidden="true"><span>Allow AI apps</span><i class="sw"><i></i></i></div>
+        </li>
+        <li class="card">
+          <span class="m-no">2</span><h3>Add one address</h3>
+          <p>In Claude: Settings → Connectors → Add custom connector. In ChatGPT: Plugins → Add custom MCP server.</p>
+          <div class="m-addr" aria-hidden="true"><code>https://pi-remote.example/mcp</code><span>Copy</span></div>
+        </li>
+        <li class="card">
+          <span class="m-no">3</span><h3>Sign in and approve</h3>
+          <p>Sign in with Google, then tap Approve on your phone. The same code shows in both places.</p>
+          <div class="m-codes" aria-hidden="true"><span>K7QD2M</span><i>=</i><span>K7QD2M</span></div>
+        </li>
+      </ol>
+      <p class="m-fine">The address is a sample. The final domain is not chosen yet.</p>
+    </section>
+
+    <!-- M4 Tools: Pi's own built-in tools. -->
+    <section class="m-sec" aria-labelledby="tools-title">
+      <h2 class="m-title" id="tools-title">Eight tools. The same ones Pi uses.</h2>
+      <p class="m-sub">Your AI app sees exactly the tools of the Pi coding agent, with the same names and limits.</p>
+      <div class="m-tools">
+        <div class="card"><h3><i class="dot look"></i>Look</h3><p class="m-k">Read only</p>
+          <ul><li><code>read</code>Open a file or an image</li><li><code>ls</code>List a folder</li><li><code>find</code>Find files by name</li><li><code>grep</code>Search inside files</li></ul></div>
+        <div class="card"><h3><i class="dot act"></i>Act</h3><p class="m-k">Can change files</p>
+          <ul><li><code>bash</code>Run a command</li><li><code>edit</code>Change part of a file</li><li><code>write</code>Write a new file</li><li><code>codemode</code>Run a short script of the tools above</li></ul></div>
+      </div>
+      <ul class="m-uses" aria-label="Examples">
+        <li>“Summarise what changed in my thesis this week”</li><li>“Run the tests and fix the one that fails”</li>
+        <li>“Rename these 200 photos by date”</li><li>“Find the invoice PDF from Studio”</li>
+      </ul>
+    </section>
+
+    <!-- M5 Control and the honest privacy note (ADR 0013). -->
+    <section class="m-sec" aria-labelledby="control-title">
+      <h2 class="m-title" id="control-title">You stay in control.</h2>
+      <ul class="m-ctl">
+        <li class="card"><b>Off by default</b><span>Nothing can connect until you allow AI apps.</span></li>
+        <li class="card"><b>Every app asks first</b><span>Approve on your computer or your phone. You see the app name and a code.</span></li>
+        <li class="card"><b>See every call</b><span>Your computer keeps a list: tool, time and result. It does not keep the content.</span></li>
+        <li class="card"><b>One tap to stop</b><span>Disconnect all ends every app’s access at once.</span></li>
+      </ul>
+      <div class="m-honest">
+        <b>Not end-to-end encrypted.</b>
+        <p>Claude and ChatGPT connect from their own cloud, so their tool calls pass our relay as plain text. The relay forwards them. It does not read, store or log them. The AI app’s provider sees the content under its own policy. Chats in the Pi Remote app stay end-to-end encrypted.</p>
+      </div>
+    </section>
+
+    <!-- M6 Price (draft) and questions -->
+    <section class="m-sec m-price" aria-labelledby="price-title">
+      <h2 class="m-title" id="price-title">One subscription.</h2>
+      <p class="m-sub">The Pi Remote app and Claude &amp; ChatGPT access, on up to 3 computers. A free plan with a daily number of calls.</p>
+      <p class="m-fine">Draft. Prices and the free limit are not set.</p>
+      <div class="m-faq">
+        <details><summary>Do I need the Pi Remote iPhone app?</summary><p>No. The computer app and a browser are enough. The iPhone app makes approval one tap, and lets you turn access on and off from anywhere.</p></details>
+        <details><summary>Which AI apps work?</summary><p>Claude (paid plans; the free plan allows one connector), ChatGPT (Plus and higher; add it on the web), Claude Code, Cursor, Codex, and other apps that support remote MCP.</p></details>
+        <details><summary>Which model does the work?</summary><p>Your AI app’s own model. The model sign-ins in Pi Remote are not used for these calls.</p></details>
+        <details><summary>What if my computer is asleep?</summary><p>Calls fail until it is awake and online. Your AI app shows an error and you can try again.</p></details>
+      </div>
+    </section>
+
+    <section class="access" id="join">
+      <h2 class="section-title">Let your AI app reach your desk.</h2>
+      <p class="section-sub">Join the waitlist. We will tell you when your invite is ready.</p>
+      <div class="hero-cta"><button class="btn btn-primary btn-lg" type="button" data-join>Join the waitlist</button></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="wordmark">Pi Remote</p>
+        <p>Your own AI, on your own computer</p>
+      </div>
+      <div class="footer-cols">
+        <div><h4>Product</h4><a href="index.html#how">How it works</a><a href="index.html#models">Models</a><a href="index.html#pricing">Pricing</a><a href="mcp.html">Claude &amp; ChatGPT</a><a href="faq.html">FAQ</a></div>
+        <div><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>Working name · Design preview · Sample content</span><span>© 2026 Pi Remote</span></div>
+  </footer>
+
+  <!-- Waitlist sheet: same markup as index.html; waitlist.js drives it. -->
+  <dialog class="wl" id="waitlist" aria-labelledby="wl-title">
+    <div class="wl-card">
+      <button class="wl-close" type="button" data-close aria-label="Close">×</button>
+      <div class="wl-step" data-step="choose">
+        <img class="wl-dog" src="assets/img/avatar-backpack.webp" alt="" width="56" height="56">
+        <h2 id="wl-title">Join the waitlist</h2>
+        <p class="wl-sub">We will email you when your invite is ready.</p>
+        <button class="gbtn" type="button" id="wl-google">
+          <svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          <span class="glabel">Continue with Google</span>
+        </button>
+        <div class="wl-or" aria-hidden="true"><span>or</span></div>
+        <div class="wl-form" id="wl-form" role="group" aria-label="Join with an email address">
+          <label class="sr-only" for="wl-email">Email address</label>
+          <input id="wl-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com" required aria-describedby="wl-status">
+          <button class="btn btn-primary" type="button" id="wl-join">Join</button>
+        </div>
+        <p class="wl-status" id="wl-status" role="status"></p>
+        <p class="wl-legal">By joining, you agree that we can email you about your invite and the launch. Unsubscribe at any time. <a href="#">Privacy</a></p>
+      </div>
+      <div class="wl-step" data-step="done" hidden>
+        <p class="wl-tick" aria-hidden="true">✓</p>
+        <h2 tabindex="-1">You’re on the list</h2>
+        <p class="wl-sub">We will email <b class="wl-addr"></b> when your invite is ready.</p>
+        <p class="wl-via" hidden>Joined with Google</p>
+        <button class="btn btn-primary btn-block" type="button" data-close>Done</button>
+      </div>
+      <div class="wl-step" data-step="check" hidden>
+        <p class="wl-tick mail" aria-hidden="true">✉</p>
+        <h2 tabindex="-1">Check your inbox</h2>
+        <p class="wl-sub">We sent a link to <b class="wl-addr"></b>. Tap it to confirm your place.</p>
+        <button class="btn btn-primary btn-block" type="button" data-close>Done</button>
+        <button class="wl-text" type="button" data-restart>Use another email</button>
+      </div>
+      <p class="wl-preview">Design preview. Nothing is sent or saved.</p>
+    </div>
+  </dialog>
+
+  <script src="mcp.js" defer></script>
+  <script src="waitlist.js" defer></script>
+</body>
+</html>

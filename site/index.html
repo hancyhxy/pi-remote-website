@@ -22,6 +22,7 @@
         <a href="#models">Models</a>
         <a href="#pricing">Pricing</a>
         <a href="#security">Security</a>
+        <a href="mcp.html">Claude &amp; ChatGPT</a>
         <a class="btn btn-outline btn-sm" href="#access" data-join><span class="glyph" aria-hidden="true">▯</span>Early access</a>
       </nav>
     </div>
@@ -102,8 +103,9 @@
         <div class="big-num"><b data-count="30">30</b><span>+</span></div>
         <h2>model providers.<br>Bring the ones you pay for.</h2>
         <p>Claude, ChatGPT, Gemini, Grok, DeepSeek, Kimi, Qwen and more. Sign in with the subscriptions you already have. Switch any time; your chats stay on your computer.</p>
+        <p class="pv-hint">Point at a logo to see its name.</p>
       </div>
-      <div class="logo-wall big" id="logo-wall" aria-hidden="true"></div>
+      <div class="pv-sphere" id="pv-sphere" aria-label="A turning sphere of model provider logos"><p class="pv-tip" id="pv-tip" aria-live="polite"></p></div>
     </section>
 
     <!-- S4 Cost. Source: Composio Bench, Kimi K3 run, Aug 2026. -->
@@ -112,30 +114,18 @@
         <h2>Same model.<br>A third of the cost.</h2>
         <p>Your AI runs on Pi, a lean open agent framework. On the same model and the same tasks, it spends less and finishes sooner than the popular coding agents.</p>
       </div>
-      <div class="stats">
-        <div class="stat"><b>3.4×</b><span>cheaper per finished task<br>than Claude Code</span></div>
-        <div class="stat"><b>50%</b><span>fewer tokens<br>than Claude Code</span></div>
-        <div class="stat"><b>2×</b><span>faster than<br>Claude Code</span></div>
-      </div>
-      <div class="charts" id="charts">
-        <figure class="chart" data-unit="$"><figcaption>Cost per finished task</figcaption>
-          <div class="row me"><span>Pi</span><i style="--w:29%"></i><b>$0.57</b></div>
-          <div class="row"><span>Codex</span><i style="--w:34%"></i><b>$0.66</b></div>
-          <div class="row"><span>OpenCode</span><i style="--w:37%"></i><b>$0.72</b></div>
-          <div class="row"><span>Claude Code</span><i style="--w:100%"></i><b>$1.96</b></div>
-        </figure>
-        <figure class="chart"><figcaption>Tokens for all 25 tasks</figcaption>
-          <div class="row me"><span>Pi</span><i style="--w:50%"></i><b>7.6M</b></div>
-          <div class="row"><span>Codex</span><i style="--w:61%"></i><b>9.2M</b></div>
-          <div class="row"><span>OpenCode</span><i style="--w:63%"></i><b>9.5M</b></div>
-          <div class="row"><span>Claude Code</span><i style="--w:100%"></i><b>15.1M</b></div>
-        </figure>
-        <figure class="chart"><figcaption>Median time per task</figcaption>
-          <div class="row me"><span>Pi</span><i style="--w:47%"></i><b>156 s</b></div>
-          <div class="row"><span>Codex</span><i style="--w:70%"></i><b>233 s</b></div>
-          <div class="row"><span>OpenCode</span><i style="--w:82%"></i><b>271 s</b></div>
-          <div class="row"><span>Claude Code</span><i style="--w:100%"></i><b>331 s</b></div>
-        </figure>
+      <!-- One race instead of three equal charts. All meters run at the same rate; Pi stops first. -->
+      <div class="race card" id="race">
+        <div class="race-tabs" role="tablist" aria-label="Benchmark measure">
+          <button role="tab" data-m="time" aria-selected="true">Speed</button>
+          <button role="tab" data-m="cost" aria-selected="false">Cost</button>
+          <button role="tab" data-m="tokens" aria-selected="false">Tokens</button>
+        </div>
+        <div class="race-body">
+          <div class="race-big" aria-live="polite"><b id="race-num">2×</b><span id="race-line">faster than Claude Code</span></div>
+          <div class="lanes" id="lanes"></div>
+        </div>
+        <p class="race-cap" id="race-cap">Median time per task.</p>
       </div>
       <p class="src">Composio Bench, August 2026. Same model (Kimi K3) for every agent, 25 real-app tasks, one run per task. Costs use the model prices of that month. Results vary by model and task. <a href="https://composio.dev/content/best-ai-agent-harnesses" target="_blank" rel="noopener">Source</a></p>
     </section>
@@ -158,14 +148,33 @@
           <div class="row"><small>Your data</small><span>On your disk, always yours</span></div>
         </div>
       </div>
-      <div class="flow card" role="img" aria-label="Phone and computer exchange encrypted messages through the relay. The relay has no key and cannot read them.">
-        <div class="node"><span class="px-icon lg" data-icon="phone"></span><b>Your phone</b><small>holds a key</small></div>
-        <div class="wire"><span class="packet"></span><small>sealed</small></div>
-        <div class="node relay"><span class="px-icon lg" data-icon="cloud"></span><b>Relay</b><small>no key · forwards only</small></div>
-        <div class="wire"><span class="packet rev"></span><small>sealed</small></div>
-        <div class="node"><span class="px-icon lg" data-icon="mac"></span><b>Your computer</b><small>holds a key · runs your AI</small></div>
+      <!-- A real sentence is sealed on the phone, crosses the relay as noise, and opens on the computer. -->
+      <div class="seal card" id="seal" role="img" aria-label="A message is sealed on your phone, passes the relay as unreadable text, and opens on your computer. The relay has no key.">
+        <div class="seal-track" aria-hidden="true"><i class="seal-line"></i><i class="seal-glow" id="seal-glow"></i></div>
+        <div class="seal-node" data-n="phone"><span class="seal-ic"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.6"/><path d="M10.5 18.5h3"/></svg></span><b>Your phone</b><small>has the key</small></div>
+        <div class="seal-node relay" data-n="relay"><span class="seal-ic"><svg viewBox="0 0 24 24"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.6 9.3 4.6 4.6 0 0 0 7 18.5z"/></svg></span><b>Relay</b><small>no key · only forwards</small><em class="seal-blind" id="seal-blind">Can’t read this</em></div>
+        <div class="seal-node" data-n="mac"><span class="seal-ic"><svg viewBox="0 0 24 24"><rect x="4" y="4.5" width="16" height="11" rx="1.6"/><path d="M2.5 19.5h19"/></svg></span><b>Your computer</b><small>has the key</small></div>
+        <div class="seal-msg" id="seal-msg" aria-hidden="true"><svg class="lk" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9.5" rx="2.2"/><path class="shackle" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span id="seal-text">Book the dentist, Tue 9:30</span></div>
       </div>
       <p class="note">Your model provider still sees what your AI sends to it, under its own data policy.</p>
+    </section>
+
+    <!-- S5b The MCP gateway in short. Its own page is mcp.html. -->
+    <section class="sp sp-mcp" id="mcp">
+      <div class="mcp-band card">
+        <div class="mcp-band-copy">
+          <p class="eyebrow-s">Also works with Claude and ChatGPT</p>
+          <h2>Already pay for Claude or ChatGPT?</h2>
+          <p>Add one address, and they can work on your computer too: read your files, run commands, make edits. You approve each app. Same subscription.</p>
+          <a class="btn btn-outline" href="mcp.html">See how it works <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="mcp-band-art" aria-hidden="true">
+          <span class="mb-app"><img src="assets/providers/claude.png" alt=""></span>
+          <span class="mb-app b"><img src="assets/providers/openai.png" alt=""></span>
+          <i class="mb-line"><i></i></i>
+          <span class="mb-mac"><svg viewBox="0 0 24 24"><rect x="4" y="4.5" width="16" height="11" rx="1.6"/><path d="M2.5 19.5h19"/></svg><small>Your computer</small></span>
+        </div>
+      </div>
     </section>
 
     <!-- S6 Pricing. Price and refund terms are drafts. -->
@@ -185,6 +194,7 @@
         <ul class="ticks">
           <li>Every feature, on every computer you pair</li>
           <li>Bring your own model subscriptions</li>
+          <li>Works with Claude and ChatGPT, on up to 3 computers</li>
           <li>Full refund within 3 days of your first payment</li>
         </ul>
         <a class="btn btn-primary btn-block" href="#top" id="plan-join" data-join>Join the waitlist</a>
@@ -198,29 +208,34 @@
         <p>The parts you touch a hundred times a day get the most care.</p>
       </div>
       <div class="details">
+        <figure class="dt dt-orb">
+          <div class="dt-stage" id="dt-orb" role="button" tabindex="0" aria-label="Thinking orb. Activate to change its form.">
+            <canvas id="dt-orb-c" aria-hidden="true"></canvas>
+            <p class="dt-orb-copy" id="dt-orb-copy">Bring the hard part.</p>
+            <span class="dt-orb-name" id="dt-orb-name">composing · 1 / 15</span>
+          </div>
+          <figcaption><b>Thinking orb</b> Fifteen dot forms, each with its own motion. It changes while your AI works. Tap it to change.</figcaption>
+        </figure>
+        <figure class="dt dt-max" aria-hidden="true">
+          <div class="dt-stage"><canvas class="aura" id="dt-aura"></canvas>
+            <div class="mx-sheet"><div class="mx-model"><b>claude-opus</b><span>Thinking</span></div>
+              <div class="mx-track" id="mx-track"><i class="mx-thumb" id="mx-thumb"></i><span>Low</span><span>Medium</span><span>High</span><span>Max</span></div>
+              <p class="mx-level" id="mx-level">High</p></div></div>
+          <figcaption><b>Max thinking</b> Push the level to Max and the sheet glows in a slow rainbow.</figcaption>
+        </figure>
+        <figure class="dt dt-halo" aria-hidden="true">
+          <div class="dt-stage"><div class="hl-run"><canvas id="hl-orb"></canvas><span>Working · <b id="hl-sec">12</b> s</span></div>
+            <div class="cblock beaming"><p>Plan my week around the dentist visit</p><div class="hl-row"><span class="cplus">+</span><span class="cchip">claude-opus · Max</span><span class="hl-stop"><i></i></span></div></div></div>
+          <figcaption><b>Running</b> While your AI works, a rainbow light circles the message box.</figcaption>
+        </figure>
+        <figure class="dt dt-read" aria-hidden="true">
+          <div class="dt-stage"><div class="rd-seg"><span class="on" id="rd-a">Mono</span><span id="rd-b">Reading</span></div>
+            <div class="rd-text" id="rd-text"><p class="mono">Go early in April. The blossoms peak in the first week, and fares rise from the 10th.</p><p class="serif">Go early in April. The blossoms peak in the first week, and fares rise from the 10th.</p></div></div>
+          <figcaption><b>Reading font</b> Switch long answers to a book face. Code stays in mono.</figcaption>
+        </figure>
         <figure class="dt dt-send" aria-hidden="true">
           <div class="dt-stage"><div class="dt-chat"><div class="dt-msg">Thanks, that works.</div><div class="dt-fly">Book the 9:30 slot</div></div><div class="dt-comp"><span>Book the 9:30 slot</span><b class="dt-btn"><i class="up"></i><i class="stop"></i></b></div></div>
           <figcaption><b>Send</b> Your message lifts into place. Send becomes Stop.</figcaption>
-        </figure>
-        <figure class="dt dt-fold" aria-hidden="true">
-          <div class="dt-stage"><div class="dt-card"><small>bash</small><pre>rsync -av ~/Photos/2026 /Volumes/Backup
-sending incremental file list
-2026/04/IMG_2041.HEIC
-2026/04/IMG_2042.HEIC
-2026/04/IMG_2043.HEIC
-2026/04/IMG_2044.HEIC
-2026/04/IMG_2045.HEIC
-sent 1.92G bytes  received 3.1K
-total size is 48.6G</pre><span class="dt-show">Show all</span></div></div>
-          <figcaption><b>Long output</b> Folds with a soft fade. One tap shows it all.</figcaption>
-        </figure>
-        <figure class="dt dt-effort" aria-hidden="true">
-          <div class="dt-stage"><div class="dt-chips"><span class="chip">claude-opus <i>·</i> Low</span><span class="chip hi">claude-opus <i>·</i> <em>High</em></span><span class="chip mx">claude-opus <i>·</i> <em>Max</em></span></div></div>
-          <figcaption><b>Thinking level</b> Each step has its own mark. Max gets a rainbow.</figcaption>
-        </figure>
-        <figure class="dt dt-photos" aria-hidden="true">
-          <div class="dt-stage"><div class="dt-pages"><i class="p1"></i><i class="p2"></i><i class="p3"></i></div><div class="dt-dots"><i></i><i></i><i></i></div></div>
-          <figcaption><b>Photos</b> Sent images sit in a 3:4 frame. Swipe through a set.</figcaption>
         </figure>
       </div>
     </section>
@@ -250,7 +265,7 @@ total size is 48.6G</pre><span class="dt-show">Show all</span></div></div>
         <p>Your own AI, on your own computer</p>
       </div>
       <div class="footer-cols">
-        <div><h4>Product</h4><a href="#how">How it works</a><a href="#models">Models</a><a href="#pricing">Pricing</a><a href="#security">Security</a><a href="faq.html">FAQ</a></div>
+        <div><h4>Product</h4><a href="#how">How it works</a><a href="#models">Models</a><a href="#pricing">Pricing</a><a href="#security">Security</a><a href="mcp.html">Claude &amp; ChatGPT</a><a href="faq.html">FAQ</a></div>
         <div><h4>Guides</h4><a href="faq.html">Pair a phone</a><a href="faq.html">Continue a terminal session</a><a href="faq.html">Preview files</a><a href="faq.html">Add another computer</a></div>
         <div><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a></div>
       </div>
@@ -305,7 +320,9 @@ total size is 48.6G</pre><span class="dt-show">Show all</span></div></div>
   </dialog>
 
   <!-- Images that scripts reuse. Scripts copy currentSrc from here, so previews can rewrite the paths. -->
-  <div class="asset-bank" hidden aria-hidden="true"><img data-asset="atu" src="assets/img/atu-face.webp" alt=""><img data-asset="claude" src="assets/providers/claude.png" alt=""><img data-asset="openai" src="assets/providers/openai.png" alt=""><img data-asset="google" src="assets/providers/google.png" alt=""><img data-asset="xai" src="assets/providers/xai.png" alt=""><img data-asset="deepseek" src="assets/providers/deepseek.png" alt=""><img data-asset="kimi" src="assets/providers/kimi.png" alt=""><img data-asset="qwen" src="assets/providers/qwen.png" alt=""><img data-asset="mistral" src="assets/providers/mistral.png" alt=""><img data-asset="meta" src="assets/providers/meta.png" alt=""><img data-asset="githubcopilot" src="assets/providers/githubcopilot.png" alt=""><img data-asset="openrouter" src="assets/providers/openrouter.png" alt=""><img data-asset="groq" src="assets/providers/groq.png" alt=""><img data-asset="nvidia" src="assets/providers/nvidia.png" alt=""><img data-asset="minimax" src="assets/providers/minimax.png" alt=""><img data-asset="zhipu" src="assets/providers/zhipu.png" alt=""><img data-asset="huggingface" src="assets/providers/huggingface.png" alt=""><img data-asset="together" src="assets/providers/together.png" alt=""><img data-asset="fireworks" src="assets/providers/fireworks.png" alt=""><img data-asset="cerebras" src="assets/providers/cerebras.png" alt=""><img data-asset="azure" src="assets/providers/azure.png" alt=""><img data-asset="bedrock" src="assets/providers/bedrock.png" alt=""><img data-asset="vertexai" src="assets/providers/vertexai.png" alt=""><img data-asset="cloudflare" src="assets/providers/cloudflare.png" alt=""><img data-asset="vercel" src="assets/providers/vercel.png" alt=""><img data-asset="moonshot" src="assets/providers/moonshot.png" alt=""><img data-asset="baseten" src="assets/providers/baseten.png" alt=""><img data-asset="zai" src="assets/providers/zai.png" alt=""><img data-asset="opencode" src="assets/providers/opencode.png" alt=""><img data-asset="antgroup" src="assets/providers/antgroup.png" alt=""><img data-asset="xiaomimimo" src="assets/providers/xiaomimimo.png" alt=""></div>
+  <div class="asset-bank" hidden aria-hidden="true"><img data-asset="atu" src="assets/img/atu-face.webp" alt=""><img data-asset="pi" src="assets/img/avatar-backpack.webp" alt=""><img data-asset="claude" src="assets/providers/claude.png" alt=""><img data-asset="openai" src="assets/providers/openai.png" alt=""><img data-asset="google" src="assets/providers/google.png" alt=""><img data-asset="xai" src="assets/providers/xai.png" alt=""><img data-asset="deepseek" src="assets/providers/deepseek.png" alt=""><img data-asset="kimi" src="assets/providers/kimi.png" alt=""><img data-asset="qwen" src="assets/providers/qwen.png" alt=""><img data-asset="mistral" src="assets/providers/mistral.png" alt=""><img data-asset="meta" src="assets/providers/meta.png" alt=""><img data-asset="githubcopilot" src="assets/providers/githubcopilot.png" alt=""><img data-asset="openrouter" src="assets/providers/openrouter.png" alt=""><img data-asset="groq" src="assets/providers/groq.png" alt=""><img data-asset="nvidia" src="assets/providers/nvidia.png" alt=""><img data-asset="minimax" src="assets/providers/minimax.png" alt=""><img data-asset="zhipu" src="assets/providers/zhipu.png" alt=""><img data-asset="huggingface" src="assets/providers/huggingface.png" alt=""><img data-asset="together" src="assets/providers/together.png" alt=""><img data-asset="fireworks" src="assets/providers/fireworks.png" alt=""><img data-asset="cerebras" src="assets/providers/cerebras.png" alt=""><img data-asset="azure" src="assets/providers/azure.png" alt=""><img data-asset="bedrock" src="assets/providers/bedrock.png" alt=""><img data-asset="vertexai" src="assets/providers/vertexai.png" alt=""><img data-asset="cloudflare" src="assets/providers/cloudflare.png" alt=""><img data-asset="vercel" src="assets/providers/vercel.png" alt=""><img data-asset="moonshot" src="assets/providers/moonshot.png" alt=""><img data-asset="baseten" src="assets/providers/baseten.png" alt=""><img data-asset="zai" src="assets/providers/zai.png" alt=""><img data-asset="opencode" src="assets/providers/opencode.png" alt=""><img data-asset="antgroup" src="assets/providers/antgroup.png" alt=""><img data-asset="xiaomimimo" src="assets/providers/xiaomimimo.png" alt=""></div>
+  <script src="thinking-orb.js" defer></script>
   <script src="app.js" defer></script>
+  <script src="waitlist.js" defer></script>
 </body>
 </html>
