@@ -81,13 +81,38 @@ rules of the earlier bands that the page no longer uses.
 
 ## Behaviour
 
-- The hero waitlist form validates the address and states that nothing was sent
-  or saved. The Join buttons lower on the page focus the hero email field.
+- Waitlist: see the next section.
+
+## Waitlist sheet
+
+Every Join button (hero, nav Early access, pricing card, closing card) opens one
+sheet: a centred card on wide screens, a bottom sheet below 640 px.
+
+```text
+choose ── Continue with Google ──► done   "You're on the list" + Joined with Google
+   │
+   └──── any email + Join ───────► check  "Check your inbox" (confirm link)
+                                     └─ Use another email ──► choose
+same address again ──────────────► done   "You're already on the list"
+```
+
+- Google comes first. A typed Gmail address shows a tip that Google skips the
+  confirmation email.
+- After a join, the hero button reads "You're on the list" and the hint names the address.
+- The consent line sits under the form (Spam Act: clear consent, unsubscribe).
+- Preview only: no network call. Google returns the sample `alex.chen@gmail.com`
+  after 0.9 s. State stays in memory for the page view.
+- Production plan: `google.accounts.id.renderButton` (outline, large, pill,
+  `continue_with`) replaces the mock button. The Worker checks the Google ID token
+  (signature, `aud`, `iss`, `exp`, `email_verified`) or a typed address with
+  Turnstile, and stores it in D1. Not built yet.
 
 ## Open items
 
 - Hero headline: option A is live; B and C are in the brief.
 - Price, refund condition and the billing channel (App Store refunds are Apple's).
-- Final name and logo, real waitlist endpoint, real Privacy and Terms pages.
+- Final name and logo, real Privacy and Terms pages.
+- Waitlist backend (Worker, D1, Turnstile, Google client ID) and the confirmation
+  email for typed addresses; the confirm step is a proposal, not a decision.
 - ATU follow-up starts from the user. The page does not claim that ATU starts it.
 - Review on a physical iPhone.

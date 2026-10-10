@@ -22,7 +22,7 @@
         <a href="#models">Models</a>
         <a href="#pricing">Pricing</a>
         <a href="#security">Security</a>
-        <a class="btn btn-outline btn-sm" href="#access"><span class="glyph" aria-hidden="true">▯</span>Early access</a>
+        <a class="btn btn-outline btn-sm" href="#access" data-join><span class="glyph" aria-hidden="true">▯</span>Early access</a>
       </nav>
     </div>
   </header>
@@ -39,12 +39,11 @@
           <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Linux</li>
           <li class="soon">Windows soon</li>
         </ul>
-        <form id="access-form" class="hero-signup" novalidate>
-          <label class="sr-only" for="email">Email address</label>
-          <input id="email" name="email" type="email" placeholder="Your email address" autocomplete="email" required aria-describedby="form-status">
-          <button class="btn btn-primary" type="submit">Join the waitlist</button>
-        </form>
-        <p class="form-status" id="form-status" role="status">Preview only. Your email is not sent or saved.</p>
+        <!-- Waitlist entry. The button opens the waitlist sheet: Google first, any email second. -->
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" type="button" id="hero-join" data-join>Join the waitlist</button>
+        </div>
+        <p class="form-status" id="hero-hint" role="status">One tap with Google, or use any email.</p>
         <a class="learn" href="#how">See it work <span aria-hidden="true">↓</span></a>
       </div>
     </section>
@@ -188,7 +187,7 @@
           <li>Bring your own model subscriptions</li>
           <li>Full refund within 3 days of your first payment</li>
         </ul>
-        <a class="btn btn-primary btn-block" href="#email" id="plan-join">Join the waitlist</a>
+        <a class="btn btn-primary btn-block" href="#top" id="plan-join" data-join>Join the waitlist</a>
       </div>
     </section>
 
@@ -238,7 +237,7 @@ total size is 48.6G</pre><span class="dt-show">Show all</span></div></div>
         </div>
         <p class="price-name">Pi Remote Early Access</p>
         <p class="price-value">7 days<small>free to try</small></p>
-        <a class="btn btn-primary btn-block" href="#email" id="bottom-join">Join the waitlist</a>
+        <a class="btn btn-primary btn-block" href="#top" id="bottom-join" data-join>Join the waitlist</a>
       </div></div>
       <p class="aside-links"><a href="faq.html">Questions first?</a> · <a href="#how">See it work</a></p>
     </section>
@@ -258,6 +257,52 @@ total size is 48.6G</pre><span class="dt-show">Show all</span></div></div>
     </div>
     <div class="footer-bottom"><span>Working name · Design preview · Sample content</span><span>© 2026 Pi Remote</span></div>
   </footer>
+
+  <!-- Waitlist sheet. A centred card on wide screens, a bottom sheet on phones.
+       Preview only: no network call. Production replaces the Google button with
+       google.accounts.id.renderButton (outline, large, pill, continue_with) and
+       posts the ID token or the email to the waitlist Worker. -->
+  <dialog class="wl" id="waitlist" aria-labelledby="wl-title">
+    <div class="wl-card">
+      <button class="wl-close" type="button" data-close aria-label="Close">×</button>
+
+      <div class="wl-step" data-step="choose">
+        <img class="wl-dog" src="assets/img/avatar-backpack.webp" alt="" width="56" height="56">
+        <h2 id="wl-title">Join the waitlist</h2>
+        <p class="wl-sub">We will email you when your invite is ready.</p>
+        <button class="gbtn" type="button" id="wl-google" autofocus>
+          <svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          <span class="glabel">Continue with Google</span>
+        </button>
+        <div class="wl-or" aria-hidden="true"><span>or</span></div>
+        <form class="wl-form" id="wl-form" novalidate>
+          <label class="sr-only" for="wl-email">Email address</label>
+          <input id="wl-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com" required aria-describedby="wl-status">
+          <button class="btn btn-primary" type="submit">Join</button>
+        </form>
+        <p class="wl-status" id="wl-status" role="status"></p>
+        <p class="wl-legal">By joining, you agree that we can email you about your invite and the launch. Unsubscribe at any time. <a href="#">Privacy</a></p>
+      </div>
+
+      <div class="wl-step" data-step="done" hidden>
+        <p class="wl-tick" aria-hidden="true">✓</p>
+        <h2 tabindex="-1">You’re on the list</h2>
+        <p class="wl-sub">We will email <b class="wl-addr"></b> when your invite is ready.</p>
+        <p class="wl-via" hidden>Joined with Google</p>
+        <button class="btn btn-primary btn-block" type="button" data-close>Done</button>
+      </div>
+
+      <div class="wl-step" data-step="check" hidden>
+        <p class="wl-tick mail" aria-hidden="true">✉</p>
+        <h2 tabindex="-1">Check your inbox</h2>
+        <p class="wl-sub">We sent a link to <b class="wl-addr"></b>. Tap it to confirm your place.</p>
+        <button class="btn btn-primary btn-block" type="button" data-close>Done</button>
+        <button class="wl-text" type="button" data-restart>Use another email</button>
+      </div>
+
+      <p class="wl-preview">Design preview. Nothing is sent or saved.</p>
+    </div>
+  </dialog>
 
   <!-- Images that scripts reuse. Scripts copy currentSrc from here, so previews can rewrite the paths. -->
   <div class="asset-bank" hidden aria-hidden="true"><img data-asset="atu" src="assets/img/atu-face.webp" alt=""><img data-asset="claude" src="assets/providers/claude.png" alt=""><img data-asset="openai" src="assets/providers/openai.png" alt=""><img data-asset="google" src="assets/providers/google.png" alt=""><img data-asset="xai" src="assets/providers/xai.png" alt=""><img data-asset="deepseek" src="assets/providers/deepseek.png" alt=""><img data-asset="kimi" src="assets/providers/kimi.png" alt=""><img data-asset="qwen" src="assets/providers/qwen.png" alt=""><img data-asset="mistral" src="assets/providers/mistral.png" alt=""><img data-asset="meta" src="assets/providers/meta.png" alt=""><img data-asset="githubcopilot" src="assets/providers/githubcopilot.png" alt=""><img data-asset="openrouter" src="assets/providers/openrouter.png" alt=""><img data-asset="groq" src="assets/providers/groq.png" alt=""><img data-asset="nvidia" src="assets/providers/nvidia.png" alt=""><img data-asset="minimax" src="assets/providers/minimax.png" alt=""><img data-asset="zhipu" src="assets/providers/zhipu.png" alt=""><img data-asset="huggingface" src="assets/providers/huggingface.png" alt=""><img data-asset="together" src="assets/providers/together.png" alt=""><img data-asset="fireworks" src="assets/providers/fireworks.png" alt=""><img data-asset="cerebras" src="assets/providers/cerebras.png" alt=""><img data-asset="azure" src="assets/providers/azure.png" alt=""><img data-asset="bedrock" src="assets/providers/bedrock.png" alt=""><img data-asset="vertexai" src="assets/providers/vertexai.png" alt=""><img data-asset="cloudflare" src="assets/providers/cloudflare.png" alt=""><img data-asset="vercel" src="assets/providers/vercel.png" alt=""><img data-asset="moonshot" src="assets/providers/moonshot.png" alt=""><img data-asset="baseten" src="assets/providers/baseten.png" alt=""><img data-asset="zai" src="assets/providers/zai.png" alt=""><img data-asset="opencode" src="assets/providers/opencode.png" alt=""><img data-asset="antgroup" src="assets/providers/antgroup.png" alt=""><img data-asset="xiaomimimo" src="assets/providers/xiaomimimo.png" alt=""></div>

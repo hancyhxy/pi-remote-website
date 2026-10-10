@@ -490,19 +490,76 @@ iph.addEventListener('click', async e => {
 
 if (reduced) { autoplay = false; tabs.classList.add('manual'); play('pair'); } else cycle();
 
-/* ---------- Waitlist preview ---------- */
-['#bottom-join', '#plan-join'].forEach(sel => $(sel)?.addEventListener('click', () => {
-  requestAnimationFrame(() => $('#email').focus({ preventScroll: true }));
-}));
-$('#access-form').addEventListener('submit', e => {
-  e.preventDefault();
-  const input = $('#email'), status = $('#form-status');
-  if (!input.checkValidity() || !input.value) {
-    status.className = 'form-status err'; status.textContent = 'Enter a valid email address.'; input.focus(); return;
+/* ---------- Waitlist sheet (preview) ----------
+   Steps: choose -> done (Google, or an address already on the list)
+                 -> check (new typed address: confirm link by email).
+   State stays in memory for this page view. No network call. */
+(() => {
+  const dlg = $('#waitlist'); if (!dlg) return;
+  const gBtn = $('#wl-google'), form = $('#wl-form'), input = $('#wl-email'), status = $('#wl-status');
+  const SAMPLE_GOOGLE = 'alex.chen@gmail.com';
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  let joined = null;            // { email, via: 'google' | 'email' }
+  let busy = false;
+
+  const say = (text, cls = '') => { status.className = `wl-status ${cls}`; status.textContent = text; };
+  function show(step) {
+    $$('.wl-step', dlg).forEach(s => { s.hidden = s.dataset.step !== step; });
+    if (joined) $$('.wl-addr', dlg).forEach(b => { b.textContent = joined.email; });
+    $('.wl-via', dlg).hidden = !(joined && joined.via === 'google');
+    if (step !== 'choose') $(`[data-step="${step}"] h2`, dlg).focus();
   }
-  input.value = '';
-  status.className = 'form-status ok'; status.textContent = '✓ Preview only — nothing was sent or saved.';
-});
+  function open() {
+    say('');
+    $('[data-step="done"] h2', dlg).textContent = 'You’re on the list';
+    dlg.showModal();
+    show(!joined ? 'choose' : joined.via === 'google' ? 'done' : 'check');
+  }
+  const close = () => dlg.close();
+  function finish(email, via) {
+    const again = !!joined && joined.email === email;
+    joined = { email, via: again ? joined.via : via };
+    show(via === 'google' || again ? 'done' : 'check');
+    if (again) $('[data-step="done"] h2', dlg).textContent = 'You’re already on the list';
+    $('#hero-join').textContent = '✓ You’re on the list';
+    $('#hero-hint').textContent = joined.via === 'google' || again
+      ? `We will email ${email} when your invite is ready.`
+      : `Tap the link we sent to ${email} to confirm.`;
+  }
+
+  $$('[data-join]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); open(); }));
+  $$('[data-close]', dlg).forEach(b => b.addEventListener('click', close));
+  $('[data-restart]', dlg).addEventListener('click', () => {
+    joined = null; input.value = ''; say(''); show('choose'); input.focus();
+    $('#hero-join').textContent = 'Join the waitlist';
+    $('#hero-hint').textContent = 'One tap with Google, or use any email.';
+  });
+  // A click on the backdrop closes the sheet.
+  dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
+
+  // Production: Google returns an ID token; the Worker checks it and keeps the verified address.
+  gBtn.addEventListener('click', () => {
+    if (busy) return; busy = true;
+    gBtn.classList.add('busy'); $('.glabel', gBtn).textContent = 'Connecting to Google…';
+    setTimeout(() => {
+      busy = false; gBtn.classList.remove('busy'); $('.glabel', gBtn).textContent = 'Continue with Google';
+      finish(SAMPLE_GOOGLE, 'google');
+    }, reduced ? 0 : 900);
+  });
+
+  // A Gmail address typed by hand: point to the one-tap path, which needs no confirmation email.
+  input.addEventListener('input', () => {
+    const v = input.value.trim().toLowerCase();
+    if (/@(gmail|googlemail)\.com$/.test(v)) say('Tip: Continue with Google skips the confirmation email.', 'tip');
+    else if (/\b(tip|err)\b/.test(status.className)) say('');
+  });
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const v = input.value.trim().toLowerCase();
+    if (!EMAIL_RE.test(v)) { say('Enter a valid email address.', 'err'); input.focus(); return; }
+    finish(v, 'email');
+  });
+})();
 
 /* ---------- Model provider wall ---------- */
 (() => {
