@@ -28,7 +28,7 @@ One state per GIF, chosen in code (`NativeMascot.swift`).
 | To-do dock "Ask ATU to plan your day" | 30 pt | no | Idle | `NativeTodoView.swift:416` |
 | To-do ATU chat header | 32 pt | while sending | Idle/Working | `NativeTodoView.swift:1516` |
 
-## Website (`site/`, 3D plush)
+## Old website (`archive/site-v1-pi-remote/`, 3D plush)
 
 | Place | File |
 |---|---|
