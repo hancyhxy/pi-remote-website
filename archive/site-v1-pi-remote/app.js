@@ -100,8 +100,8 @@ function matrix(canvas, { cell = 16, alpha = .1, glyphs = '0 1 · ·  ' } = {}) 
     };
     step();
   };
-  // Per-word hold: every dog plays its full 4 s video (trims pending review).
-  const hold = () => 4000;
+  // Per-word hold: the opening phone dog plays its full 4 s wave; the others are 2 s clips.
+  const hold = w => (w === 'phone' ? 4000 : 2000);
   const next = () => setTimeout(() => { if (!document.hidden) run(); next(); }, hold(words[index]));
   next();
 })();
@@ -150,7 +150,7 @@ const SCENES = {
     ...pairTerm.map(s => ({ ...s, at: 300 })),
     { at: 200, kind: 'qr', on: true },
     { at: 500, kind: 'cam', on: true },
-    { at: 900, kind: 'scan' },
+    { at: 1300, kind: 'scan' },
     { at: 700, kind: 'qr', on: false },
     { at: 0, kind: 'cam', on: false },
     { at: 0, kind: 'paired', on: true },
@@ -196,6 +196,7 @@ function setToast(scene) {
 function resetStage(scene) {
   term.innerHTML = ''; phone.innerHTML = '';
   ['#qr', '#cam', '#paired', '#signin'].forEach(id => $(id).classList.remove('on', 'hit'));
+  $('#stage').classList.remove('scanning');
   sheet.className = 'sheet'; sheet.innerHTML = '';
   composer.className = 'phone-composer'; composerText.textContent = 'Message Pi…';
   $('#scene-title').textContent = COPY[scene][0];
@@ -229,7 +230,7 @@ function runStep(step, scene, instant) {
     case 'pick': $('[data-o=yes]', sheet)?.classList.add('on'); break;
     case 'sheet-close': sheet.className = 'sheet'; break;
     case 'qr': $('#qr').classList.toggle('on', step.on); break;
-    case 'cam': $('#cam').classList.toggle('on', step.on); break;
+    case 'cam': $('#cam').classList.toggle('on', step.on); $('#stage').classList.toggle('scanning', step.on); break;
     case 'scan': $('#cam').classList.add('hit'); break;
     case 'signin': $('#signin').classList.toggle('on', step.on); break;
     case 'paired': $('#paired').classList.toggle('on', step.on); break;
