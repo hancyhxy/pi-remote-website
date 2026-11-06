@@ -1,2 +1,4 @@
 .DS_Store
 __pycache__/
+# Rebuilt from the kit folders by 09-generator/build_zips.py
+brand/hey-atu-brand-kit/downloads/

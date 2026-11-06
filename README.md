@@ -49,8 +49,9 @@ App 不读这个文件夹。要换 App 里的小狗或图标，就把成品交�
 
 ## 注意
 
-- `brand/hey-atu-brand-kit/`、`brand/concepts/`、`brand/mascot/anchors/` 和
-  `brand/mascot/explorations/hd/` 还没提交进 Git，所以也没有远端备份。
+- `brand/hey-atu-brand-kit/downloads/` 里的压缩包不进 Git。重新打包：
+  `ATU_KIT=brand/hey-atu-brand-kit pyx brand/hey-atu-brand-kit/09-generator/build_zips.py`。
+  不设 `ATU_KIT` 的话，脚本会去打包临时目录里的那份套件。
 - 品牌套件生成器的工作目录在 `~/.pi/tmp/2026-10-12/brand-spec`（`09-generator/common.py` 里的
   `ROOT`），截图原图在那里的 `build/screens/`。这是临时目录。
 
