@@ -1,9 +1,6 @@
-# Deploy the archived site to GitHub Pages on every push to main.
+# Deploy the archived site to GitHub Pages. Manual runs only: a push is a backup, not a deployment.
 name: Pages
 on:
-  push:
-    branches: [main]
-    paths: ["archive/site-v1-pi-remote/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 permissions:
   contents: read

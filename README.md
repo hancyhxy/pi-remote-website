@@ -58,5 +58,6 @@ App 不读这个文件夹。要换 App 里的小狗或图标，就把成品交�
 ## 远端
 
 GitHub 私有仓库 `hancyhxy/pi-remote-website`。文件夹在 2026-11-07 改名为 `heyatu-marketing`，
-远端名字没变。push 到 `main` 会触发 `.github/workflows/pages.yml`，把
-`archive/site-v1-pi-remote/` 发布到 GitHub Pages。
+远端名字没变。push 只是备份。旧官网的公开预览页 https://hancyhxy.github.io/pi-remote-website/
+只在手动运行 `.github/workflows/pages.yml` 时才会重新发布。
+分支 `wip/site-v1-hero-videos` 存着旧官网首屏小狗视频的未完成改动。
