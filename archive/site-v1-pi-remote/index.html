@@ -4,9 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex">
-  <title>Pi Remote — Your Pi agent, from your phone</title>
+  <title>Pi Remote — Your own AI, on your own computer</title>
   <link rel="icon" href="assets/logo.svg">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="v2.css">
+  <link rel="stylesheet" href="dark.css">
+  <script src="theme.js"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -17,227 +20,280 @@
         <img src="assets/img/avatar-backpack.webp" alt="" width="26" height="26"><span>PI REMOTE</span>
       </a>
       <nav aria-label="Main">
-        <a href="#features">Features</a>
-        <a href="#stage">How it works</a>
+        <a href="#how">How it works</a>
+        <a href="#models">Models</a>
+        <a href="#pricing">Pricing</a>
         <a href="#security">Security</a>
-        <a class="btn btn-outline btn-sm" href="#access"><span class="glyph" aria-hidden="true">▯</span>Early access</a>
+        <a href="mcp.html">Claude &amp; ChatGPT</a>
+        <button class="theme-btn" type="button" id="theme-btn" aria-label="Switch to dark mode"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
+        <a class="btn btn-outline btn-sm" href="#access" data-join><span class="glyph" aria-hidden="true">▯</span>Early access</a>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <!-- Hero: pixel headline over a digit matrix and soft light beams. -->
+    <!-- S1 Hero. No framework name here: the reader meets "your AI". -->
     <section class="hero" id="top">
       <div class="hero-copy">
-        <div class="hero-dogs" aria-hidden="true"><video class="hero-dog on" data-word="phone" poster="assets/img/dog-wave-rest.webp" autoplay muted playsinline preload="auto"><source src="assets/video/dog-wave-vest.mov" type="video/mp4; codecs=hvc1"><source src="assets/video/dog-wave-vest.webm" type="video/webm"></video><video class="hero-dog" data-word="sofa" poster="assets/img/dog-switch.webp" muted playsinline preload="auto"><source src="assets/video/dog-switch.mov" type="video/mp4; codecs=hvc1"><source src="assets/video/dog-switch.webm" type="video/webm"></video><video class="hero-dog" data-word="iPad" poster="assets/img/dog-noodles.webp" muted playsinline preload="auto"><source src="assets/video/dog-noodles.mov" type="video/mp4; codecs=hvc1"><source src="assets/video/dog-noodles.webm" type="video/webm"></video><video class="hero-dog" data-word="commute" poster="assets/img/scene-commute.webp" muted playsinline preload="auto"><source src="assets/video/scene-commute.mov" type="video/mp4; codecs=hvc1"><source src="assets/video/scene-commute.webm" type="video/webm"></video><video class="hero-dog" data-word="garden" poster="assets/img/scene-garden.webp" muted playsinline preload="auto"><source src="assets/video/scene-garden.mov" type="video/mp4; codecs=hvc1"><source src="assets/video/scene-garden.webm" type="video/webm"></video></div>
-        <h1>Keep Pi working<br>from your <span class="accent" id="scramble" aria-label="phone">phone</span><span class="word-obj" aria-hidden="true"><img class="word-img on" data-word="phone" src="assets/img/word-phone.webp" alt=""><img class="word-img" data-word="sofa" src="assets/img/word-sofa.webp" alt=""><img class="word-img" data-word="iPad" src="assets/img/word-ipad.webp" alt=""><img class="word-img" data-word="commute" src="assets/img/word-metro.webp" alt=""><img class="word-img" data-word="garden" src="assets/img/word-plant.webp" alt=""></span></h1>
-        <p class="lede">Your agent runs on your own Mac, not in someone else's cloud. <br>Your phone is the remote.</p>
-        <form id="access-form" class="hero-signup" novalidate>
-          <label class="sr-only" for="email">Email address</label>
-          <input id="email" name="email" type="email" placeholder="Your email address" autocomplete="email" required aria-describedby="form-status">
-          <button class="btn btn-primary" type="submit">Join the waitlist</button>
-        </form>
-        <p class="form-status" id="form-status" role="status">Preview only. Your email is not sent or saved.</p>
-        <a class="learn" href="#how">Learn more <span aria-hidden="true">↓</span></a>
+        <div class="hero-dogs" aria-hidden="true"><img class="hero-dog on" data-word="phone" src="assets/img/dog-latte.webp" alt=""><img class="hero-dog" data-word="sofa" src="assets/img/dog-switch.webp" alt=""><img class="hero-dog" data-word="iPad" src="assets/img/dog-noodles.webp" alt=""><img class="hero-dog" data-word="commute" src="assets/img/scene-commute.webp" alt=""><img class="hero-dog" data-word="garden" src="assets/img/scene-garden.webp" alt=""></div>
+        <h1>Keep your AI working<br>from your <span class="accent" id="scramble" aria-label="phone">phone</span><span class="word-obj" aria-hidden="true"><img class="word-img on" data-word="phone" src="assets/img/word-phone.webp" alt=""><img class="word-img" data-word="sofa" src="assets/img/word-sofa.webp" alt=""><img class="word-img" data-word="iPad" src="assets/img/word-ipad.webp" alt=""><img class="word-img" data-word="commute" src="assets/img/word-metro.webp" alt=""><img class="word-img" data-word="garden" src="assets/img/word-plant.webp" alt=""></span></h1>
+        <p class="lede">Your own AI assistant runs on your own computer, not in someone else's cloud. Your phone keeps it moving.</p>
+        <ul class="platforms" aria-label="Supported computers">
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Mac</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Linux</li>
+          <li class="soon">Windows soon</li>
+        </ul>
+        <!-- Waitlist entry. The button opens the waitlist sheet: Google first, any email second. -->
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" type="button" id="hero-join" data-join>Join the waitlist</button>
+        </div>
+        <p class="form-status" id="hero-hint" role="status">One tap with Google, or use any email.</p>
       </div>
-
     </section>
 
+    <!-- S2 Three core scenes. One stage: the computer (scene 1) or the iPad (scenes 2 and 3), and the phone.
+         Phone and iPad screens follow the shipped iOS app (Oct 2026). The Mac window is a concept surface. -->
+    <section class="demo" id="how" aria-labelledby="demo-title">
+      <div class="ds-wrap" id="ds-wrap">
+        <div class="ds" id="ds" role="tabpanel" aria-label="Interactive product demo. It plays by itself; click inside to take over.">
 
-    <section class="act2" id="how">
-      <div class="scene-copy" aria-live="polite">
-        <h2 id="scene-title">Scan. Sign in. Done.</h2>
-        <p id="scene-text">Pair your phone and sign in with the models you already pay for.</p>
-      </div>
-      <div class="tabs" role="tablist" aria-label="How Pi Remote works">
-        <button role="tab" data-scene="pair" aria-selected="true"><span class="step-n">1</span>Scan &amp; sign in</button>
-        <button role="tab" data-scene="work" aria-selected="false"><span class="step-n">2</span>Work from your phone</button>
-      </div>
-      <!-- Product stage: a Mac screen with the terminal Pi, and the phone in front. -->
-      <div class="stage" id="stage" data-scene="pair">
-        <div class="screen">
-          <div class="menubar">
-            <span class="apple" aria-hidden="true"></span><b>Terminal</b><span>Shell</span><span>Edit</span><span>View</span>
-            <span class="menubar-right" id="clock">Thu 9:41 AM</span>
+          <!-- Computer -->
+          <div class="mac" aria-hidden="true">
+            <div class="mac-screen">
+              <div class="mac-bar"><span class="apple"></span><b id="mac-app">Pi Remote</b><span>File</span><span>Edit</span><span>Window</span><span class="mac-right"><img src="assets/img/atu-face.webp" alt=""><span id="mac-clock">Fri 9:41 AM</span></span></div>
+              <div class="mac-win" id="mac-win">
+                <div class="mac-title"><i></i><i></i><i></i><span id="mac-title">Pi Remote</span></div>
+                <div class="mac-body" id="mac-body"></div>
+              </div>
+            </div>
+            <div class="mac-base"></div>
           </div>
-          <div class="toast" id="toast" role="status"><i class="dot"></i><span id="toast-text">iPhone connected</span></div>
-          <div class="qr-card" id="qr" aria-hidden="true"><div class="qr" id="qr-code"></div><b>Scan with Pi Remote</b><small>Valid for 120 s</small></div>
-          <div class="term term-front">
-            <div class="term-bar"><i></i><i></i><i></i><span>pi — ~/projects/studio</span></div>
-            <div class="term-body" id="term"></div>
+
+          <!-- iPad, landscape. Scenes 2 and 3: the same account on a bigger screen, in sync with the phone. -->
+          <div class="ipad" aria-hidden="true">
+            <div class="ipad-scr"><div class="pad" id="pad">
+              <div class="pad-sb"><span><b id="pad-time">6:58</b> Fri 9 Oct</span><span class="r"><svg viewBox="0 0 16 12"><path d="M8 11.2l2.3-2.6a3.3 3.3 0 0 0-4.6 0zM3.4 6.4l1.4 1.5a4.6 4.6 0 0 1 6.4 0l1.4-1.5a6.6 6.6 0 0 0-9.2 0zM.6 3.6L2 5.1a8.6 8.6 0 0 1 12 0l1.4-1.5a10.6 10.6 0 0 0-14.8 0z" fill="currentColor"/></svg>100% <i class="batt"></i></span></div>
+              <nav class="pad-tabs" id="pad-tabs"><span data-t="chats">Chats</span><span data-t="updates">Updates</span><span data-t="todo">Todo</span></nav>
+              <div class="pad-body" id="pad-body"></div>
+            </div></div>
+          </div>
+
+          <!-- iPhone, drawn at 390 x 844 pt and scaled -->
+          <div class="iph">
+            <div class="iph-scr" id="iph">
+              <div class="sb"><span id="sb-time">9:41</span><span class="sb-r"><svg viewBox="0 0 18 12"><path d="M1 11h2V8H1zM5 11h2V6H5zM9 11h2V3.5H9zM13 11h2V1h-2z" fill="currentColor"/></svg><svg viewBox="0 0 16 12"><path d="M8 11.2l2.3-2.6a3.3 3.3 0 0 0-4.6 0zM3.4 6.4l1.4 1.5a4.6 4.6 0 0 1 6.4 0l1.4-1.5a6.6 6.6 0 0 0-9.2 0zM.6 3.6L2 5.1a8.6 8.6 0 0 1 12 0l1.4-1.5a10.6 10.6 0 0 0-14.8 0z" fill="currentColor"/></svg><i class="batt"></i></span></div>
+              <div class="layers" id="layers"></div>
+              <nav class="tabbar" id="tabbar" aria-hidden="true">
+                <span data-t="chats"><svg viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-4.5 3.5V17H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>Chats</span>
+                <span data-t="updates"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5H8.5"/></svg>Updates</span>
+                <span data-t="todo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8 12.2l2.7 2.7L16 9.5"/></svg>Todo</span>
+              </nav>
+              <i class="tap" id="tap"></i>
+            </div>
           </div>
         </div>
-
-        <div class="phone" aria-label="Sample Pi Remote session on a phone">
-          <div class="phone-island" aria-hidden="true"></div>
-          <div class="phone-status" aria-hidden="true"><span>9:41</span><span>▂▄▆ ▭</span></div>
-          <div class="phone-top"><span aria-hidden="true">☰</span><img class="phone-avatar" src="assets/img/avatar-backpack.webp" alt=""><div><b>Empty state tests</b><small><i class="dot"></i>Studio Mac · ~/projects/studio</small></div><span aria-hidden="true">＋</span></div>
-          <div class="phone-body" id="phone"></div>
-          <div class="phone-composer" id="composer"><span id="composer-text">Message Pi…</span><button type="button" id="send" tabindex="-1" aria-hidden="true">↑</button></div>
-          <div class="phone-home" aria-hidden="true"></div>
-          <div class="sheet" id="sheet" aria-hidden="true"></div>
-          <div class="cam" id="cam" aria-hidden="true"><div class="cam-frame"><div class="qr mini" id="qr-mini"></div><i class="scanline"></i></div><p>Point at the QR code on your Mac</p></div>
-          <div class="signin" id="signin" aria-hidden="true"><b>Add your models</b><small>Use the subscriptions you already have.</small><ul><li class="ok"><img src="assets/providers/claude.png" alt="">Claude<em>Signed in</em></li><li class="ok"><img src="assets/providers/openai.png" alt="">ChatGPT · Codex<em>Signed in</em></li><li><img src="assets/providers/xai.png" alt="">Grok<em>Sign in</em></li><li><img src="assets/providers/google.png" alt="">Gemini<em>Sign in</em></li></ul><small class="fine">Keys are stored on your Mac.</small></div>
-          <div class="paired" id="paired" aria-hidden="true"><span class="ok">✓</span><b>Paired with Studio Mac</b><small>Your Mac stays connected. You can leave your desk.</small><img src="assets/img/atu-idle.gif" alt=""></div>
-        </div>
       </div>
-      <!-- Cloud agents vs Pi Remote: three pairs under the stage. -->
+      <div class="demo-tabs" role="tablist" aria-label="Product scenes">
+        <button role="tab" id="tab-pair" data-scene="pair" aria-selected="true" aria-controls="ds"><span class="n">1</span>Scan and pair<i class="bar"><i></i></i></button>
+        <button role="tab" id="tab-updates" data-scene="updates" aria-selected="false" aria-controls="ds"><span class="n">2</span>Updates<i class="bar"><i></i></i></button>
+        <button role="tab" id="tab-todo" data-scene="todo" aria-selected="false" aria-controls="ds"><span class="n">3</span>To-do follow-up<i class="bar"><i></i></i></button>
+      </div>
 
-
+      <div class="demo-copy" aria-live="polite">
+        <h2 id="demo-title">One scan. You’re in.</h2>
+        <p id="demo-text">Install on your computer, then scan the code with your iPhone. No account, no VPN, no ports to open.</p>
+      </div>
+      <p class="demo-note">Sample content. Phone and iPad screens follow the current app.</p>
     </section>
 
-    <!-- What it does: four full-width bands, grey / white / grey / white. Each band has one
-         phone outline with one enlarged card that spills over its edge (muse.ai style). -->
-    <div class="showcase" id="features">
+    <!-- Secondary selling points: short, plain, numbers first. -->
 
-      <!-- 1. To-Do with ATU follow-up. -->
-      <section class="band band-grey">
-        <div class="band-inner rev">
-          <div class="copy">
-            <h2>Plan the day with ATU.<br>Get it done in the chat.</h2>
-            <p>Tell ATU what's on your mind and it sorts out today. Save any line Pi writes as a to-do, then pick a few and follow them up together in one chat.</p>
-          </div>
-
-          <div class="vis vis-todo" aria-hidden="true">
-            <div class="shell">
-              <div class="atu"><img src="assets/img/atu-idle.gif" alt=""><b>ATU</b><small>✓ Planning your day…</small></div>
-              <p class="bub me">Plan my day: launch email, pricing FAQ, invoice</p>
-              <div class="dock"><img src="assets/img/atu-idle.gif" alt=""><span>Ask ATU to plan your day</span><b>+</b></div>
-            </div>
-            <div class="pop pop-todo">
-              <div class="todo-top"><b>Today</b><span class="tiles"><i class="f"></i><i class="f"></i><i></i><i></i></span></div>
-              <ul>
-                <li class="done"><span class="mk"></span>Send the invoice to Studio</li>
-                <li class="done"><span class="mk"></span>Review relay PR</li>
-                <li class="sel"><span class="mk"></span>Draft launch email</li>
-                <li class="sel"><span class="mk"></span>Update pricing FAQ</li>
-              </ul>
-              <button tabindex="-1">Follow up 2 in chat →</button>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- 2. Updates: scheduled results arrive as tiles in two columns. -->
-      <section class="band band-white">
-        <div class="band-inner">
-          <div class="vis vis-updates" aria-hidden="true">
-            <div class="shell shell-feed">
-              <div class="feed-head"><b>Updates</b><span class="chips"><i class="on">All</i><i>News</i><i>Repos</i><i>Inbox</i></span></div>
-              <small class="feed-day">Today · 7:00</small>
-              <div class="feed">
-                <div class="col">
-                  <div class="tile"><b>3 things need you today</b><p>Invoice due · PR waiting · flight check-in</p><em><i style="background:#7b61ff"></i>Morning brief</em></div>
-                  <div class="tile cov"><span class="cover c-code"></span><b>Build fixed overnight</b><em><i style="background:#2f9e5b"></i>Repo watch</em></div>
-                  <div class="tile"><b>Inbox: 2 replies worth reading</b><em><i style="background:#d9803a"></i>Inbox digest</em></div>
-                </div>
-                <div class="col">
-                  <div class="tile cov"><span class="cover c-garden"></span><b>Weekend: sunny, 24°</b><em><i style="background:#5b7be0"></i>Weather</em></div>
-                  <div class="tile"><b>All 12 repos are clean</b><p>2 pulled, 0 conflicts</p><em><i style="background:#2f9e5b"></i>Repo sync</em></div>
-                </div>
-              </div>
-            </div>
-            <div class="pop pop-update">
-              <span class="cover c-news"></span>
-              <b>Three model releases worth a look</b>
-              <p>What changed, what it costs and whether to switch. Five links inside.</p>
-              <div class="pop-foot"><em><i style="background:#e0533d"></i>AI news daily · 7:00</em></div>
-              <div class="ask">Ask Pi about this…<b>↑</b></div>
-            </div>
-          </div>
-          <div class="copy">
-            <h2>Wake up to<br>finished work.</h2>
-            <p>Scheduled Pi tasks run on your Mac while you sleep. Each result arrives on your phone as one tile: a cover, a title, the source. Tap to read it, then ask Pi about it right there.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- 3. Any model you pay for. -->
-      <section class="band band-grey">
-        <div class="band-inner rev">
-          <div class="copy">
-            <h2>Every model<br>you pay for.<br>Switch mid-chat.</h2>
-            <p>Claude, ChatGPT and Codex, Grok, Gemini and more. Use the subscriptions you already have. A cloud agent gives you its model. Pi Remote gives you all of yours — and a new model is one tap away, with every chat still on your Mac.</p>
-          </div>
-          <div class="vis vis-models" aria-hidden="true">
-            <div class="logo-wall" id="logo-wall"></div>
-            <div class="pop pop-model">
-              <small>Model</small>
-              <ul>
-                <li><img src="assets/providers/claude.png" alt=""><b>Claude Opus</b><span>Anthropic</span><em>✓</em></li>
-                <li><img class="mono" src="assets/providers/openai.png" alt=""><b>GPT-5 Codex</b><span>ChatGPT</span></li>
-                <li><img class="mono" src="assets/providers/xai.png" alt=""><b>Grok 4</b><span>xAI</span></li>
-                <li><img src="assets/providers/google.png" alt=""><b>Gemini 2.5 Pro</b><span>Google</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      <!-- 4. Pi benchmark. Source: apache/maka, Terminal-Bench 2.1, deepseek-v4-flash, 89 tasks, one run. -->
-      <section class="band band-white">
-        <div class="band-inner">
-          <div class="vis vis-bench">
-            <div class="bench">
-              <div class="bench-block"><small>Tokens per task</small>
-                <div class="bar me"><span>Pi</span><i style="--w:50.7%"></i><b>1.48M</b></div>
-                <div class="bar"><span>Claude Code</span><i style="--w:95.2%"></i><b>2.78M</b></div>
-                <div class="bar"><span>Codex</span><i style="--w:100%"></i><b>2.92M</b></div>
-              </div>
-              <div class="bench-block"><small>Cost per solved task</small>
-                <div class="bar me"><span>Pi</span><i style="--w:36.7%"></i><b>$0.020</b></div>
-                <div class="bar"><span>Codex</span><i style="--w:53.6%"></i><b>$0.029</b></div>
-                <div class="bar"><span>Claude Code</span><i style="--w:100%"></i><b>$0.054</b></div>
-              </div>
-              <p class="bench-src">Terminal-Bench 2.1, same model (DeepSeek V4 Flash), 89 tasks, single run. Results vary by model and task. <a href="https://github.com/apache/maka/blob/main/docs/eval/terminal-bench-2.1-deepseek-v4-flash-nine-arm.md" target="_blank" rel="noopener">Source</a></p>
-            </div>
-          </div>
-          <div class="copy">
-            <h2>Same model.<br>Half the tokens.</h2>
-            <p>Pi Remote runs Pi, the open agent framework. With the same model, Pi used about half the tokens of Codex and Claude Code, and had the lowest cost per solved task of nine agents tested.</p>
-            <ul class="ticks">
-              <li>Lowest cost per solved task, out of 9 agents</li>
-              <li>35% more tasks done than Claude Code</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-    </div>
-
-
-
-    <!-- Security: one diagram of the connection. -->
-    <section class="security" id="security">
-      <h2 class="section-title">Your work stays on your Mac.</h2>
-      <p class="section-sub">Not another cloud agent. Phone and Mac talk end-to-end encrypted; the relay only passes sealed messages.</p>
-      <div class="cmp">
-        <div class="cmp-col them">
-          <h3>Cloud agents</h3>
-          <div class="row"><small>Where it runs</small><span>On their servers</span></div>
-          <div class="row"><small>Models</small><span>The one they pick</span></div>
-          <div class="row"><small>Your data</small><span>Stored on their side</span></div>
-        </div>
-        <div class="cmp-col us">
-          <h3>Pi Remote</h3>
-          <div class="row"><small>Where it runs</small><span>On your own Mac</span></div>
-          <div class="row"><small>Models</small><span>Any model you pay for</span></div>
-          <div class="row"><small>Your data</small><span>On your disk, always yours</span></div>
-        </div>
+    <!-- S3 Models -->
+    <section class="sp sp-models" id="models">
+      <div class="sp-inner">
+        <div class="big-num"><b data-count="30">30</b><span>+</span></div>
+        <h2>model providers.<br>Bring the ones you pay for.</h2>
+        <p>Claude, ChatGPT, Gemini, Grok, DeepSeek, Kimi, Qwen and more. Sign in with the subscriptions you already have. Switch any time; your chats stay on your computer.</p>
+        <p class="pv-hint">Point at a logo to see its name.</p>
       </div>
-      <div class="flow card" role="img" aria-label="Phone and Mac exchange encrypted envelopes through the relay. The relay cannot read them.">
-        <div class="node"><span class="px-icon lg" data-icon="phone"></span><b>Your phone</b><small>holds a key</small></div>
-        <div class="wire"><span class="packet"></span><small>sealed</small></div>
-        <div class="node relay"><span class="px-icon lg" data-icon="cloud"></span><b>Relay</b><small>no key · forwards only</small></div>
-        <div class="wire"><span class="packet rev"></span><small>sealed</small></div>
-        <div class="node"><span class="px-icon lg" data-icon="mac"></span><b>Your Mac</b><small>holds a key · runs Pi</small></div>
-      </div>
-      <p class="note">Your model provider still sees what Pi sends to it, under its own data policy.</p>
+      <div class="pv-sphere" id="pv-sphere" aria-label="A turning sphere of model provider logos"><p class="pv-tip" id="pv-tip" aria-live="polite"></p></div>
     </section>
 
+    <!-- S4 Cost. Source: Composio Bench, Kimi K3 run, Aug 2026. -->
+    <section class="sp sp-cost split" id="cost">
+      <div class="split-l">
+        <h2>Same model.<br>A third of the cost.</h2>
+        <p>Your AI runs on Pi, a lean open agent framework. On the same model and the same tasks, it spends less and finishes sooner than the popular coding agents.</p>
+        <div class="race-big" aria-live="polite"><b id="race-num">2×</b><span id="race-line">faster than Claude Code</span></div>
+      </div>
+      <!-- One race instead of three equal charts. All meters run at the same rate; Pi stops first. -->
+      <div class="race card" id="race">
+        <div class="race-tabs" role="tablist" aria-label="Benchmark measure">
+          <button role="tab" data-m="time" aria-selected="true">Speed</button>
+          <button role="tab" data-m="cost" aria-selected="false">Cost</button>
+          <button role="tab" data-m="tokens" aria-selected="false">Tokens</button>
+        </div>
+        <div class="lanes" id="lanes"></div>
+        <p class="race-cap" id="race-cap">Median time per task.</p>
+      </div>
+      <p class="src">Composio Bench, August 2026. Same model (Kimi K3) for every agent, 25 real-app tasks, one run per task. Costs use the model prices of that month. Results vary by model and task. <a href="https://composio.dev/content/best-ai-agent-harnesses" target="_blank" rel="noopener">Source</a></p>
+    </section>
 
+    <!-- S5 Data and security -->
+    <section class="security split" id="security">
+      <div class="split-l">
+        <h2 class="section-title">Your data stays on your computer.</h2>
+        <p class="section-sub">Change models as often as you like. Your chats, to-dos and files do not move.</p>
+        <div class="cmp">
+          <div class="cmp-col them">
+            <h3>Cloud agents</h3>
+            <p class="cmp-logos"><span><img src="assets/providers/xai.png" alt="Grok"></span><span><img src="assets/providers/openai.png" alt="ChatGPT"></span><span><img src="assets/providers/meta.png" alt="Meta Muse"></span><small>Grok · ChatGPT agents · Meta Muse</small></p>
+            <div class="row"><small>Where it runs</small><span>On their servers</span></div>
+            <div class="row"><small>Models</small><span>The one they pick</span></div>
+            <div class="row"><small>Your data</small><span>Stored on their side</span></div>
+          </div>
+          <div class="cmp-col us">
+            <h3>Pi Remote</h3>
+            <p class="cmp-logos"><span class="me"><img src="assets/img/avatar-backpack.webp" alt=""></span><small>Your computer, your models</small></p>
+            <div class="row"><small>Where it runs</small><span>On your own computer</span></div>
+            <div class="row"><small>Models</small><span>Any model you pay for</span></div>
+            <div class="row"><small>Your data</small><span>On your disk, always yours</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="split-r">
+        <!-- A real sentence is sealed on the phone, crosses the relay as noise, and opens on the computer. -->
+        <div class="seal card" id="seal" role="img" aria-label="A message is sealed on your phone, passes the relay as unreadable text, and opens on your computer. The relay has no key.">
+          <div class="seal-track" aria-hidden="true"><i class="seal-line"></i><i class="seal-glow" id="seal-glow"></i></div>
+          <div class="seal-node" data-n="phone"><span class="seal-ic"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.6"/><path d="M10.5 18.5h3"/></svg></span><b>Your phone</b><small>has the key</small></div>
+          <div class="seal-node relay" data-n="relay"><span class="seal-ic"><svg viewBox="0 0 24 24"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.6 9.3 4.6 4.6 0 0 0 7 18.5z"/></svg></span><b>Relay</b><small>no key · only forwards</small><em class="seal-blind" id="seal-blind">Can’t read this</em></div>
+          <div class="seal-node" data-n="mac"><span class="seal-ic"><svg viewBox="0 0 24 24"><rect x="4" y="4.5" width="16" height="11" rx="1.6"/><path d="M2.5 19.5h19"/></svg></span><b>Your computer</b><small>has the key</small></div>
+          <div class="seal-msg" id="seal-msg" aria-hidden="true"><svg class="lk" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9.5" rx="2.2"/><path class="shackle" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span id="seal-text">Book the dentist, Tue 9:30</span></div>
+        </div>
+        <p class="note">Your model provider still sees what your AI sends to it, under its own data policy.</p>
+      </div>
+    </section>
+
+    <!-- S5b The MCP gateway in short. Its own page is mcp.html. -->
+    <section class="sp sp-mcp" id="mcp">
+      <div class="mcp-band card">
+        <div class="mcp-band-copy">
+          <p class="eyebrow-s">Remote MCP server · Works with Skills</p>
+          <h2>Control your computer from ChatGPT or Claude.</h2>
+          <p>Pi Remote turns your computer into a remote MCP server. Add its address as a connector in ChatGPT or Claude, then just ask: find a file, run a command, tidy a folder. Your Skills can use it too: a Skill tells the AI what to do, and Pi Remote lets it do it on your computer.</p>
+          <ul class="mcp-tags" aria-label="Key facts"><li>MCP connector</li><li>Works with Skills</li><li>8 tools</li><li>You approve each app</li><li>Same subscription</li></ul>
+          <a class="btn btn-outline" href="mcp.html">See how it works <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="mcp-band-art" aria-hidden="true">
+          <span class="mb-app"><img src="assets/providers/claude.png" alt=""></span>
+          <span class="mb-app b"><img src="assets/providers/openai.png" alt=""></span>
+          <i class="mb-line"><i></i></i>
+          <span class="mb-mac"><svg viewBox="0 0 24 24"><rect x="4" y="4.5" width="16" height="11" rx="1.6"/><path d="M2.5 19.5h19"/></svg><small>Your computer</small></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- S6 Pricing. Price and refund terms are drafts. -->
+    <section class="sp sp-price split" id="pricing">
+      <div class="split-l">
+      <div class="sp-head">
+        <h2>Try it free for 7 days.</h2>
+        <p>No surprises. If it is not for you, you get your money back.</p>
+      </div>
+      <ol class="timeline" aria-label="Trial and refund timeline">
+        <li><b>Day 0</b><span>Start free. Everything included.</span></li>
+        <li><b>Day 7</b><span>Your first payment. Cancel before, pay nothing.</span></li>
+        <li class="refund"><b>Day 7–10</b><span>Changed your mind? Full refund.</span></li>
+      </ol>
+      </div>
+      <div class="plan card">
+        <p class="plan-name">Pi Remote</p>
+        <p class="plan-price">7 days free<small>then the launch price</small></p>
+        <ul class="ticks">
+          <li>Every feature, on every computer you pair</li>
+          <li>Bring your own model subscriptions</li>
+          <li>Works with Claude and ChatGPT, on up to 3 computers</li>
+          <li>Full refund within 3 days of your first payment</li>
+        </ul>
+        <a class="btn btn-primary btn-block" href="#top" id="plan-join" data-join>Join the waitlist</a>
+      </div>
+    </section>
+
+    <!-- S7 Details: small live pieces of the app. -->
+    <section class="sp sp-details" id="details">
+      <div class="sp-head center">
+        <h2>Polished in the small places.</h2>
+        <p>The parts you touch a hundred times a day get the most care.</p>
+      </div>
+      <!-- Bento grid: one large card, one tall card, two small cards and a wide iPad card. -->
+      <div class="bento">
+        <figure class="bx bx-orb" id="dt-orb" role="button" tabindex="0" aria-label="Thinking orb. Activate to change its form.">
+          <figcaption><b>Thinking orb</b><span>Fifteen dot forms. It changes while your AI works. Tap it.</span></figcaption>
+          <div class="orb-wrap"><canvas id="dt-orb-c" aria-hidden="true"></canvas><p class="dt-orb-copy" id="dt-orb-copy">Bring the hard part.</p></div>
+          <span class="dt-orb-name" id="dt-orb-name">composing · 1 / 15</span>
+        </figure>
+        <figure class="bx bx-max" aria-hidden="true">
+          <figcaption><b>Max thinking</b><span>Push it to Max. The sheet glows in a slow rainbow.</span></figcaption>
+          <canvas class="aura" id="dt-aura"></canvas>
+          <div class="mx-sheet"><div class="mx-model"><b>claude-opus</b><span>Thinking</span></div>
+            <div class="mx-track" id="mx-track"><i class="mx-thumb" id="mx-thumb"></i><span>Low</span><span>Med</span><span>High</span><span>Max</span></div>
+            <p class="mx-level" id="mx-level">High</p></div>
+        </figure>
+        <figure class="bx bx-read" aria-hidden="true">
+          <figcaption><b>Reading font</b><span>A book face for long answers.</span></figcaption>
+          <div class="rd-seg"><span class="on" id="rd-a">Mono</span><span id="rd-b">Reading</span></div>
+          <div class="rd-text" id="rd-text"><p class="mono">Go early in April. The blossoms peak in the first week.</p><p class="serif">Go early in April. The blossoms peak in the first week.</p></div>
+        </figure>
+        <figure class="bx bx-run" aria-hidden="true">
+          <figcaption><b>Running</b><span>A rainbow light circles the box while your AI works.</span></figcaption>
+          <div class="hl-run"><canvas id="hl-orb"></canvas><span>Working · <b id="hl-sec">12</b> s</span></div>
+          <div class="cblock beaming"><p>Plan my week around the dentist</p><div class="hl-row"><span class="cplus">+</span><span class="cchip">opus · Max</span><span class="hl-stop"><i></i></span></div></div>
+        </figure>
+        <figure class="bx bx-ipad" aria-hidden="true">
+          <figcaption><b>iPad</b><span>The same chats, to-dos and updates on a bigger screen. Start on your phone, carry on at your iPad.</span><em class="bx-tags"><i>Same account</i><i>Live sync</i><i>Landscape and portrait</i></em></figcaption>
+          <!-- The iPad app at 1180 x 820 pt and the iPhone at 390 x 844 pt, both scaled. One chat on both. -->
+          <div class="dev dev-pad"><div class="scr"><div class="pad">
+            <div class="pad-sb"><span><b>8:16</b> Fri 9 Oct</span><span class="r"><svg viewBox="0 0 16 12"><path d="M8 11.2l2.3-2.6a3.3 3.3 0 0 0-4.6 0zM3.4 6.4l1.4 1.5a4.6 4.6 0 0 1 6.4 0l1.4-1.5a6.6 6.6 0 0 0-9.2 0zM.6 3.6L2 5.1a8.6 8.6 0 0 1 12 0l1.4-1.5a10.6 10.6 0 0 0-14.8 0z" fill="currentColor"/></svg>100% <i class="batt"></i></span></div>
+            <nav class="pad-tabs"><span class="on">Chats</span><span>Updates</span><span>Todo</span></nav>
+            <aside class="pc-side">
+              <div class="pc-sh"><div><b>Chats</b><small>Studio Mac</small></div><span class="host">S</span></div>
+              <div class="pc-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>Search chats…</div>
+              <div class="pc-seg"><span class="on">Recent</span><span>Projects</span></div>
+              <div class="pc-row on"><b>Passport and dentist</b><small>Todo · now</small></div><div class="pc-row"><b>Tokyo flights in April</b><small>Updates · 7:06</small></div><div class="pc-row"><b>Fix the failing test</b><small>pi-remote · 2h</small></div><div class="pc-row"><b>Weekly plan</b><small>Home · 1d</small></div><div class="pc-row"><b>Invoice for Studio</b><small>Work · 2d</small></div><div class="pc-row"><b>Rename holiday photos</b><small>Photos · 3d</small></div>
+              <span class="pc-new">+ Chat</span>
+            </aside>
+            <section class="pc-main">
+              <div class="pc-top"><span class="round"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><b>Passport and dentist</b><span class="host">S</span></div>
+              <div class="pc-thread">
+            <div class="msg me"><span class="tpill">✓ Todo · Renew passport before booking flights</span><span class="tpill">✓ Todo · Book a dentist appointment</span>Help me get these done.<time>8:13</time></div>
+            <div class="msg">Here’s the plan.<ul><li><b>Passport:</b> renew online today. It is back in about 3 weeks.</li><li><b>Dentist:</b> you are free Tue 9:30, Wed 2:00 pm and Fri 11:15.</li></ul><time>8:14</time></div>
+            <div class="msg me">Tue 9:30<time>8:15</time></div>
+            <div class="msg">Booked for Tue 9:30. Smile Dental confirmed it.<time>8:16</time></div>
+            <div class="change done"><div class="change-h"><span>Todo · Done</span><b>Undo</b></div><div class="change-r"><i>✓</i><div><s>Book a dentist appointment</s><small>Done · appointment Tue 13 Oct, 9:30</small></div></div></div>
+              </div>
+              <div class="composer"><div class="ph">Message your AI…</div><div class="row"><span class="cplus">+</span><span class="cchip">claude-opus · High ⌄</span><span class="cchip">~/Home</span><span class="csend">↑</span></div></div>
+            </section>
+          </div></div></div>
+          <div class="dev dev-ph"><div class="scr"><div class="ph">
+            <div class="sb"><span>8:16</span><span class="sb-r"><svg viewBox="0 0 16 12"><path d="M8 11.2l2.3-2.6a3.3 3.3 0 0 0-4.6 0zM3.4 6.4l1.4 1.5a4.6 4.6 0 0 1 6.4 0l1.4-1.5a6.6 6.6 0 0 0-9.2 0zM.6 3.6L2 5.1a8.6 8.6 0 0 1 12 0l1.4-1.5a10.6 10.6 0 0 0-14.8 0z" fill="currentColor"/></svg><i class="batt"></i></span></div>
+            <div class="pc-top"><span class="round"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><b>Passport and dentist</b><span class="host">S</span></div>
+            <div class="pc-thread">
+            <div class="msg me"><span class="tpill">✓ Todo · Renew passport before booking flights</span><span class="tpill">✓ Todo · Book a dentist appointment</span>Help me get these done.<time>8:13</time></div>
+            <div class="msg">Here’s the plan.<ul><li><b>Passport:</b> renew online today. It is back in about 3 weeks.</li><li><b>Dentist:</b> you are free Tue 9:30, Wed 2:00 pm and Fri 11:15.</li></ul><time>8:14</time></div>
+            <div class="msg me">Tue 9:30<time>8:15</time></div>
+            <div class="msg">Booked for Tue 9:30. Smile Dental confirmed it.<time>8:16</time></div>
+            <div class="change done"><div class="change-h"><span>Todo · Done</span><b>Undo</b></div><div class="change-r"><i>✓</i><div><s>Book a dentist appointment</s><small>Done · appointment Tue 13 Oct, 9:30</small></div></div></div>
+            </div>
+            <div class="chat-comp"><span class="cplus">+</span>Message your AI<span class="csend" style="margin-left:auto">↑</span></div>
+          </div></div></div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- S8 Call to action -->
     <section class="access" id="access">
       <h2 class="section-title">Ready to leave your desk?</h2>
-      <p class="section-sub">Early access. No subscription during the preview.</p>
+      <p class="section-sub">Join the waitlist. We will tell you when your invite is ready.</p>
       <div class="price-wrap"><img class="access-dog" src="assets/img/dog-clog.webp" alt="" aria-hidden="true">
       <div class="price card">
         <div class="badge" aria-hidden="true">
@@ -245,10 +301,10 @@
           <img src="assets/img/avatar-backpack.webp" alt="">
         </div>
         <p class="price-name">Pi Remote Early Access</p>
-        <p class="price-value">Free<small>during the preview</small></p>
-        <a class="btn btn-primary btn-block" href="#email" id="bottom-join">Join the waitlist</a>
+        <p class="price-value">7 days<small>free to try</small></p>
+        <a class="btn btn-primary btn-block" href="#top" id="bottom-join" data-join>Join the waitlist</a>
       </div></div>
-      <p class="aside-links"><a href="faq.html">Questions first?</a> · <a href="#stage">See the setup</a></p>
+      <p class="aside-links"><a href="faq.html">Questions first?</a> · <a href="#how">See it work</a></p>
     </section>
   </main>
 
@@ -256,17 +312,67 @@
     <div class="footer-top">
       <div class="footer-brand">
         <p class="wordmark">Pi Remote</p>
-        <p>Your Pi agent, from your phone</p>
+        <p>Your own AI, on your own computer</p>
       </div>
       <div class="footer-cols">
-        <div><h4>Product</h4><a href="#stage">How it works</a><a href="#security">Security</a><a href="#access">Early access</a><a href="faq.html">FAQ</a></div>
-        <div><h4>Guides</h4><a href="faq.html">Pair a phone</a><a href="faq.html">Continue a terminal session</a><a href="faq.html">Preview files</a><a href="faq.html">Add another Mac</a></div>
+        <div><h4>Product</h4><a href="#how">How it works</a><a href="#models">Models</a><a href="#pricing">Pricing</a><a href="#security">Security</a><a href="mcp.html">Claude &amp; ChatGPT</a><a href="faq.html">FAQ</a></div>
+        <div><h4>Guides</h4><a href="faq.html">Pair a phone</a><a href="faq.html">Continue a terminal session</a><a href="faq.html">Preview files</a><a href="faq.html">Add another computer</a></div>
         <div><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a></div>
       </div>
     </div>
-    <div class="footer-bottom"><span>Independent project for Pi · Working name · Design preview</span><span>© 2026 Pi Remote</span></div>
+    <div class="footer-bottom"><span>Working name · Design preview · Sample content</span><span>© 2026 Pi Remote</span></div>
   </footer>
 
-  <script type="module" src="app.js"></script>
+  <!-- Waitlist sheet. A centred card on wide screens, a bottom sheet on phones.
+       Preview only: no network call. Production replaces the Google button with
+       google.accounts.id.renderButton (outline, large, pill, continue_with) and
+       posts the ID token or the email to the waitlist Worker. -->
+  <dialog class="wl" id="waitlist" aria-labelledby="wl-title">
+    <div class="wl-card">
+      <button class="wl-close" type="button" data-close aria-label="Close">×</button>
+
+      <div class="wl-step" data-step="choose">
+        <img class="wl-dog" src="assets/img/avatar-backpack.webp" alt="" width="56" height="56">
+        <h2 id="wl-title">Join the waitlist</h2>
+        <p class="wl-sub">We will email you when your invite is ready.</p>
+        <button class="gbtn" type="button" id="wl-google">
+          <svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          <span class="glabel">Continue with Google</span>
+        </button>
+        <div class="wl-or" aria-hidden="true"><span>or</span></div>
+        <div class="wl-form" id="wl-form" role="group" aria-label="Join with an email address">
+          <label class="sr-only" for="wl-email">Email address</label>
+          <input id="wl-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com" required aria-describedby="wl-status">
+          <button class="btn btn-primary" type="button" id="wl-join">Join</button>
+        </div>
+        <p class="wl-status" id="wl-status" role="status"></p>
+        <p class="wl-legal">By joining, you agree that we can email you about your invite and the launch. Unsubscribe at any time. <a href="#">Privacy</a></p>
+      </div>
+
+      <div class="wl-step" data-step="done" hidden>
+        <p class="wl-tick" aria-hidden="true">✓</p>
+        <h2 tabindex="-1">You’re on the list</h2>
+        <p class="wl-sub">We will email <b class="wl-addr"></b> when your invite is ready.</p>
+        <p class="wl-via" hidden>Joined with Google</p>
+        <button class="btn btn-primary btn-block" type="button" data-close>Done</button>
+      </div>
+
+      <div class="wl-step" data-step="check" hidden>
+        <p class="wl-tick mail" aria-hidden="true">✉</p>
+        <h2 tabindex="-1">Check your inbox</h2>
+        <p class="wl-sub">We sent a link to <b class="wl-addr"></b>. Tap it to confirm your place.</p>
+        <button class="btn btn-primary btn-block" type="button" data-close>Done</button>
+        <button class="wl-text" type="button" data-restart>Use another email</button>
+      </div>
+
+      <p class="wl-preview">Design preview. Nothing is sent or saved.</p>
+    </div>
+  </dialog>
+
+  <!-- Images that scripts reuse. Scripts copy currentSrc from here, so previews can rewrite the paths. -->
+  <div class="asset-bank" hidden aria-hidden="true"><img data-asset="atu" src="assets/img/atu-face.webp" alt=""><img data-asset="pi" src="assets/img/avatar-backpack.webp" alt=""><img data-asset="claude" src="assets/providers/claude.png" alt=""><img data-asset="openai" src="assets/providers/openai.png" alt=""><img data-asset="google" src="assets/providers/google.png" alt=""><img data-asset="xai" src="assets/providers/xai.png" alt=""><img data-asset="deepseek" src="assets/providers/deepseek.png" alt=""><img data-asset="kimi" src="assets/providers/kimi.png" alt=""><img data-asset="qwen" src="assets/providers/qwen.png" alt=""><img data-asset="mistral" src="assets/providers/mistral.png" alt=""><img data-asset="meta" src="assets/providers/meta.png" alt=""><img data-asset="githubcopilot" src="assets/providers/githubcopilot.png" alt=""><img data-asset="openrouter" src="assets/providers/openrouter.png" alt=""><img data-asset="groq" src="assets/providers/groq.png" alt=""><img data-asset="nvidia" src="assets/providers/nvidia.png" alt=""><img data-asset="minimax" src="assets/providers/minimax.png" alt=""><img data-asset="zhipu" src="assets/providers/zhipu.png" alt=""><img data-asset="huggingface" src="assets/providers/huggingface.png" alt=""><img data-asset="together" src="assets/providers/together.png" alt=""><img data-asset="fireworks" src="assets/providers/fireworks.png" alt=""><img data-asset="cerebras" src="assets/providers/cerebras.png" alt=""><img data-asset="azure" src="assets/providers/azure.png" alt=""><img data-asset="bedrock" src="assets/providers/bedrock.png" alt=""><img data-asset="vertexai" src="assets/providers/vertexai.png" alt=""><img data-asset="cloudflare" src="assets/providers/cloudflare.png" alt=""><img data-asset="vercel" src="assets/providers/vercel.png" alt=""><img data-asset="moonshot" src="assets/providers/moonshot.png" alt=""><img data-asset="baseten" src="assets/providers/baseten.png" alt=""><img data-asset="zai" src="assets/providers/zai.png" alt=""><img data-asset="opencode" src="assets/providers/opencode.png" alt=""><img data-asset="antgroup" src="assets/providers/antgroup.png" alt=""><img data-asset="xiaomimimo" src="assets/providers/xiaomimimo.png" alt=""></div>
+  <script src="thinking-orb.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="waitlist.js" defer></script>
 </body>
 </html>
