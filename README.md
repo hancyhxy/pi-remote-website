@@ -20,6 +20,7 @@ Hey Atu 的运营物料都从这里找：品牌、图标、小狗、商店截图
 |---|---|
 | App Store 截图 | `brand/hey-atu-brand-kit/03-stores/app-store/`，规格和清单见同目录 `listing.md` |
 | App Store 截图 v2 的内容（每张的意思、文案、界面，换样式时用） | `docs/app-store-screenshots/README.md` |
+| App Store 截图 v2 的生成脚本和定稿草图 | `brand/hey-atu-brand-kit/09-generator/appstore-v2/`（`build.sh`） |
 | 截图和营销图模板 | `brand/hey-atu-brand-kit/09-generator/`（`build_appstore.py`、`as-*.html`） |
 | App 图标 | `brand/hey-atu-brand-kit/02-app-icon/` |
 | 社媒图、OG 分享图、邮件头图 | `brand/hey-atu-brand-kit/04-marketing/` |

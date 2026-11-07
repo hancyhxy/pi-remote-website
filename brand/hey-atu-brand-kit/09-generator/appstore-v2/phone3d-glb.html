@@ -1,0 +1,103 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>html,body{margin:0;background:transparent;overflow:hidden}canvas{display:block}</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head><body>
+<script type="module">
+// iPhone 17 Pro GLB ("iPhone 17 Pro" by Ranguel, CC-BY-4.0, via app-preview-craft-skill) with our screen texture.
+// Same query and framing as phone3d.html: screen, rx, ry, rz, finish, w, h, dpr.
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const q = new URLSearchParams(location.search);
+const W = +q.get('w') || 1300, H = +q.get('h') || 2300;
+const deg = (k, d = 0) => (+(q.get(k) ?? d)) * Math.PI / 180;
+const FIN = { silver: 0xdcdde0, orange: 0xd9773a, blue: 0x34445e, keep: null }[q.get('finish') || 'silver'];
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(+q.get('dpr') || 2);
+renderer.setSize(W, H);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.03).texture;
+const key = new THREE.DirectionalLight(0xffffff, 1.4); key.position.set(-300, 400, 500); scene.add(key);
+const rim = new THREE.DirectionalLight(0xfff1e0, 0.8); rim.position.set(400, -200, 300); scene.add(rim);
+
+const loader = new GLTFLoader(); loader.setMeshoptDecoder(MeshoptDecoder);
+const gltf = await loader.loadAsync('models/iphone-17-pro.glb');
+const model = gltf.scene;
+model.rotation.set(0, Math.PI, 0);              // screen to +Z, +Y up
+const holder = new THREE.Group(); holder.add(model); holder.updateMatrixWorld(true);
+
+const screens = [];
+model.traverse((o) => {
+  if (!o.isMesh) return;
+  const name = o.material?.name;
+  if (name === 'Glass') o.visible = false;      // cover glass would tint the screenshot
+  if (name === 'OLED') screens.push(o);
+  if (FIN != null && name === 'Anodized_aluminum') { o.material = o.material.clone(); o.material.color.setHex(FIN); }
+});
+
+// planar UVs over the screen's projection on XY
+const box = new THREE.Box2(new THREE.Vector2(Infinity, Infinity), new THREE.Vector2(-Infinity, -Infinity));
+const v = new THREE.Vector3(), pts = [];
+for (const m of screens) {
+  const p = m.geometry.attributes.position, arr = [];
+  for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i).applyMatrix4(m.matrixWorld); arr.push([v.x, v.y]); box.expandByPoint(new THREE.Vector2(v.x, v.y)); }
+  pts.push(arr);
+}
+const tex = await new THREE.TextureLoader().loadAsync(q.get('screen'));
+tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 16;
+const smat = new THREE.MeshBasicMaterial({ map: tex, toneMapped: false, side: THREE.DoubleSide });
+screens.forEach((m, n) => {
+  const geo = m.geometry.clone(), uv = new Float32Array(pts[n].length * 2);
+  pts[n].forEach(([x, y], i) => { uv[i * 2] = (x - box.min.x) / (box.max.x - box.min.x); uv[i * 2 + 1] = (y - box.min.y) / (box.max.y - box.min.y); });
+  geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2)); m.geometry = geo; m.material = smat;
+});
+
+// centre and scale: body height 147.6 units, like phone3d.html
+const bb = new THREE.Box3().setFromObject(holder);
+const size = bb.getSize(new THREE.Vector3()), ctr = bb.getCenter(new THREE.Vector3());
+const s = 147.6 / size.y;
+model.parent.remove(model);
+const inner = new THREE.Group(); inner.add(model);
+model.position.sub(ctr.clone().divideScalar(1)); // offset in holder space before scale
+const scaled = new THREE.Group(); scaled.scale.setScalar(s); scaled.add(inner);
+inner.position.set(0, 0, 0); model.position.set(-ctr.x, -ctr.y, -ctr.z);
+model.rotation.set(0, Math.PI, 0);
+// iOS shows the Dynamic Island as one black pill; the model has a pill cutout and a lens. Cover both.
+{
+  let zmax = -Infinity;
+  for (const m of screens) { const p = m.geometry.attributes.position; for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i).applyMatrix4(m.matrixWorld); zmax = Math.max(zmax, v.z); } }
+  const bw = box.max.x - box.min.x, bh = box.max.y - box.min.y;
+  const iw = bw * 125 / 402, ih = bh * 37.3 / 874, top = bh * 11 / 874;
+  const sh = new THREE.Shape(), r = ih / 2, x0 = -iw / 2, y0 = -ih / 2;
+  sh.moveTo(x0 + r, y0); sh.lineTo(-x0 - r, y0); sh.absarc(-x0 - r, 0, r, -Math.PI / 2, Math.PI / 2); sh.lineTo(x0 + r, -y0); sh.absarc(x0 + r, 0, r, Math.PI / 2, Math.PI * 1.5);
+  const pill = new THREE.Mesh(new THREE.ShapeGeometry(sh, 32), new THREE.MeshBasicMaterial({ color: 0x000000, toneMapped: false }));
+  const cx = (box.min.x + box.max.x) / 2, cy = box.max.y - top - ih / 2;
+  pill.position.set(cx - ctr.x, cy - ctr.y, zmax - ctr.z + 0.0006);
+  inner.add(pill);
+}
+const phone = new THREE.Group(); phone.add(scaled);
+phone.rotation.order = 'ZYX';
+phone.rotation.set(deg('rx'), deg('ry'), deg('rz'));
+scene.add(phone);
+
+const cam = new THREE.PerspectiveCamera(18, W / H, 10, 3000);
+cam.position.set(0, 0, 600); cam.lookAt(0, 0, 0);
+renderer.render(scene, cam);
+window.info = { screens: screens.length, size: [size.x, size.y, size.z], scale: s };
+window.done = true;
+</script>
+</body></html>

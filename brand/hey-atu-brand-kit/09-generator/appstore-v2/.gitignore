@@ -1,0 +1,12 @@
+# Rebuilt by build.sh (render_screens.py, bezels.py, compose_c.py)
+scr-*.png
+wscr-*.png
+ph2d-*.png
+mac-desktop.png
+watch-*.png
+watchs-*.png
+watchb-*.png
+ipadm.png
+pano-c*.html
+out/*
+!out/r6f-*

@@ -49,7 +49,7 @@ A 的抽屉照 App 现在的样子：宽 `min(320, 屏宽 − 62)`（390 pt 的�
 
 ![开场 A 和 B（上一版）](style-c-r6-open-a-vs-b.jpg)
 
-出图：`pyx compose_c.py`（默认 F）或 `pyx compose_c.py --open E`（也可以 `A`–`D`），切图在 `out-c/r6<版本>-*.png`。
+出图：`brand/hey-atu-brand-kit/09-generator/appstore-v2/build.sh`（默认 F）或 `build.sh --open E`（也可以 `A`–`D`），切图在同一文件夹的 `out/r6<版本>-*.png`；定稿 F 的 7 张已提交在 `out/r6f-*`。步骤和素材授权见那里的 [README](../../brand/hey-atu-brand-kit/09-generator/appstore-v2/README.md)。
 
 | # | 想传递的意思 | 文案 | 界面主要展示 | 视觉描述 |
 |---|---|---|---|---|
@@ -308,7 +308,7 @@ CapWords 当前第 1 张的文案是 `Learn to speak a new language`，和你截
 
 ![样式 A](style-a-preview.jpg)
 
-- 样式 A 的生成脚本和原尺寸图在临时目录 `~/.pi/tmp/2026-11-07/appstore-v2/`（`src/compose.py`、`out/`），会被清理。
+- 样式 A 的生成脚本和原尺寸图当时在临时目录 `~/.pi/tmp/2026-11-07/appstore-v2/`（`src/compose.py`、`out/`），没有保留。
   选定样式后再把脚本移进 `brand/hey-atu-brand-kit/09-generator/`。
 - 预览里第 1、2、5 张的手机界面是按现在的 App 用 HTML 还原的；第 3、4 张用的是产品团队的模拟器截图；
   桌面窗口和手表来自产品设计稿。都不是最终截图。
@@ -331,7 +331,7 @@ CapWords 当前第 1 张的文案是 `Learn to speak a new language`，和你截
 | 贴纸 | 官网的矢量 Atu 头像 `../pi-remote/site/assets/brand/atu-outline.svg`（带黑描边的版本，在橙底上最清楚），外面加一圈白边；大小和角度都不一样 |
 
 - 第 3 张的 Todo 界面已经换成本文的英文示例数据，用 HTML 还原。
-- 生成脚本是临时目录里的 `src/compose_b.py`，原尺寸切图在 `out-b/`。
+- 生成脚本当时是临时目录里的 `src/compose_b.py`，没有保留。
 - 第一版用的是毛绒 Atu 抠图，已按 Xinyi 的意见换成官网矢量头像；标题字体（品牌像素等宽字）已确认。
 
 **样式 C**（2026-11-07，5 张）：开场重度参考 Otter，内容按上面“当前顺序（第二轮）”。蓝色虚线和编号只是标出切线，成品里没有。
@@ -345,19 +345,18 @@ CapWords 当前第 1 张的文案是 `Learn to speak a new language`，和你截
 | 项 | 做法 |
 |---|---|
 | 配色（当前，5 张都一样） | 照样式 A：黑底 `#0E0E10`，白色点阵往下渐隐，每张左上角一团焦糖色光晕；标题白 `#F7F7F8`，强调词焦糖 `#D9803A`；连接设备的虚线也是焦糖色 |
-| 配色（弃用） | 橙色开场 + 浅金功能页；以及橙色渐变到浅金。脚本备份在 `src/compose_c_orange_light.py` |
+| 配色（弃用） | 橙色开场 + 浅金功能页；以及橙色渐变到浅金。脚本当时在临时目录（`src/compose_c_orange_light.py`），没有保留 |
 | 标题 | 品牌像素等宽字。开场标题 184 px、左上；第 2 张右下那句 128 px、右对齐；功能页 120 px、居中 |
 | 品牌标 | 第 1 张左上角的横版 Logo（`01-logo/svg/atu-lockup-horizontal-on-dark.svg`），和 Otter 一样 |
 | 设备模型（当前，第五轮） | 第 1 张：CC-BY 的 iPhone 17 Pro 3D 模型（Ranguel）。第 2 张：苹果官方 MacBook Air 午夜色（屏幕上方补了菜单栏，窗口不裁）、Apple Watch Ultra 带表带、iPad 横屏。第 3–7 张：苹果官方 iPhone 17 Pro 银色正视边框。第 7 张的手表：苹果官方 Apple Watch Series 11 46mm 银色铝壳（Apple Design Resources 的 `Bezel-Apple-Watch-Series-11-2025.dmg`，从 PSD 里的 2100×3300 原图把表带抠掉）。见上面“设备模型资源” |
 | 设备模型（第四轮，弃用） | 第 1 张也用平面手机；第 7 张用带表带的 Ultra，太写实，和官网的手表不像 |
 | 设备模型（第三轮，弃用） | 第 1 张 3D 手机，第 2 张自己画的 Mac 和设计稿手表，第 4 张宇宙橙边框（侧键看起来像虚线），风格不统一 |
-| 手机模型（上一版） | three.js 渲染的立体 iPhone：银色金属边框（带倒角和厚度）、侧键、黑边、淡淡的玻璃反光，带透视角度。第一版是平面圆角框，Xinyi 觉得不如 Otter 好看，已替换。脚本：临时目录的 `src/phone3d.html` + `src/render_phone3d.py` |
+| 手机模型（上一版） | three.js 渲染的立体 iPhone：银色金属边框（带倒角和厚度）、侧键、黑边、淡淡的玻璃反光，带透视角度。第一版是平面圆角框，Xinyi 觉得不如 Otter 好看，已替换。脚本当时在临时目录（`src/phone3d.html`），没有保留；现在的 3D 手机用 `phone3d-glb.html` |
 | 三端 | 手机左倾 9°、向右转 22°（露出左侧按键）；功能页的手机左右小角度转向；Mac 水平，屏幕里是桌面端设计稿；手表右倾 8°。方案 B 的两块手表一左倾一右倾 |
 | 跨页 | 第 1 张的手机右下角伸进第 2 张；Atu 贴纸横跨第 4、5 张和第 5、6 张的切线（只转几度）。不再有连设备的虚线 |
 | 跑出手机的元素 | 第 3 张的模型卡；第 4 张的待办卡和 Follow up 面板；第 5 张的定时任务卡。都和手机同角度、不旋转 |
 
 - Updates 界面里的新闻改成了虚构条目（`New ferry route opens Monday`、`Fire ban from Saturday`，来源写 `Local news`），不再用真实媒体名。
 - 桌面端还是内部版（ADR 0025），上架前要公开，否则第 2 张的 Mac 要换掉。
-- 生成脚本是临时目录里的 `src/compose_c.py`（`pyx compose_c.py`；界面在 `src/screens.html`，`pyx render_screens.py` 重新出；
-  `pyx bezels.py` 把界面放进苹果边框），原尺寸切图在 `out-c/r6f-*.png`（开场 F）。第三轮的脚本备份是 `src/compose_c_r3.py`。
+- 生成脚本在 `brand/hey-atu-brand-kit/09-generator/appstore-v2/`（`build.sh`：`render_screens.py` 出界面，`bezels.py` 放进苹果边框，`compose_c.py` 拼图），定稿 F 的 7 张原尺寸切图在那里的 `out/r6f-*.png`。第三到五轮的脚本没有保留。
 - `pyx compose_c.py --p1-flat` 把第 1 张换回平面手机。

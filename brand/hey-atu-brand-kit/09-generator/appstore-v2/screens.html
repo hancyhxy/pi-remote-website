@@ -1,0 +1,722 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- Preview-only recreations of current Hey Atu iOS screens (sample data). Style follows
+     pi-remote/ios/native/evidence screenshots of 2026-10-26 .. 11-05. -->
+<style>
+@font-face { font-family: JBM; src: url("../../../../../pi-remote/ios/native/Resources/jetbrains-mono.ttf"); }
+* { box-sizing: border-box; }
+body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; font-family: system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; color: #111; }
+.screen { position: relative; width: 390px; height: 844px; overflow: hidden; background: #f4f4f5; }
+.sb { position: absolute; top: 0; left: 0; right: 0; height: 50px; display: flex; align-items: center; justify-content: space-between; padding: 8px 30px 0 46px; font: 600 16.5px system-ui; z-index: 9; }
+.sb .island { position: absolute; left: 50%; top: 11px; width: 122px; height: 35px; border-radius: 20px; background: #000; transform: translateX(-50%); }
+.sb .r { display: flex; gap: 6px; align-items: center; } .sb svg { height: 12px; fill: #111; }
+.glass { position: absolute; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.82); box-shadow: 0 4px 14px rgba(0,0,0,.07), 0 0 0 .5px rgba(0,0,0,.07); display: grid; place-items: center; z-index: 8; }
+.glass svg { width: 20px; height: 20px; fill: none; stroke: #222; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.cap { position: absolute; left: 76px; right: 76px; top: 47px; height: 44px; border-radius: 22px; background: rgba(255,255,255,.86); box-shadow: 0 4px 14px rgba(0,0,0,.07), 0 0 0 .5px rgba(0,0,0,.07); display: grid; place-content: center; text-align: center; z-index: 8; }
+.cap b { font: 600 14.5px system-ui; } .cap small { font: 11px JBM, monospace; color: #8a8a90; }
+.topfade { position: absolute; left: 0; right: 0; top: 0; height: 110px; background: linear-gradient(#f4f4f5 60%, rgba(244,244,245,0)); z-index: 7; }
+/* code chat */
+.thread { position: absolute; left: 14px; right: 14px; top: 100px; bottom: 176px; display: flex; flex-direction: column; justify-content: flex-end; gap: 9px; font: 13.6px/1.5 JBM, monospace; }
+.thread > * { flex: none; }
+.me { align-self: flex-end; max-width: 84%; padding: 9px 13px; border-radius: 18px; background: #e3ecfb; }
+.ag { padding: 0 4px; }
+.tool { background: #fff; border-radius: 16px; box-shadow: 0 0 0 .5px rgba(0,0,0,.07); overflow: hidden; }
+.tool .hd { display: flex; align-items: center; gap: 7px; padding: 10px 12px; font: 600 13px JBM, monospace; border-bottom: .5px solid #ececee; }
+.tool .hd i { font-style: normal; font-weight: 400; color: #6b6b72; }
+.tool .hd .ok { margin-left: auto; color: #2f9e55; font-weight: 700; }
+.chev { width: 12px; height: 12px; stroke: #555; stroke-width: 2; fill: none; }
+.blk { margin: 9px 10px 4px; border-radius: 11px; background: #f3f3f5; overflow: hidden; font: 12px/1.6 JBM, monospace; }
+.blk div { padding: 1px 10px; white-space: pre; }
+.blk .del { background: #fbe3e1; } .blk .add { background: #e2f3e5; }
+.blk .del::first-letter { color: #d0453a; } .blk .add::first-letter { color: #2f9e55; }
+.blk .k { color: #c2417a; } .blk .s { color: #3a8a3a; } .blk .n { color: #b8641d; } .blk .c { color: #8a8a90; font-style: italic; } .blk .g { color: #2f9e55; }
+.tool .ft { display: flex; align-items: center; gap: 6px; padding: 7px 12px 9px; font: 12.5px system-ui; color: #6b6b72; }
+.tool .ft .g { color: #2f9e55; } .tool .ft .r { color: #d0453a; }
+.opts { background: #fff; border-radius: 16px; box-shadow: 0 0 0 .5px rgba(0,0,0,.07); padding: 10px 10px 4px; font: 12.5px system-ui; color: #6b6b72; }
+.opts div { display: flex; align-items: center; justify-content: space-between; margin: 7px 0 6px; padding: 8px 12px; border: 1.2px dashed #cfcfd4; border-radius: 12px; font: 500 14px system-ui; color: #111; }
+.opts div::after { content: "›"; color: #8a8a90; font-size: 18px; line-height: 10px; }
+.compose { position: absolute; left: 12px; right: 12px; bottom: 104px; height: 56px; display: flex; align-items: center; gap: 10px; padding: 0 7px; border-radius: 28px; background: rgba(255,255,255,.94); box-shadow: 0 8px 26px -12px rgba(0,0,0,.25), 0 0 0 .5px rgba(0,0,0,.07); font-size: 16.5px; color: #a1a1a6; z-index: 8; }
+.compose .p { width: 42px; height: 42px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: 0 0 0 .5px rgba(0,0,0,.1), 0 2px 6px rgba(0,0,0,.08); font: 300 28px system-ui; color: #333; }
+.compose .s { margin-left: auto; width: 42px; height: 42px; border-radius: 50%; background: #e3e3e6; display: grid; place-items: center; }
+.compose .s svg { width: 18px; stroke: #fff; stroke-width: 2.4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.botfade { position: absolute; left: 0; right: 0; bottom: 0; height: 200px; background: linear-gradient(rgba(244,244,245,0), rgba(244,244,245,.96) 45%); z-index: 6; }
+.tabs { position: absolute; left: 14px; right: 14px; bottom: 26px; height: 66px; display: flex; padding: 5px; border-radius: 34px; background: rgba(255,255,255,.9); box-shadow: 0 10px 30px -8px rgba(0,0,0,.18), 0 0 0 .5px rgba(0,0,0,.08); z-index: 9; }
+.tabs span { flex: 1; border-radius: 30px; display: grid; justify-items: center; align-content: center; gap: 3px; font: 600 11.5px system-ui; color: #1a1a1a; }
+.tabs span.on { background: rgba(0,0,0,.06); color: #d2643f; }
+.tabs svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+/* sheet */
+.dim { position: absolute; inset: 0; background: #c9c9cc; }
+.sheet { position: absolute; left: 8px; right: 8px; top: 64px; bottom: 8px; border-radius: 38px; background: #f2f2f4; box-shadow: 0 -2px 20px rgba(0,0,0,.08); z-index: 5; }
+.sheet .grab { width: 36px; height: 5px; border-radius: 3px; background: #c4c4c8; margin: 8px auto 0; }
+.sheet .bar { position: relative; height: 56px; display: grid; place-items: center; font: 600 17px system-ui; }
+.sheet .bk { position: absolute; left: 14px; top: 8px; width: 40px; height: 40px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: 0 0 0 .5px rgba(0,0,0,.08); }
+.sheet .bk svg, .sheet .x svg { width: 16px; height: 16px; stroke: #222; stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.sheet .x { position: absolute; right: 14px; top: 8px; width: 40px; height: 40px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: 0 0 0 .5px rgba(0,0,0,.08); }
+.grp { margin: 6px 14px 0; background: #fff; border-radius: 18px; box-shadow: 0 0 0 .5px rgba(0,0,0,.05); overflow: hidden; }
+.grp-t { margin: 16px 28px 0; font: 600 13px system-ui; color: #77777d; }
+.prow { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-top: .5px solid #ececee; }
+.prow:first-child { border-top: 0; }
+.prow .lg { width: 40px; height: 40px; border-radius: 10px; border: .5px solid #e2e2e6; display: grid; place-items: center; background: #fff; flex: none; }
+.prow .lg img { width: 26px; height: 26px; border-radius: 6px; }
+.prow .tx { flex: 1; } .prow b { display: block; font: 600 15.5px system-ui; } .prow small { font: 13px system-ui; color: #6b6b72; }
+.prow .chip { padding: 3px 8px; border-radius: 7px; background: #fbf0d6; color: #b8862a; font: 600 11.5px system-ui; }
+.prow::after { content: "›"; color: #9a9aa0; font-size: 22px; }
+.note { margin: 10px 28px 0; font: 12.5px/1.4 system-ui; color: #8a8a90; }
+/* picker card */
+.pick, .scn { align-self: flex-start; }
+.blk .x { color: #d0453a; }
+.spin { margin-left: auto; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #d4d4d8; border-top-color: #6b6b72; }
+.pick { width: 380px; padding: 14px 10px 14px; border-radius: 30px; background: #fff; }
+.pick .h { display: flex; justify-content: space-between; align-items: center; padding: 0 8px 10px; font: 600 16px system-ui; }
+.pick .h span { padding: 7px 14px; border-radius: 16px; background: #ececee; font: 500 14px system-ui; color: #333; }
+.mrow { display: flex; align-items: center; padding: 10px 12px; border-radius: 14px; }
+.mrow.on { background: #ececee; }
+.mrow div { flex: 1; font: 500 15.5px system-ui; } .mrow small { display: block; margin-top: 2px; font: 12.5px system-ui; color: #77777d; }
+.eff { margin: 10px 4px 0; padding: 12px; border-radius: 16px; border: .5px solid #e6e6ea; }
+.eff .t { display: flex; justify-content: space-between; font: 600 13px system-ui; } .eff .t span { padding: 3px 9px; border-radius: 8px; background: #ececee; font-weight: 500; }
+.eff .tr { position: relative; margin-top: 12px; height: 34px; border-radius: 12px; background: linear-gradient(90deg, #d4d4d8 62%, #ececee 62%); }
+.eff .tr i { position: absolute; left: 56%; top: 3px; width: 28px; height: 28px; border-radius: 8px; background: #1d1d1f; }
+.eff .lb { display: flex; justify-content: space-between; padding: 8px 6px 0; font: 11px system-ui; color: #77777d; } .eff .lb b { color: #111; }
+/* scenes card */
+.scn { width: 380px; padding: 16px 0 12px; border-radius: 30px; background: #f2f2f4; }
+.scn .bar { position: relative; text-align: center; font: 600 16.5px system-ui; padding: 4px 0 6px; }
+.scn .bar small { position: absolute; left: 18px; top: 6px; font: 14px system-ui; color: #333; }
+.srow { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-top: .5px solid #ececee; }
+.srow:first-child { border-top: 0; }
+.srow i { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font: 700 9px system-ui; color: #fff; font-style: normal; flex: none; }
+.srow div { flex: 1; font: 600 15px system-ui; } .srow small { display: block; margin-top: 2px; font: 12.5px system-ui; color: #77777d; }
+.srow em { font: 13.5px system-ui; color: #444; font-style: normal; } .srow em::after { content: "  ›"; color: #9a9aa0; }
+
+/* chats drawer */
+.dr-h { position: absolute; top: 62px; left: 22px; right: 18px; display: flex; align-items: center; z-index: 8; }
+.dr-h b { font: 700 25px system-ui; letter-spacing: -.01em; } .dr-h small { margin-left: 10px; font: 13px system-ui; color: #77777d; }
+.dr-h .av { margin-left: auto; width: 46px; height: 46px; border-radius: 50%; background: #fff; display: grid; place-items: center; font: 600 17px system-ui; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,.07), 0 0 0 .5px rgba(0,0,0,.06); }
+.dr-h .av::after { content: ""; position: absolute; right: 3px; bottom: 3px; width: 9px; height: 9px; border-radius: 50%; background: #2fa04f; border: 2px solid #fff; }
+.atu-row { position: absolute; top: 124px; left: 14px; right: 14px; display: flex; align-items: center; gap: 12px; padding: 10px 10px; }
+.atu-row .face { width: 46px; height: 46px; border-radius: 50%; background: #fff url(../../../../../pi-remote/mockup/site-app-screens/mascot-idle-frame.png) center 3px / 52px no-repeat; box-shadow: 0 0 0 1px rgba(0,0,0,.06); flex: none; }
+.atu-row div { flex: 1; font: 600 16.5px system-ui; } .atu-row small { display: block; margin-top: 2px; font: 13.5px system-ui; color: #6b6b72; }
+.atu-row .n { width: 24px; height: 24px; border-radius: 50%; background: #1d1d1f; color: #fff; display: grid; place-items: center; font: 600 12.5px system-ui; }
+.seg { position: absolute; top: 194px; left: 14px; right: 14px; height: 40px; border-radius: 20px; background: #e6e6e9; display: flex; padding: 3px; }
+.seg span { flex: 1; display: grid; place-items: center; border-radius: 17px; font: 500 15px system-ui; color: #333; }
+.seg span.on { background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.08); font-weight: 600; color: #111; }
+.dl { position: absolute; top: 248px; left: 0; right: 0; }
+.dp { display: flex; align-items: center; gap: 8px; padding: 12px 24px 4px; font: 600 13.5px system-ui; color: #77777d; }
+.dp svg { width: 16px; height: 16px; fill: none; stroke: #77777d; stroke-width: 1.8; stroke-linejoin: round; }
+.dr { display: flex; align-items: center; padding: 10px 24px 10px 30px; }
+.dr div { flex: 1; font: 16px system-ui; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .dr div.u { font-weight: 600; }
+.dr small { display: block; margin-top: 2px; font: 13px system-ui; color: #8a8a90; }
+.dr.sub { padding-left: 54px; position: relative; } .dr.sub::before { content: ""; position: absolute; left: 36px; top: 0; bottom: 6px; border-left: 1.5px solid #d4d4d8; }
+.dr .dot { width: 9px; height: 9px; border-radius: 50%; background: #3b82f6; }
+.dr .spin { width: 15px; height: 15px; border-radius: 50%; border: 2px dotted #9a9aa0; margin-left: 0; }
+.dr .tm { font: 13px system-ui; color: #8a8a90; }
+.dr-b { position: absolute; left: 16px; right: 16px; bottom: 34px; display: flex; align-items: center; gap: 10px; z-index: 8; }
+.dr-b .chat { height: 52px; padding: 0 22px; border-radius: 26px; background: #1d1d1f; color: #fff; display: flex; align-items: center; gap: 8px; font: 600 17px system-ui; }
+.dr-b .srch { height: 52px; padding: 0 20px; border-radius: 26px; background: #fff; display: flex; align-items: center; gap: 8px; font: 16px system-ui; color: #444; box-shadow: 0 4px 14px rgba(0,0,0,.07), 0 0 0 .5px rgba(0,0,0,.06); }
+.dr-b .srch svg, .dr-b .gear svg { width: 19px; height: 19px; fill: none; stroke: #444; stroke-width: 1.8; stroke-linecap: round; }
+.dr-b .gear { margin-left: auto; width: 52px; height: 52px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: 0 4px 14px rgba(0,0,0,.07), 0 0 0 .5px rgba(0,0,0,.06); }
+
+/* todo (current A2 header + Today segment) */
+.th { position: absolute; top: 47px; left: 20px; right: 20px; height: 52px; display: flex; align-items: center; gap: 10px; z-index: 8; }
+.th .atu { width: 52px; height: 44px; border-radius: 22px; background: rgba(255,255,255,.86); box-shadow: 0 4px 14px rgba(0,0,0,.07), 0 0 0 .5px rgba(0,0,0,.07); display: grid; place-items: center; }
+.th .atu img { width: 34px; }
+.th .tt b { font: 700 27px system-ui; letter-spacing: -.02em; vertical-align: middle; }
+.th .tt svg { width: 17px; height: 17px; vertical-align: middle; margin-left: 6px; fill: none; stroke: #77777d; stroke-width: 1.8; }
+.th .tt small { display: block; margin-top: 1px; font: 13.5px system-ui; color: #77777d; }
+.th .av { margin-left: auto; width: 44px; height: 44px; border-radius: 50%; background: #fff; display: grid; place-items: center; font: 600 16px system-ui; position: relative; box-shadow: 0 4px 14px rgba(0,0,0,.07), 0 0 0 .5px rgba(0,0,0,.07); }
+.th .av::after { content: ""; position: absolute; right: 2px; bottom: 2px; width: 9px; height: 9px; border-radius: 50%; background: #2fa04f; border: 2px solid #fff; }
+.tseg { position: absolute; top: 114px; left: 22px; display: flex; gap: 26px; font: 600 16.5px system-ui; color: #77777d; }
+.tseg span small { margin-left: 5px; font: 500 14px system-ui; color: #9a9aa0; }
+.tseg span.on { color: #111; position: relative; } .tseg span.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -9px; height: 2.5px; border-radius: 2px; background: #111; }
+.tcard { position: absolute; left: 12px; right: 12px; background: #fff; border-radius: 22px; box-shadow: 0 0 0 .5px rgba(0,0,0,.05); padding: 14px 16px 6px; }
+.tcard h3 { margin: 0; display: flex; align-items: center; font: 700 17.5px system-ui; } .tcard h3 small { margin-left: 8px; font: 500 15px system-ui; color: #8a8a90; }
+.tcard h3 .sel { margin-left: auto; padding: 5px 12px; border-radius: 14px; background: #ececee; font: 500 13.5px system-ui; color: #333; }
+.tcard h4 { margin: 12px 0 0; font: 600 13px system-ui; color: #444; } .tcard h4 span { font-weight: 400; color: #8a8a90; }
+.trow { display: flex; align-items: center; gap: 13px; padding: 9px 0; }
+.trow .cb { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid #cfcfd3; flex: none; }
+.trow div { flex: 1; font: 16px/1.3 system-ui; } .trow small { display: block; margin-top: 2px; font: 13.5px system-ui; color: #8a8a90; }
+.trow .go { color: #b0b0b5; font-size: 20px; }
+.trow .st { padding: 5px 12px; border-radius: 14px; background: #f0f0f2; font: 600 13px system-ui; }
+.trow .sp { width: 16px; height: 16px; border-radius: 50%; border: 2px dotted #9a9aa0; }
+.askd { position: absolute; left: 12px; right: 70px; bottom: 104px; height: 54px; display: flex; align-items: center; gap: 10px; padding: 0 7px; border-radius: 27px; background: rgba(255,255,255,.94); box-shadow: 0 8px 26px -12px rgba(0,0,0,.25), 0 0 0 .5px rgba(0,0,0,.07); font-size: 16px; color: #9a9aa0; z-index: 8; }
+.askd .face { width: 40px; height: 40px; border-radius: 50%; background: #fff url(../../../../../pi-remote/mockup/site-app-screens/mascot-idle-frame.png) center 2px / 46px no-repeat; box-shadow: 0 0 0 1px rgba(0,0,0,.06); }
+.plusb { position: absolute; right: 12px; bottom: 104px; width: 54px; height: 54px; border-radius: 50%; background: rgba(255,255,255,.94); box-shadow: 0 8px 26px -12px rgba(0,0,0,.25), 0 0 0 .5px rgba(0,0,0,.07); display: grid; place-items: center; font: 300 30px system-ui; color: #222; z-index: 8; }
+
+/* updates: morning brief scene card */
+.chips2 { position: absolute; top: 112px; left: 16px; display: flex; gap: 7px; white-space: nowrap; z-index: 8; }
+.chips2 span { padding: 7px 13px; border-radius: 17px; background: #e9e9eb; font: 500 14px system-ui; color: #333; }
+.chips2 span.on { background: #1d1d1f; color: #fff; }
+.dayl { position: absolute; top: 160px; left: 20px; right: 20px; display: flex; align-items: center; gap: 10px; font: 500 13.5px system-ui; color: #8a8a90; }
+.dayl::after { content: ""; flex: 1; height: 1px; background: #dcdcde; }
+.brief { position: absolute; top: 186px; left: 12px; right: 12px; background: #fff; border-radius: 20px; box-shadow: 0 0 0 .5px rgba(0,0,0,.06); padding: 16px 16px 8px; font-family: "New York", ui-serif, Georgia, serif; }
+.brief .bt { font: 400 27px/1.1 "New York", ui-serif, Georgia, serif; color: #111; }
+.brief .meta { margin-top: 5px; font: 12.5px/1.35 system-ui; color: #77777d; }
+.brief hr { border: 0; border-top: 1px solid #ececee; margin: 12px 0; }
+.brief .hl { font: 400 23.5px/1.16 "New York", ui-serif, Georgia, serif; color: #111; }
+.brief .bd { margin-top: 8px; font: 400 16px/1.42 "New York", ui-serif, Georgia, serif; color: #333; }
+.brief .bd u { color: #a7782a; text-decoration-color: #d9b46a; text-underline-offset: 3px; }
+.brief .lb { margin: 14px 0 4px; font: 12.5px system-ui; color: #77777d; }
+.brief .it { display: flex; align-items: center; padding: 6px 0; border-top: .5px solid #f0f0f2; }
+.brief .it:first-of-type { border-top: 0; }
+.brief .it div { flex: 1; font: 600 14.5px system-ui; color: #111; } .brief .it small { display: block; margin-top: 1px; font: 500 12.5px system-ui; color: #b26a1f; }
+.brief .it small.g { color: #8a8a90; font-weight: 400; }
+.brief .it span { color: #9a9aa0; font: 16px system-ui; }
+/* popout: a chat line that became a to-do */
+.addwrap { width: 360px; display: flex; flex-direction: column; gap: 10px; align-self: flex-start; }
+.addwrap .bub { align-self: flex-end; max-width: 92%; padding: 11px 15px; border-radius: 20px; background: #e3ecfb; font: 16px/1.35 system-ui; color: #111; box-shadow: 0 0 0 .5px rgba(0,0,0,.05); }
+.addwrap .crd { background: #fff; border-radius: 20px; padding: 12px 14px 14px; box-shadow: 0 0 0 .5px rgba(0,0,0,.06); }
+.addwrap .crd .top { display: flex; align-items: center; gap: 6px; font: 13.5px system-ui; color: #77777d; }
+.addwrap .crd .top b { margin-left: auto; font: 500 14px system-ui; color: #2f6fe0; }
+.addwrap .crd .row { display: flex; align-items: center; gap: 12px; margin-top: 10px; padding: 11px 12px; border-radius: 14px; background: #f6f6f8; }
+.addwrap .crd .row i { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid #cfcfd3; }
+.addwrap .crd .row div { flex: 1; font: 16px system-ui; } .addwrap .crd .row small { display: block; margin-top: 3px; font: 12.5px system-ui; color: #8a8a90; }
+.addwrap .crd .row small em { font-style: normal; padding: 1px 6px; border-radius: 5px; background: #dff3e4; color: #2f8a4c; font-weight: 600; margin-right: 4px; }
+
+/* task detail sheet (Todo drawer, working) */
+.tk-dim { position: absolute; inset: 0; background: #cfcfd2; }
+.tk { position: absolute; left: 0; right: 0; top: 58px; bottom: 0; border-radius: 34px 34px 0 0; background: #f2f2f4; padding: 10px 14px 0; z-index: 5; }
+.tk .grab { width: 36px; height: 5px; border-radius: 3px; background: #c4c4c8; margin: 0 auto 10px; }
+.tk .row1 { display: flex; align-items: center; justify-content: space-between; }
+.tk .chip { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 16px; background: #e6e6e9; font: 600 13.5px system-ui; color: #333; }
+.tk .chip i { width: 13px; height: 13px; border-radius: 50%; border: 2px dotted #8a8a90; }
+.tk .x { width: 34px; height: 34px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: 0 0 0 .5px rgba(0,0,0,.08); }
+.tk .x svg { width: 13px; height: 13px; stroke: #333; stroke-width: 2.2; fill: none; stroke-linecap: round; }
+.tk .title { margin-top: 12px; padding: 13px 15px 26px; border-radius: 16px; background: #fff; font: 600 17px/1.3 system-ui; color: #111; box-shadow: 0 0 0 .5px rgba(0,0,0,.05); }
+.tk .meta { margin: 7px 2px 0; font: 12.5px system-ui; color: #77777d; }
+.tk .now { margin-top: 12px; display: flex; gap: 11px; padding: 12px 15px; border-radius: 16px; background: #fff; box-shadow: 0 0 0 .5px rgba(0,0,0,.05); }
+.tk .now i { flex: none; margin-top: 3px; width: 13px; height: 13px; border-radius: 50%; border: 2px dotted #8a8a90; }
+.tk .now small { display: block; font: 600 12.5px system-ui; color: #333; } .tk .now b { display: block; margin-top: 2px; font: 600 17px system-ui; color: #111; }
+.tk .open { margin-top: 12px; height: 48px; border-radius: 24px; background: #1d1d1f; color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; font: 600 15.5px system-ui; }
+.tk .open svg { width: 17px; height: 17px; stroke: #fff; stroke-width: 1.9; fill: none; stroke-linejoin: round; }
+.tk .lb { margin: 16px 2px 6px; font: 600 13px system-ui; color: #77777d; }
+.tk .prog { padding: 6px 15px; border-radius: 16px; background: #fff; box-shadow: 0 0 0 .5px rgba(0,0,0,.05); }
+.tk .st { display: flex; gap: 12px; padding: 8px 0; position: relative; }
+.tk .st .t { width: 44px; flex: none; font: 13.5px JBM, monospace; color: #555; } .tk .st .t small { display: block; font: 11.5px system-ui; color: #8a8a90; }
+.tk .st .d { flex: none; width: 7px; height: 7px; margin-top: 6px; border-radius: 50%; background: #c8c8cc; position: relative; }
+.tk .st:not(:last-child) .d::after { content: ""; position: absolute; left: 3px; top: 9px; width: 1px; height: 44px; background: #e2e2e6; }
+.tk .st .w { font: 15.5px/1.32 system-ui; color: #111; } .tk .st .w em { font-style: normal; color: #8a8a90; } .tk .st .w small { display: block; font: 12.5px JBM, monospace; color: #8a8a90; }
+.tk .chat { display: flex; align-items: center; padding: 11px 15px; border-radius: 16px; background: #fff; box-shadow: 0 0 0 .5px rgba(0,0,0,.05); }
+.tk .chat i { width: 14px; height: 14px; border-radius: 50%; border: 2px dotted #8a8a90; margin-right: 11px; }
+.tk .chat div { flex: 1; font: 600 14.5px system-ui; } .tk .chat small { display: block; font: 12.5px system-ui; color: #8a8a90; font-weight: 400; }
+.tk .chat span { color: #9a9aa0; font-size: 18px; }
+
+/* wiki home */
+.wk-sub { position: absolute; top: 100px; left: 92px; font: 13.5px system-ui; color: #77777d; }
+.wk-stats { position: absolute; top: 118px; left: 12px; right: 12px; display: grid; grid-template-columns: repeat(3, 1fr); background: #fff; border-radius: 18px; box-shadow: 0 0 0 .5px rgba(0,0,0,.05); padding: 12px 0; }
+.wk-stats div { padding: 0 12px; border-left: .5px solid #ececee; font: 12px/1.35 system-ui; color: #77777d; } .wk-stats div:first-child { border-left: 0; }
+.wk-stats b { display: block; font: 700 26px system-ui; color: #111; } .wk-stats em { display: block; font-style: normal; font: 600 12.5px system-ui; color: #333; } .wk-stats .g { color: #2f9e55; }
+.wk-h { position: absolute; left: 18px; font: 700 17px system-ui; } .wk-h small { margin-left: 6px; font: 500 14px system-ui; color: #8a8a90; }
+.wk-recent { position: absolute; top: 262px; left: 12px; display: flex; gap: 10px; }
+.wk-recent div { width: 260px; height: 112px; padding: 12px 14px; background: #fff; border-radius: 16px; box-shadow: 0 0 0 .5px rgba(0,0,0,.05); font: 13px/1.35 system-ui; color: #555; }
+.wk-recent b { display: block; margin-bottom: 4px; font: 400 18px "New York", ui-serif, Georgia, serif; color: #111; }
+.wk-recent small { display: block; margin-top: 8px; font: 12px system-ui; color: #8a8a90; } .wk-recent small i { font-style: normal; color: #2f9e55; font-weight: 600; margin-right: 4px; }
+.wk-tags { position: absolute; top: 424px; left: 12px; right: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.wk-tags div { padding: 11px 13px; background: #fff; border-radius: 16px; box-shadow: 0 0 0 .5px rgba(0,0,0,.05); font: 12.5px/1.45 system-ui; color: #555; }
+.wk-tags b { display: block; font: 700 15px system-ui; color: #111; } .wk-tags em { font-style: normal; font: 12px system-ui; color: #8a8a90; } .wk-tags em i { font-style: normal; margin-left: 5px; padding: 1px 6px; border-radius: 6px; background: #dff3e4; color: #2f8a4c; font-weight: 600; }
+.wk-tags p { margin: 6px 0 0; }
+/* days home (v2) */
+.dy-sub { position: absolute; top: 100px; left: 92px; font: 13.5px system-ui; color: #77777d; } .dy-sub i { font-style: normal; color: #d93a2b; font-weight: 600; } .dy-sub i::before { content: "● "; }
+.dy-date { position: absolute; top: 132px; left: 20px; right: 16px; display: flex; align-items: center; gap: 16px; }
+.dy-date b { font: 600 56px system-ui; letter-spacing: -.03em; } .dy-date div { flex: 1; font: 13.5px/1.4 system-ui; color: #77777d; } .dy-date div strong { display: block; font: 600 19px system-ui; color: #111; }
+.dy-date span { width: 40px; height: 40px; border-radius: 50%; background: #e9e9eb; display: grid; place-items: center; }
+.dy-date span svg { width: 18px; height: 18px; fill: none; stroke: #222; stroke-width: 1.8; stroke-linecap: round; }
+.dy-week { position: absolute; top: 210px; left: 16px; right: 16px; display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font: 11px system-ui; color: #9a9aa0; }
+.dy-week div b { display: block; margin: 6px auto 0; width: 34px; height: 34px; line-height: 34px; border-radius: 50%; font: 500 16px system-ui; color: #333; } .dy-week div b.on { background: #1d1d1f; color: #fff; } .dy-week div b.off { color: #b0b0b5; }
+.dy-card { position: absolute; top: 278px; left: 12px; right: 12px; padding: 14px 16px 12px; background: #fff; border-radius: 18px; box-shadow: 0 0 0 .5px rgba(0,0,0,.05); }
+.dy-card small { font: 600 11.5px system-ui; letter-spacing: .08em; color: #77777d; } .dy-card b { display: block; margin-top: 4px; font: 600 18px system-ui; } .dy-card p { margin: 4px 0 8px; font: 13.5px system-ui; color: #77777d; }
+.dy-bars { display: flex; align-items: flex-end; gap: 3px; height: 46px; border-bottom: 1.5px dashed #e2e2e6; }
+.dy-bars i { flex: 1; background: #333; border-radius: 2px 2px 0 0; } .dy-bars i.z { height: 2px; background: #e2e2e6; } .dy-bars i.r { background: #d93a2b; }
+.dy-ax { display: flex; justify-content: space-between; margin-top: 4px; font: 10.5px JBM, monospace; color: #9a9aa0; }
+.dy-list { position: absolute; top: 452px; left: 12px; right: 12px; background: #fff; border-radius: 18px; box-shadow: 0 0 0 .5px rgba(0,0,0,.05); padding: 4px 16px; }
+.dy-row { display: flex; gap: 14px; padding: 11px 0; border-top: .5px solid #f0f0f2; } .dy-row:first-child { border-top: 0; }
+.dy-row .t { width: 44px; font: 13.5px JBM, monospace; color: #555; } .dy-row .t.rec { color: #d93a2b; }
+.dy-row div { flex: 1; font: 600 15px/1.3 system-ui; } .dy-row div small { display: flex; gap: 6px; align-items: center; margin-top: 4px; font: 12px system-ui; color: #8a8a90; font-weight: 400; }
+.dy-row em { font-style: normal; padding: 1px 6px; border-radius: 5px; font: 600 11px system-ui; } .dy-row em.k { background: #ececee; color: #444; } .dy-row em.m { background: #1d1d1f; color: #fff; } .dy-row em.rc { color: #d93a2b; }
+.dy-row span { color: #9a9aa0; }
+/* follow-up popout */
+.fu { width: 390px; padding: 18px 14px 14px; border-radius: 30px; background: #f7f7f8; align-self: flex-start; }
+.fu .hd { display: flex; align-items: center; gap: 10px; padding: 0 4px 12px; border-bottom: .5px solid #e6e6ea; }
+.fu .hd .face { width: 36px; height: 36px; border-radius: 50%; background: #fff url(../../../../../pi-remote/mockup/site-app-screens/mascot-idle-frame.png) center 2px / 42px no-repeat; box-shadow: 0 0 0 1px rgba(0,0,0,.06); }
+.fu .hd b { display: block; font: 600 15px system-ui; } .fu .hd small { font: 12px system-ui; color: #8a8a90; }
+.fu .hd .x { margin-left: auto; font: 18px system-ui; color: #555; }
+.fu .ttl { margin: 22px 0 18px; text-align: center; font: 600 19px JBM, monospace; color: #111; }
+.fu .box { padding: 10px; border-radius: 22px; background: #fff; box-shadow: 0 6px 20px -8px rgba(0,0,0,.2), 0 0 0 .5px rgba(0,0,0,.06); }
+.fu .subj { display: flex; align-items: center; gap: 11px; padding: 11px 12px; border-radius: 16px; background: #ececee; }
+.fu .subj i { width: 22px; height: 22px; border-radius: 6px; background: #1d1d1f; display: grid; place-items: center; color: #fff; font: 700 13px system-ui; font-style: normal; }
+.fu .subj div { flex: 1; font: 600 15px system-ui; } .fu .subj small { display: block; font: 12px system-ui; color: #77777d; font-weight: 400; }
+.fu .subj span { width: 24px; height: 24px; border-radius: 50%; background: #dcdce0; display: grid; place-items: center; font: 13px system-ui; color: #555; }
+.fu .qs { display: flex; gap: 8px; margin: 12px 2px; white-space: nowrap; overflow: hidden; }
+.fu .qs span { padding: 7px 12px; border-radius: 16px; background: #f2f2f4; font: 500 13.5px system-ui; color: #333; }
+.fu .cmp { display: flex; align-items: center; gap: 8px; padding: 2px 2px 0; }
+.fu .cmp .p { width: 36px; height: 36px; border-radius: 50%; background: #f2f2f4; display: grid; place-items: center; font: 300 24px system-ui; color: #333; }
+.fu .cmp .m { padding: 7px 12px; border-radius: 16px; background: #f2f2f4; font: 600 13px system-ui; color: #333; } .fu .cmp .m em { font-style: normal; font-weight: 400; color: #666; }
+.fu .cmp .s { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; background: #1d1d1f; display: grid; place-items: center; }
+.fu .cmp .s svg { width: 16px; stroke: #fff; stroke-width: 2.4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+/* wiki graph nodes (popout) */
+.gtag { width: 230px; padding: 14px 16px; border-radius: 20px; background: #fff; align-self: flex-start; font: 13px/1.45 system-ui; color: #555; }
+.gtag b { display: block; font: 700 19px system-ui; color: #111; } .gtag em { font-style: normal; font: 13px system-ui; color: #8a8a90; } .gtag em i { font-style: normal; margin-left: 6px; padding: 1px 7px; border-radius: 6px; background: #dff3e4; color: #2f8a4c; font-weight: 600; }
+.gnode { padding: 10px 14px; border-radius: 14px; background: #fff; align-self: flex-start; font: 400 16px "New York", ui-serif, Georgia, serif; color: #111; white-space: nowrap; }
+.gnode small { display: block; margin-top: 2px; font: 11.5px system-ui; color: #8a8a90; }
+/* wiki tag page (book look 1, NativeWikiTagPage) */
+@font-face { font-family: NewsR; src: url("../../../../../pi-remote/ios/native/Resources/ChatWeb/fonts/newsreader.ttf"); }
+.jt-bar { position: absolute; top: 47px; left: 0; right: 0; height: 44px; display: grid; place-items: center; font: 600 17px system-ui; z-index: 8; }
+.jt-body { position: absolute; top: 106px; left: 20px; right: 20px; }
+.jt-head { position: relative; padding: 2px 0 2px 20px; }
+.jt-head::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; border-radius: 1.5px; background: #7a2e2a; }
+.jt-head b { display: block; font: 400 25px/1.15 NewsR, "New York", serif; color: #18181b; }
+.jt-head small { display: block; margin-top: 6px; font: 15px system-ui; color: #4f4f58; }
+.jt-upd { margin-top: 12px; font: 14.5px system-ui; color: #74747e; }
+.jt-lab { display: flex; align-items: center; gap: 10px; margin: 24px 0 10px; font: 600 11.5px system-ui; letter-spacing: .14em; color: #74747e; white-space: nowrap; }
+.jt-lab::after { content: ""; flex: 1; height: 1px; background: #e2e2e6; }
+.jt-rail { display: flex; gap: 10px; }
+.jt-rail div { flex: none; width: 262px; padding: 12px 14px; background: #fff; border-radius: 16px; box-shadow: 0 0 0 .5px rgba(0,0,0,.05); font: 13px/1.38 system-ui; color: #4f4f58; }
+.jt-rail b { display: block; margin-bottom: 4px; font: 400 18px NewsR, "New York", serif; color: #18181b; }
+.jt-rail small { display: block; margin-top: 8px; font: 12px system-ui; color: #74747e; }
+.jt-ch { display: flex; align-items: baseline; gap: 10px; margin-top: 10px; padding-bottom: 2px; }
+.jt-ch i { width: 22px; font: 600 14.5px system-ui; font-style: normal; color: #2f6fe0; }
+.jt-ch b { flex: 1; font: 400 19px NewsR, "New York", serif; color: #18181b; }
+.jt-ch span { font: 14.5px system-ui; color: #74747e; }
+.jt-en { display: flex; align-items: baseline; gap: 6px; padding: 8px 0 8px 32px; }
+.jt-en b { font: 400 16px NewsR, "New York", serif; color: #18181b; white-space: nowrap; }
+.jt-en b em { margin-left: 6px; font: 600 11px system-ui; font-style: normal; color: #74747e; }
+.jt-en .nw { padding: 1px 6px; border-radius: 9px; background: rgba(33,135,57,.1); color: #218739; font: 600 11px system-ui; }
+.jt-en::after { content: ""; order: 2; flex: 1; min-width: 12px; border-bottom: 2px dotted rgba(116,116,126,.5); transform: translateY(-4px); }
+.jt-en span { order: 3; font: 13px system-ui; color: #74747e; }
+/* drawer over the chat (drawer3) */
+.dw-under { position: absolute; inset: 0; overflow: hidden; }
+.dw-under img { position: absolute; left: -20px; top: -20px; width: 430px; height: 884px; filter: blur(11px) saturate(1.4); }
+.dw-wash { position: absolute; inset: 0; background: rgba(246,246,247,.3); }
+.dw-panel { position: absolute; left: 0; top: 0; bottom: 0; width: 320px; background: #fff; border-radius: 0 28px 28px 0; box-shadow: 6px 0 16px rgba(0,0,0,.1); overflow: hidden; }
+.dw-panel .atu-row .chv { color: #9a9aa0; font-size: 22px; margin-left: 2px; }
+.dw-panel .atu-row div { min-width: 0; } .dw-panel .atu-row small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dw-l .dr { padding: 9px 18px 9px 22px; }
+.dw-l .dr div { font-size: 15.5px; } .dw-l .dr small { font-size: 12.5px; }
+.dw-l .dr.sel { background: #ececee; border-radius: 14px; margin: 0 8px; padding-left: 14px; padding-right: 10px; }
+.dw-l .dr.sub { padding-left: 46px; } .dw-l .dr.sub::before { left: 30px; }
+.dw-l .dr small.td { color: #8a8a90; }
+.dw-fade { position: absolute; left: 0; right: 0; bottom: 0; height: 140px; background: linear-gradient(rgba(255,255,255,0), #fff 60%); }
+/* iPad split view */
+.pad { position: relative; width: 1376px; height: 1032px; overflow: hidden; background: #f4f4f5; display: flex; }
+.pad .side { width: 380px; height: 100%; background: #fafafa; border-right: .5px solid #e2e2e6; position: relative; }
+.pad .sbp { position: absolute; top: 14px; left: 26px; right: 26px; display: flex; justify-content: space-between; font: 600 15px system-ui; }
+.pad .main { flex: 1; position: relative; }
+</style></head><body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="t-chat" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-4.5 3.5V17H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="t-chat-on" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-4.5 3.5V17H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" fill="#e0764f" stroke="#e0764f"/></symbol>
+  <symbol id="t-todo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.7 2.7L16 9.5"/></symbol>
+  <symbol id="t-upd" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5H8.5"/></symbol>
+  <symbol id="t-wiki" viewBox="0 0 24 24"><path d="M12 6.5C10 5 7 4.6 3.5 5v13c3.5-.4 6.5 0 8.5 1.5 2-1.5 5-1.9 8.5-1.5V5C17 4.6 14 5 12 6.5zM12 6.5v13"/></symbol>
+  <symbol id="sb" viewBox="0 0 70 12"><path d="M1 11h2V8H1zM5 11h2V6H5zM9 11h2V3.5H9zM13 11h2V1h-2z"/><path transform="translate(22 0)" d="M8 11.2l2.3-2.6a3.3 3.3 0 0 0-4.6 0zM3.4 6.4l1.4 1.5a4.6 4.6 0 0 1 6.4 0l1.4-1.5a6.6 6.6 0 0 0-9.2 0zM.6 3.6L2 5.1a8.6 8.6 0 0 1 12 0l1.4-1.5a10.6 10.6 0 0 0-14.8 0z"/><g transform="translate(42 0)"><rect x=".5" y=".5" width="23" height="11" rx="3.5" fill="none" stroke="#111" opacity=".45"/><rect x="2.5" y="2.5" width="18" height="7" rx="2"/></g></symbol>
+</svg>
+
+<!-- 1 · Code chat on the phone -->
+<div class="screen" id="code">
+  <div class="sb"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="topfade"></div>
+  <span class="glass" style="left:20px;top:47px"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>
+  <div class="cap"><b>Fix the checkout total</b><small>shop-app · Ctx 38%</small></div>
+  <span class="glass" style="right:20px;top:47px"><svg viewBox="0 0 24 24"><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><path d="M17.5 3.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></span>
+  <div class="thread">
+    <div class="me">The checkout test fails on CI. Can you fix it?</div>
+    <div class="ag">Found it: the coupon comes off after tax.</div>
+    <div class="tool">
+      <div class="hd"><svg class="chev" viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>edit <i>src/cart/total.ts</i><span class="ok">✓</span></div>
+      <div class="blk">
+        <div>  <span class="k">const</span> sub = sum(items);</div>
+        <div class="del">- <span class="k">const</span> total = withTax(sub) - coupon;</div>
+        <div class="add">+ <span class="k">const</span> total = withTax(sub - coupon);</div>
+      </div>
+      <div class="ft"><span class="g">✓</span> Replaced 1 block · <span class="g">+1</span> <span class="r">-1</span></div>
+    </div>
+    <div class="tool">
+      <div class="hd"><svg class="chev" viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>bash <i>npm test</i><span class="ok">✓</span></div>
+      <div class="blk"><div><span class="c">$</span> npm test</div><div><span class="g">✓</span> 48 passed <span class="c">(2.1 s)</span></div></div>
+      <div class="ft"><span class="g">✓</span> Done · 2 lines</div>
+    </div>
+    <div class="ag">All 48 tests pass. Push it, or open a PR first?</div>
+    <div class="opts">What next?<div>Open a PR</div><div>Push to main</div></div>
+  </div>
+  <div class="botfade"></div>
+  <div class="compose"><span class="p">+</span>Message Atu<span class="s"><svg viewBox="0 0 24 24"><path d="M12 19V6M6 11.5 12 5.5l6 6"/></svg></span></div>
+  <nav class="tabs"><span class="on"><svg><use href="#t-chat-on"/></svg>Chats</span><span><svg><use href="#t-todo"/></svg>Todo</span><span><svg><use href="#t-upd"/></svg>Updates</span><span><svg><use href="#t-wiki"/></svg>Wiki</span></nav>
+</div>
+
+<!-- 5 · The same chat as the desktop window -->
+<div class="screen" id="code2">
+  <div class="sb"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="topfade"></div>
+  <span class="glass" style="left:20px;top:47px"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>
+  <div class="cap"><b>Fix search paging test</b><small>web-app · Ctx 41%</small></div>
+  <span class="glass" style="right:20px;top:47px"><svg viewBox="0 0 24 24"><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><path d="M17.5 3.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></span>
+  <div class="thread">
+    <div class="me">Why do two search tests fail?</div>
+    <div class="tool">
+      <div class="hd"><svg class="chev" viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>bash <i>npm test -- search</i><span class="ok">✓</span></div>
+      <div class="blk"><div><span class="c">$</span> npm test -- search</div><div><span class="g">✓</span> search order <span class="c">(12 ms)</span></div><div><span class="x">✗</span> search paging <span class="c">(40 ms)</span></div><div><span class="x">✗</span> paging after query <span class="c">(38 ms)</span></div></div>
+      <div class="ft"><span class="g">✓</span> Done · 4 lines</div>
+    </div>
+    <div class="ag">The paging test reads a stale page. After a new query, the cache still holds page 1.</div>
+    <div class="ag">• Clear the cache on a new query.<br>• Keep it for “Load more”.</div>
+    <div class="me">Fix it and run the tests again</div>
+    <div class="tool"><div class="hd" style="border-bottom:0"><svg class="chev" viewBox="0 0 12 12" style="transform:rotate(-90deg)"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>edit <i>web/search.js</i><span class="spin"></span></div></div>
+  </div>
+  <div class="botfade"></div>
+  <div class="compose"><span class="p">+</span>Message Atu<span class="s"><svg viewBox="0 0 24 24"><path d="M12 19V6M6 11.5 12 5.5l6 6"/></svg></span></div>
+  <nav class="tabs"><span class="on"><svg><use href="#t-chat-on"/></svg>Chats</span><span><svg><use href="#t-todo"/></svg>Todo</span><span><svg><use href="#t-upd"/></svg>Updates</span><span><svg><use href="#t-wiki"/></svg>Wiki</span></nav>
+</div>
+
+<!-- 5b · Chats list, the same projects as the desktop sidebar -->
+<div class="screen" id="drawer" style="background:#fafafa">
+  <div class="sb"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="dr-h"><b>Chats</b><small>Studio Mac</small><span class="av">F</span></div>
+  <div class="atu-row"><span class="face"></span><div>Atu<small>Your morning brief is ready.</small></div><span class="n">1</span></div>
+  <div class="seg"><span>Recent</span><span class="on">Projects</span></div>
+  <div class="dl">
+    <div class="dp"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>web-app</div>
+    <div class="dr"><div class="u">Fix search paging test<small>Working · 42 s</small></div><span class="spin"></span></div>
+    <div class="dr sub"><div>Check search tests</div><span class="tm">2m</span></div>
+    <div class="dr"><div class="u">Add retries to deploy script<small>Done · tests pass</small></div><span class="dot"></span></div>
+    <div class="dr"><div>Landing page copy<small>2 h ago</small></div></div>
+    <div class="dp"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>personal</div>
+    <div class="dr"><div>Sort October invoices<small>Mon</small></div></div>
+    <div class="dr"><div>Weekly report<small>Sun</small></div></div>
+    <div class="dp"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>side-project</div>
+  </div>
+  <div class="dr-b"><span class="chat">+ Chat</span><span class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>Search</span><span class="gear"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></span></div>
+</div>
+
+<!-- 1b · Chats drawer open, Recent: many tasks, some running -->
+<div class="screen" id="drawer2" style="background:#fafafa">
+  <div class="sb"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="dr-h"><b>Chats</b><small>Studio Mac</small><span class="av">F</span></div>
+  <div class="atu-row"><span class="face"></span><div>Atu<small>Your morning brief is ready.</small></div><span class="n">1</span></div>
+  <div class="seg"><span class="on">Recent</span><span>Projects</span></div>
+  <div class="dl" style="top:244px">
+    <div class="dr" style="background:#ececee;border-radius:14px;margin:0 10px;padding-left:20px;padding-right:14px"><div class="u">Fix the checkout total<small>Working · 12 min · shop-app</small></div><span class="spin"></span></div>
+    <div class="dr sub"><div>Run the 48 checkout tests<small>Working · shop-app</small></div><span class="spin"></span></div>
+    <div class="dr"><div class="u">Fix search paging test<small>Working · 42 s · web-app</small></div><span class="spin"></span></div>
+    <div class="dr"><div class="u">Add retries to deploy script<small>Done · tests pass · web-app</small></div><span class="dot"></span></div>
+    <div class="dr"><div class="u">Compare 3 hotels in Tokyo<small>Done · personal</small></div><span class="dot"></span></div>
+    <div class="dr"><div>Sort October invoices<small>personal</small></div><span class="tm">1h</span></div>
+    <div class="dr"><div>Landing page copy<small>side-project</small></div><span class="tm">2h</span></div>
+    <div class="dr"><div>Draft the reply to Lena<small>personal</small></div><span class="tm">Mon</span></div>
+    <div class="dr"><div>Weekly report<small>personal</small></div><span class="tm">Sun</span></div>
+    <div class="dr"><div>Refactor the auth module<small>web-app</small></div><span class="tm">Sat</span></div>
+  </div>
+  <div class="botfade" style="height:150px;background:linear-gradient(rgba(250,250,250,0),#fafafa 55%)"></div>
+  <div class="dr-b"><span class="chat">+ Chat</span><span class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>Search</span><span class="gear"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></span></div>
+</div>
+
+<!-- 1c · Chats drawer as in the app (NativeAppView drawerWidth = min(320, width - 62); NativeDrawerPanel:
+     right corners 28, shadow 6/8/.1; NativeDrawerBlur: ultra thin material + 18% background wash over the chat) -->
+<div class="screen" id="drawer3">
+  <div class="dw-under"><img src="scr-code.png"></div><div class="dw-wash"></div>
+  <div class="dw-panel">
+    <div class="dr-h" style="left:20px;right:14px"><b>Chats</b><small>Studio Mac</small><span class="av">F</span></div>
+    <div class="atu-row" style="left:10px;right:10px"><span class="face"></span><div>Atu<small>Your morning brief is ready.</small></div><span class="n">1</span><span class="chv">›</span></div>
+    <div class="seg" style="left:12px;right:12px"><span class="on">Recent</span><span>Projects</span></div>
+    <div class="dl dw-l" style="top:244px">
+      <div class="dr sel"><div class="u">Fix the checkout total<small>shop-app</small></div><span class="spin"></span></div>
+      <div class="dr sub"><div>Run the 48 checkout tests</div><span class="spin"></span></div>
+      <div class="dr sub"><div>Check the coupon rules</div></div>
+      <div class="dr"><div class="u">Fix search paging test<small>web-app</small></div><span class="spin"></span></div>
+      <div class="dr"><div class="u">Add retries to deploy script<small>web-app</small></div><span class="dot"></span></div>
+      <div class="dr"><div class="u">Compare 3 hotels in Tokyo<small class="td">◷ Todo · 3 Nov</small></div><span class="dot"></span></div>
+      <div class="dr"><div>Sort October invoices<small>personal</small></div></div>
+      <div class="dr"><div>Landing page copy<small>side-project</small></div></div>
+      <div class="dr"><div>Draft the reply to Lena<small>personal</small></div></div>
+      <div class="dr"><div>Weekly report<small>personal</small></div></div>
+    </div>
+    <div class="dw-fade"></div>
+    <div class="dr-b" style="left:14px;right:14px"><span class="chat">Chat</span><span class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>Search</span><span class="gear"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></span></div>
+  </div>
+  <div class="sb"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+</div>
+
+<!-- 3 · Todo, Today -->
+<div class="screen" id="todo">
+  <div class="sb"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="th"><span class="atu"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span>
+    <span class="tt"><b>Todo</b><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg><small>Tuesday, 27 October</small></span><span class="av">F</span></div>
+  <div class="tseg"><span class="on">Today<small>8</small></span><span>Later<small>7</small></span><span>Done<small>5</small></span></div>
+  <div class="tcard" style="top:160px">
+    <h3>Needs you<small>4</small></h3>
+    <h4>Review <span>· Atu finished</span></h4>
+    <div class="trow"><i class="cb"></i><div>Read the reply to Lena<small>The draft is ready</small></div><span class="go">›</span></div>
+    <div class="trow"><i class="cb"></i><div>Check the Tokyo trip budget<small>Atu compared 3 hotels</small></div><span class="go">›</span></div>
+    <h4>Reply <span>· Atu waits for you</span></h4>
+    <div class="trow"><i class="cb"></i><div>Pick a dentist time<small>Tue 9:30 or Wed 2:00</small></div><span class="go">›</span></div>
+    <div class="trow"><i class="cb"></i><div>Confirm the invoice amount<small>$1,240 or $1,320?</small></div><span class="go">›</span></div>
+  </div>
+  <div class="tcard" style="top:496px">
+    <h3>Atu working<small>1</small></h3>
+    <div class="trow"><i class="cb"></i><div>Watch flight prices to Tokyo<small>Every morning</small></div><span class="sp"></span></div>
+  </div>
+  <div class="tcard" style="top:608px">
+    <h3>To-dos<small>3</small><span class="sel">Select</span></h3>
+    <div class="trow"><i class="cb"></i><div>Pay the rent<small>Friday · Added by Atu from a chat</small></div><span class="st">Start</span></div>
+    <div class="trow"><i class="cb"></i><div>Book the car service<small>Added by Atu from a chat</small></div><span class="st">Start</span></div>
+  </div>
+  <div class="botfade" style="height:190px"></div>
+  <div class="askd"><span class="face"></span>Ask Atu to plan your day</div><span class="plusb">+</span>
+  <nav class="tabs"><span><svg><use href="#t-chat"/></svg>Chats</span><span class="on"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="#e0764f" stroke="none"/><path d="M8 12.2l2.7 2.7L16 9.5" stroke="#fff"/></svg>Todo</span><span><svg><use href="#t-upd"/></svg>Updates</span><span><svg><use href="#t-wiki"/></svg>Wiki</span></nav>
+</div>
+
+<!-- 5 · Updates, morning brief -->
+<div class="screen" id="updates">
+  <div class="sb"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="th"><span class="atu"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span class="tt"><b>Updates</b><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg><small>Tuesday, 3 November</small></span><span class="av">F</span></div>
+  <div class="chips2"><span class="on">All</span><span>Morning brief</span><span>AI news</span><span>Price watch</span><span>Inbox</span></div>
+  <div class="dayl">Today</div>
+  <div class="brief">
+    <div class="bt">Morning brief</div>
+    <div class="meta">Tue, Nov 3 · 7:00 AM<br>Sydney 16–22° · Rain after noon</div>
+    <hr>
+    <div class="hl">Two meetings this morning, the afternoon is clear</div>
+    <div class="bd">Review at 9:30 and a 1:1 with Mia at 11:00. After that you are free until evening, so you can finish the <u>launch plan</u>.</div>
+    <div class="lb">Waits for you · 2</div>
+    <div class="it"><div>Launch plan: A or B?<small>Atu waited 1 day</small></div><span>›</span></div>
+    <div class="it"><div>Expense claim not sent<small>Due today</small></div><span>›</span></div>
+    <div class="lb">Sydney news</div>
+    <div class="it"><div>New ferry route opens Monday<small class="g">Local news</small></div><span>↗</span></div>
+    <div class="it"><div>Fire ban from Saturday<small class="g">Local news</small></div><span>↗</span></div>
+  </div>
+  <div class="botfade" style="height:190px"></div>
+  <div class="askd"><span class="face"></span>Ask Atu about your tasks</div><span class="plusb">+</span>
+  <nav class="tabs"><span><svg><use href="#t-chat"/></svg>Chats</span><span><svg><use href="#t-todo"/></svg>Todo</span><span class="on"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="#e0764f" stroke="none"/><path d="M12 7v5H8.5" stroke="#fff"/></svg>Updates</span><span><svg><use href="#t-wiki"/></svg>Wiki</span></nav>
+</div>
+
+<!-- 4b · Popout: a chat line that Atu turned into a to-do -->
+<div class="addwrap" id="addcard">
+  <div class="bub">Remind me to pay the rent on Friday</div>
+  <div class="crd"><div class="top">✓ Todo · Added 1<b>Undo</b></div>
+    <div class="row"><i></i><div>Pay the rent<small><em>Added</em>Friday</small></div></div></div>
+</div>
+
+<!-- 1 · Task detail: Atu working on a task -->
+<div class="screen" id="task">
+  <div class="tk-dim"></div>
+  <div class="sb"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="tk">
+    <div class="grab"></div>
+    <div class="row1"><span class="chip"><i></i>Atu working · 12 min</span><span class="x"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg></span></div>
+    <div class="title">Fix the checkout total before the release</div>
+    <div class="meta">Found by Atu · 9:20 · Waits on The tests pass on CI</div>
+    <div class="now"><i></i><div><small>Now · Atu working</small><b>Running the 48 checkout tests</b></div></div>
+    <div class="open"><svg viewBox="0 0 24 24"><path d="M5 5h14v10H10l-4 3.5V15H5z"/></svg>Open working chat</div>
+    <div class="lb">Progress</div>
+    <div class="prog">
+      <div class="st"><span class="t">9:38<small>Today</small></span><span class="d"></span><span class="w">Found it: the coupon comes off after tax<small>src/cart/total.ts</small></span></div>
+      <div class="st"><span class="t">9:31</span><span class="d"></span><span class="w"><em>You</em> Fix it and add a test</span></div>
+      <div class="st"><span class="t">9:24</span><span class="d"></span><span class="w">Build and review · 1 round · failed</span></div>
+      <div class="st"><span class="t">9:20</span><span class="d"></span><span class="w">Found by Atu</span></div>
+    </div>
+    <div class="lb">Chats · 1</div>
+    <div class="chat"><i></i><div>checkout total<small>Working now · shop-app</small></div><span>›</span></div>
+  </div>
+</div>
+
+<!-- 6 · Wiki home -->
+<div class="screen" id="wiki">
+  <div class="sb"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="th"><span class="atu"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span class="tt"><b>Wiki</b><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg><small>Synced 6 h ago · 418 chats read</small></span><span class="av">F</span></div>
+  <div class="wk-stats"><div><b>142</b><em>Pages</em>12 tags<br>from 418 chats</div><div><b>6</b><em>Last night ›</em><span class="g">2 new</span><br>4 updated</div><div><b>23</b><em>This week ›</em><span class="g">7 new</span><br>16 updated</div></div>
+  <div class="wk-h" style="top:232px">Recent<small>9</small></div>
+  <div class="wk-recent"><div><b>Kyoto in April</b>Temples first, then the Philosopher's Path while it is quiet.<small><i>New</i>Nov 2 · # Japan trip</small></div><div><b>Builder quotes</b>Three quotes for the kitchen, side by side.<small>Nov 1 · # Home</small></div></div>
+  <div class="wk-h" style="top:394px">Tags<small>12</small></div>
+  <div class="wk-tags">
+    <div><b># Home renovation</b><em>24 pages<i>+2 new</i></em><p>Kitchen layout choices<br>Builder quotes compared</p></div>
+    <div><b># Japan trip</b><em>18 pages<i>+1 new</i></em><p>Kyoto in April<br>Rail pass or not</p></div>
+    <div><b># Investing</b><em>16 pages</em><p>Index funds, my rules<br>Tax checklist</p></div>
+    <div><b># Product ideas</b><em>15 pages<i>+3 new</i></em><p>Attention as the limit<br>Shared to-do lists</p></div>
+    <div><b># Health</b><em>12 pages</em><p>Sleep: what works for me<br>Running plan</p></div>
+    <div><b># Reading notes</b><em>11 pages<i>+1 new</i></em><p>Getting Things Done<br>Spaced review</p></div>
+  </div>
+  <div class="botfade" style="height:190px"></div>
+  <div class="askd"><span class="face"></span>Ask your Wiki</div><span class="plusb">+</span>
+  <nav class="tabs"><span class=""><svg><use href="#t-chat"/></svg>Chats</span><span class=""><svg><use href="#t-todo"/></svg>Todo</span><span class=""><svg><use href="#t-upd"/></svg>Updates</span><span class=""><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg>Days</span><span class="on"><svg><use href="#t-wiki"/></svg>Wiki</span></nav>
+</div>
+
+<!-- 7 · Days home (Watch recordings) -->
+<div class="screen" id="days">
+  <div class="sb"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="th"><span class="atu"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span class="tt"><b>Days</b><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg><small><i style="font-style:normal;color:#d93a2b;font-weight:600">● Recording</i> since 08:04</small></span><span class="av">F</span></div>
+  <div class="dy-date"><b>3</b><div><strong>Tuesday</strong>November · Recorded 5h 08m</div><span><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg></span><span><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span></div>
+  <div class="dy-week"><div>M<b>2</b></div><div>T<b class="on">3</b></div><div>W<b class="off">4</b></div><div>T<b class="off">5</b></div><div>F<b class="off">6</b></div><div>S<b class="off">7</b></div><div>S<b class="off">8</b></div></div>
+  <div class="dy-card"><small>TODAY SO FAR</small><b>5h 08m recorded · 2 marks</b><p>Atu writes the recap at 22:30.</p><div class="dy-bars"><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i><i style="height:40%"></i><i style="height:72%"></i><i style="height:95%"></i><i class="z"></i><i style="height:55%"></i><i style="height:80%"></i><i style="height:30%"></i><i style="height:18%"></i><i class="r" style="height:42%"></i><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i></div><div class="dy-ax"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div></div>
+  <div class="dy-list">
+    <div class="dy-row"><span class="t rec">17:00</span><div>Run 5.2 km<small><em class="k">Run</em><em class="rc">● Recording</em></small></div><span>›</span></div>
+    <div class="dy-row"><span class="t">16:00</span><div>Mostly quiet<small>2m</small></div><span>›</span></div>
+    <div class="dy-row"><span class="t">15:00</span><div>Note to self: send the brief to Atu<small><em class="m">Marked</em>3m</small></div><span>›</span></div>
+    <div class="dy-row"><span class="t">14:00</span><div>Design review: cards lead with the answer<small>55m</small></div><span>›</span></div>
+  </div>
+  <div class="botfade" style="height:150px"></div>
+  <nav class="tabs"><span class=""><svg><use href="#t-chat"/></svg>Chats</span><span class=""><svg><use href="#t-todo"/></svg>Todo</span><span class=""><svg><use href="#t-upd"/></svg>Updates</span><span class="on"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg>Days</span><span class=""><svg><use href="#t-wiki"/></svg>Wiki</span></nav>
+</div>
+
+<!-- 6c · Wiki tag page: # Japan trip -->
+<div class="screen" id="jtrip">
+  <div class="sb"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <span class="glass" style="left:20px;top:47px"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></span>
+  <div class="jt-bar"># Japan trip</div>
+  <div class="jt-body">
+    <div class="jt-head"><b>Japan trip</b><small>18 pages · 4 chapters</small></div>
+    <div class="jt-upd">Updated Nov 2</div>
+    <div class="jt-lab">NEW THIS WEEK · 1</div>
+    <div class="jt-rail"><div><b>Kyoto in April</b>Temples first, then the Philosopher's Path while it is quiet.<small>Nov 2 · 02 Kyoto</small></div></div>
+    <div class="jt-lab">CONTENTS</div>
+    <div class="jt-ch"><i>01</i><b>Plan and dates</b><span>5</span></div>
+    <div class="jt-en"><b>Flights: Tuesday is cheapest</b><span>Nov 1</span></div>
+    <div class="jt-en"><b>Rail pass or not<em>My view</em></b><span>Oct 30</span></div>
+    <div class="jt-en"><b>Two weeks in April</b><span>Oct 24</span></div>
+    <div class="jt-ch"><i>02</i><b>Kyoto</b><span>4</span></div>
+    <div class="jt-en"><b>Kyoto in April</b><i class="nw">New</i><span>Nov 2</span></div>
+    <div class="jt-en"><b>Temples to book ahead</b><span>Oct 28</span></div>
+    <div class="jt-ch"><i>03</i><b>Tokyo</b><span>5</span></div>
+    <div class="jt-en"><b>Hotel shortlist</b><span>Oct 27</span></div>
+    <div class="jt-en"><b>Tokyo budget<em>My view</em></b><span>Oct 26</span></div>
+  </div>
+  <div class="botfade" style="height:190px"></div>
+  <div class="askd" style="right:12px"><span class="face"></span>Ask about this tag</div>
+  <nav class="tabs"><span class=""><svg><use href="#t-chat"/></svg>Chats</span><span class=""><svg><use href="#t-todo"/></svg>Todo</span><span class=""><svg><use href="#t-upd"/></svg>Updates</span><span class=""><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg>Days</span><span class="on"><svg><use href="#t-wiki"/></svg>Wiki</span></nav>
+</div>
+
+<!-- 4c · Follow-up sheet (popout) -->
+<div class="fu" id="followup">
+  <div class="hd"><span class="face"></span><div><b>Chat with Atu</b><small>Todo · Pick a dentist time</small></div><span class="x">✕</span></div>
+  <div class="ttl">Follow up on this to-do</div>
+  <div class="box">
+    <div class="subj"><i>✓</i><div>Pick a dentist time<small>Todo · Today · Added by Atu</small></div><span>✕</span></div>
+    <div class="qs"><span>Book Tue 9:30</span><span>Break it into steps</span><span>Start doing it</span></div>
+    <div class="cmp"><span class="p">+</span><span class="m">claude-opus-5-5 <em>· High</em></span><span class="s"><svg viewBox="0 0 24 24"><path d="M12 19V6M6 11.5 12 5.5l6 6"/></svg></span></div>
+  </div>
+</div>
+
+<!-- 6b · Wiki graph nodes -->
+<div class="gtag" id="gtag"><b># Japan trip</b><em>18 pages<i>+1 new</i></em></div>
+<div class="gnode" id="gn1">Kyoto in April<small>from 4 chats</small></div>
+<div class="gnode" id="gn2">Rail pass or not<small>from 3 chats</small></div>
+<div class="gnode" id="gn3">Hotel shortlist<small>from 2 chats</small></div>
+<div class="gnode" id="gn4">Tokyo budget<small>from 5 chats</small></div>
+<div class="gnode" id="gn5">Flights: Tuesday is cheapest<small>from Price watch</small></div>
+
+<!-- 2b · iPad split view: chats beside the chat -->
+<div class="pad" id="pad">
+  <div class="side">
+    <div class="sbp"><span>9:41&nbsp;&nbsp;Tue 3 Nov</span><span></span></div>
+    <div class="dr-h" style="top:46px"><b>Chats</b><small>Studio Mac</small><span class="av">F</span></div>
+    <div class="atu-row" style="top:108px"><span class="face"></span><div>Atu<small>Your morning brief is ready.</small></div><span class="n">1</span></div>
+    <div class="seg" style="top:178px"><span>Recent</span><span class="on">Projects</span></div>
+    <div class="dl" style="top:232px">
+      <div class="dp"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>web-app</div>
+      <div class="dr" style="background:#ececee;border-radius:12px;margin:0 10px;padding-left:20px"><div class="u">Fix search paging test<small>Working · 42 s</small></div><span class="spin"></span></div>
+      <div class="dr sub"><div>Check search tests</div><span class="tm">2m</span></div>
+      <div class="dr"><div class="u">Add retries to deploy script<small>Done · tests pass</small></div><span class="dot"></span></div>
+      <div class="dr"><div>Landing page copy<small>2 h ago</small></div></div>
+      <div class="dp"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>personal</div>
+      <div class="dr"><div>Sort October invoices<small>Mon</small></div></div>
+      <div class="dr"><div>Weekly report<small>Sun</small></div></div>
+      <div class="dp"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>side-project</div>
+    </div>
+    <div class="dr-b" style="bottom:28px"><span class="chat">+ Chat</span><span class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>Search</span></div>
+  </div>
+  <div class="main">
+    <div class="sbp" style="justify-content:flex-end"><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+    <div class="cap" style="left:160px;right:160px;top:40px"><b>Fix search paging test</b><small>web-app · Ctx 41%</small></div>
+    <span class="glass" style="right:24px;top:40px"><svg viewBox="0 0 24 24"><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><path d="M17.5 3.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></span>
+    <div class="thread" style="left:90px;right:90px;top:110px;bottom:120px;font-size:15px">
+      <div class="me">Why do two search tests fail?</div>
+      <div class="tool">
+        <div class="hd"><svg class="chev" viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>bash <i>npm test -- search</i><span class="ok">✓</span></div>
+        <div class="blk"><div><span class="c">$</span> npm test -- search</div><div><span class="g">✓</span> search order <span class="c">(12 ms)</span></div><div><span class="x">✗</span> search paging <span class="c">(40 ms)</span></div><div><span class="x">✗</span> paging after query <span class="c">(38 ms)</span></div></div>
+        <div class="ft"><span class="g">✓</span> Done · 4 lines</div>
+      </div>
+      <div class="ag">The paging test reads a stale page. After a new query, the cache still holds page 1.</div>
+      <div class="ag">• Clear the cache on a new query.<br>• Keep it for “Load more”.</div>
+      <div class="me">Fix it and run the tests again</div>
+      <div class="tool"><div class="hd" style="border-bottom:0"><svg class="chev" viewBox="0 0 12 12" style="transform:rotate(-90deg)"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>edit <i>web/search.js</i><span class="spin"></span></div></div>
+    </div>
+    <div class="compose" style="left:90px;right:90px;bottom:30px"><span class="p">+</span>Message Atu<span class="s"><svg viewBox="0 0 24 24"><path d="M12 19V6M6 11.5 12 5.5l6 6"/></svg></span></div>
+  </div>
+</div>
+
+<!-- 2c · iPad mini landscape (1158 x 756 pt, Apple bezel hole 2316 x 1512) -->
+<div class="pad" id="padm" style="width:1158px;height:756px">
+  <div class="side" style="width:330px">
+    <div class="sbp"><span>9:41&nbsp;&nbsp;Tue 3 Nov</span><span></span></div>
+    <div class="dr-h" style="top:46px"><b>Chats</b><small>Studio Mac</small><span class="av">F</span></div>
+    <div class="atu-row" style="top:108px"><span class="face"></span><div>Atu<small>Your morning brief is ready.</small></div><span class="n">1</span></div>
+    <div class="seg" style="top:178px"><span>Recent</span><span class="on">Projects</span></div>
+    <div class="dl" style="top:232px">
+      <div class="dp"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>web-app</div>
+      <div class="dr" style="background:#ececee;border-radius:12px;margin:0 10px;padding-left:20px"><div class="u">Fix search paging test<small>Working · 42 s</small></div><span class="spin"></span></div>
+      <div class="dr sub"><div>Check search tests</div><span class="tm">2m</span></div>
+      <div class="dr"><div class="u">Add retries to deploy script<small>Done · tests pass</small></div><span class="dot"></span></div>
+      <div class="dr"><div>Landing page copy<small>2 h ago</small></div></div>
+      <div class="dp"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>personal</div>
+      <div class="dr"><div>Sort October invoices<small>Mon</small></div></div>
+            <div class="dp"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>side-project</div>
+    </div>
+    <div class="dr-b" style="bottom:28px"><span class="chat">Chat</span><span class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>Search</span></div>
+  </div>
+  <div class="main">
+    <div class="sbp" style="justify-content:flex-end"><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+    <div class="cap" style="left:120px;right:120px;top:36px"><b>Fix search paging test</b><small>web-app · Ctx 41%</small></div>
+    <span class="glass" style="right:24px;top:40px"><svg viewBox="0 0 24 24"><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><path d="M17.5 3.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></span>
+    <div class="thread" style="left:56px;right:56px;top:100px;bottom:104px;font-size:14px">
+      <div class="me">Why do two search tests fail?</div>
+      <div class="tool">
+        <div class="hd"><svg class="chev" viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>bash <i>npm test -- search</i><span class="ok">✓</span></div>
+        <div class="blk"><div><span class="c">$</span> npm test -- search</div><div><span class="g">✓</span> search order <span class="c">(12 ms)</span></div><div><span class="x">✗</span> search paging <span class="c">(40 ms)</span></div><div><span class="x">✗</span> paging after query <span class="c">(38 ms)</span></div></div>
+        <div class="ft"><span class="g">✓</span> Done · 4 lines</div>
+      </div>
+      <div class="ag">The paging test reads a stale page. After a new query, the cache still holds page 1.</div>
+      <div class="ag">• Clear the cache on a new query.<br>• Keep it for “Load more”.</div>
+      <div class="me">Fix it and run the tests again</div>
+      <div class="tool"><div class="hd" style="border-bottom:0"><svg class="chev" viewBox="0 0 12 12" style="transform:rotate(-90deg)"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>edit <i>web/search.js</i><span class="spin"></span></div></div>
+    </div>
+    <div class="compose" style="left:56px;right:56px;bottom:26px"><span class="p">+</span>Message Atu<span class="s"><svg viewBox="0 0 24 24"><path d="M12 19V6M6 11.5 12 5.5l6 6"/></svg></span></div>
+  </div>
+</div>
+
+<!-- 2 · Providers -->
+<div class="screen" id="providers">
+  <div class="dim"></div>
+  <div class="sb"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="sheet">
+    <div class="grab"></div>
+    <div class="bar"><span class="bk"><svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg></span>Providers<span class="x"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg></span></div>
+    <div style="height:8px"></div>
+    <div class="grp">
+      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/openai.png"></span><span class="tx"><b>ChatGPT</b><small>Connected · ChatGPT plan</small></span></div>
+      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/claude.png"></span><span class="tx"><b>Claude</b><small>Connected · Claude account</small></span></div>
+      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/deepseek.png"></span><span class="tx"><b>DeepSeek</b><small>Connected · API key</small></span></div>
+      <div class="prow"><span class="lg" style="background:#f0f0f2;font:300 24px system-ui">+</span><span class="tx"><b>Add provider</b><small>ChatGPT, Claude, Zhipu GLM and more</small></span></div>
+    </div>
+    <div class="note">Accounts are saved on the Mac, not on this phone.</div>
+  </div>
+</div>
+
+<!-- 2b · Model picker card -->
+<div class="pick" id="picker">
+  <div class="h">Favourites<span>Done</span></div>
+  <div class="mrow on"><div>claude-opus-5-5<small>anthropic · 1000k ctx</small></div>✓</div>
+  <div class="mrow"><div>gpt-6-astra<small>openai-codex · 272k ctx</small></div></div>
+  <div class="mrow"><div>claude-sonnet-5-5<small>anthropic · 1000k ctx</small></div></div>
+  <div class="mrow"><div>claude-fable-5-1<small>anthropic · 1000k ctx</small></div></div>
+  <div class="eff"><div class="t">Reasoning effort<span>High</span></div><div class="tr"><i></i></div><div class="lb"><span>Low</span><span>Medium</span><b>High</b><span>X-high</span><span>Max</span></div></div>
+</div>
+
+<!-- 4b · Updates scenes card -->
+<div class="scn" id="scenes">
+  <div class="bar"><small>‹ Settings</small>Scenes</div>
+  <div class="grp-t" style="margin-top:8px">On · 4</div>
+  <div class="grp">
+    <div class="srow"><i style="background:#8b6cf0">MB</i><div>Morning brief<small>Every day 7:00 AM</small></div><em>Every run</em></div>
+    <div class="srow"><i style="background:#e0605a">AN</i><div>AI news daily<small>Every day 7:05 AM</small></div><em>Every run</em></div>
+    <div class="srow"><i style="background:#4a7fe0">PW</i><div>Price watch<small>Every day 8:00 AM</small></div><em>Every run</em></div>
+    <div class="srow"><i style="background:#ef7d45">ID</i><div>Inbox digest<small>Weekdays 6:30 PM</small></div><em>Every run</em></div>
+  </div>
+</div>
+</body></html>

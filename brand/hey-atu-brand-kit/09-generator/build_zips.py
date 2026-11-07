@@ -7,7 +7,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 from common import KIT
 
 SKIP_NAMES = {'.DS_Store', '.render.html'}
-SKIP_DIRS = {'__pycache__'}
+# appstore-v2 holds Apple product bezels and a CC-BY 3D model: internal drafts, not for the download packs
+SKIP_DIRS = {'__pycache__', 'appstore-v2'}
 
 PACKS = {
     'hey-atu-google-play': ['03-stores/google-play'],

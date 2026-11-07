@@ -72,7 +72,7 @@ android:roundIcon="@mipmap/ic_launcher_round"
 | 07-fonts-and-tokens | Departure Mono、JetBrains Mono（OFL 授权）、tokens.json / tokens.css |
 | 08-source | 真实 App 界面截图（浅色和深色，取自 heyatu.com 线上演示）、官网素材、玩偶状态 GIF |
 | 10-character | 角色素材：Plush 状态动画 GIF（App 现行版本）、各档服装的抠图、Flat 贴纸（SVG + PNG，深 / 浅） |
-| 09-generator | 生成脚本和 HTML 模板。改了几何参数或文案后运行 `ATU_KIT=<本仓库根目录> 09-generator/build_all.sh`，会重建全部素材、规范 HTML / PDF 和 `downloads/` 下载包。`run.sh` 固定 Playwright 1.63.0；`sync_kit.py` 会在渲染宣发、商店和示意图之前同步新生成的 Logo、图标和状态图 |
+| 09-generator | 生成脚本和 HTML 模板。改了几何参数或文案后运行 `ATU_KIT=<本仓库根目录> 09-generator/build_all.sh`，会重建全部素材、规范 HTML / PDF 和 `downloads/` 下载包。`run.sh` 固定 Playwright 1.63.0；`sync_kit.py` 会在渲染宣发、商店和示意图之前同步新生成的 Logo、图标和状态图。`appstore-v2/` 是 App Store 截图 v2 的草稿生成器（单独运行，含苹果边框，不进下载包） |
 
 ## 规则摘要
 
