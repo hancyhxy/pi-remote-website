@@ -3,8 +3,9 @@
 样式 C 第六轮，开场 F 定稿（2026-11-07）。每张图想说什么、写什么、放哪个界面，见
 [`docs/app-store-screenshots/README.md`](../../../../docs/app-store-screenshots/README.md)。
 
-这里的成图是草稿：手机界面是用 HTML 还原的 App，不是真机截图。上架前要在模拟器里用干净的英文演示数据重新截，
-再按同样的版式出图。所以这些图不放进 `03-stores/app-store/`，也不进下载包（`build_zips.py` 跳过本文件夹）。
+2026-11-08 Xinyi 确认 `out/r6f-*` 为上架定稿，已复制到 `03-stores/app-store/` 的 6.9 寸和 6.3 寸文件夹
+（去掉 alpha，6.3 寸由 1320×2868 缩放）。手机界面是用 HTML 还原的 App。本文件夹仍不进下载包
+（`build_zips.py` 跳过它，因为里面有苹果设备边框和 3D 模型原件）。
 
 ## 出图
 
