@@ -86,22 +86,32 @@ async def capture_watch():
             await scr.evaluate('e => e.style.borderRadius = "0"')
             await scr.screenshot(path=str(H / f'wscr-{name}.png'))
             print('captured', name)
+            if name == 'reply':
+                # the iPad set: the same reply with "Open on iPad" (Xinyi 2026-11-08)
+                await scr.evaluate('e => e.querySelectorAll(".wv-btn").forEach(b => b.textContent = b.textContent.replace("iPhone", "iPad"))')
+                await scr.screenshot(path=str(H / 'wscr-reply-ipad.png'))
+                print('captured reply-ipad')
         await b.close()
 
 
 def main(args):
-    if 'watch' in args or not all((H / f'wscr-{n}.png').exists() for n in WATCHES):
+    if 'watch' in args or not all((H / f'wscr-{n}.png').exists() for n in [*WATCHES, 'reply-ipad']):
         asyncio.run(capture_watch())
     for n, s in PHONES.items():
         put(H / 'bezels/iphone-17-pro-silver.png', Image.open(H / s), f'ph2d-{n}.png')
     put(H / 'bezels/parth-mac.png', mac_screen(Image.open(H / 'dev-desktop.png')), 'mac-desktop.png')
     # iPad mini (A20 Pro) Starlight, landscape (Apple Design Resources Bezel-iPad-mini-(A20-Pro).dmg)
     put(H / 'bezels/ipad-mini-starlight-land.png', Image.open(H / 'scr-padm.png'), 'ipadm.png')
+    # iPad Pro (M5) 13" Silver, portrait (Apple Design Resources Bezel-iPad-Pro-(M5).dmg), for the iPad set
+    for n in ['chat', 'providers', 'todo', 'updates', 'wiki', 'days']:
+        if (H / f'scr-ip-{n}.png').exists():
+            put(H / 'bezels/ipad-pro-13-silver-port.png', Image.open(H / f'scr-ip-{n}.png'), f'ip13-{n}.png')
     for n in WATCHES:
         put(H / 'bezels/parth-watch.png', Image.open(H / f'wscr-{n}.png'), f'watch-{n}.png')
         # Apple Watch Series 11 46mm, silver aluminium case without the band (as the site-v3 hero)
         put(H / 'bezels/aw11-silver-case.png', Image.open(H / f'wscr-{n}.png'), f'watchs-{n}.png')
         put(H / 'bezels/aw11-silver-band.png', Image.open(H / f'wscr-{n}.png'), f'watchb-{n}.png')   # with the Purple Fog band
+    put(H / 'bezels/aw11-silver-case.png', Image.open(H / 'wscr-reply-ipad.png'), 'watchs-reply-ipad.png')
 
 
 main(sys.argv[1:])

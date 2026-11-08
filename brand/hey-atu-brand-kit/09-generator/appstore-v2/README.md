@@ -13,6 +13,7 @@
 ./build.sh                 # 默认开场 F；切图在 out/r6f-*.png
 ./build.sh --open E        # 其他开场方案：A–F，见内容大纲
 ./build.sh --3d            # 先重新渲染 3D 手机（要 GPU，大约一分钟），改了第 1 张的界面时用
+./build.sh --ipad          # iPad 版：7 张 2064 × 2752，切图在 out/ipad-r1-*.png
 ```
 
 `build.sh` 依次运行下面几步，用的是 `pyx`（Python 3.12，带 Playwright、Pillow、NumPy、SciPy）。
@@ -41,8 +42,16 @@
 |---|---|---|
 | `bezels/iphone-17-pro-silver.png` | Apple Product Bezels（经 mockify） | Apple Design Resources，只能用来做 Apple 平台 App 的界面示意；不外发 |
 | `bezels/parth-mac.png`、`parth-watch.png` | Apple Product Bezels（经 ParthJadhav/app-store-screenshots） | 同上 |
+| `bezels/ipad-pro-13-silver-port.png` | Apple Design Resources `Bezel-iPad-Pro-(M5).dmg`，13 寸银色竖屏，屏幕开口正好 2064 × 2752 | 同上 |
 | `bezels/ipad-mini-starlight-land.png` | Apple Design Resources `Bezel-iPad-mini-(A20-Pro).dmg` | 同上，授权全文 `bezels/Apple Design Resources License.rtf` |
 | `bezels/aw11-silver-case.png`、`aw11-silver-band.png` | Apple Design Resources `Bezel-Apple-Watch-Series-11-2025.dmg`，46mm 银色铝壳 + Purple Fog 表带。从 PSD 的智能对象（2100 × 3300）取出；`case` 版按黄色表带的颜色把表带抠掉 | 同上 |
 | `models/iphone-17-pro.glb` | Ranguel，[Sketchfab](https://sketchfab.com/3d-models/iphone-17-pro-4541aa8a28324b33a2baaf81d263aaec)（经 imshaikot/app-preview-craft-skill），见 `models/credits.json` | CC-BY-4.0：发布用到它的图时要署名（商店描述或官网 Credits） |
 
 苹果的营销规范不允许 3D 渲染、倾斜或从屏幕里跑出来的元素（见内容大纲的“设备模型资源”）。第 1 张的 3D 手机和功能页的 pop-up 都有这个风险。
+
+## iPad 版（2026-11-08）
+
+照 Otter：和 iPhone 同样 7 张、同样的标题和弹出卡片，手机换成正放的 iPad Pro 13 寸（竖屏），每张单独成图、不跨页。
+iPad 界面在 `screens.html` 的 `ip-*`，按 App 的宽屏布局还原（`NativeAppView`：宽度 ≥ 1024 pt）：Chats 带 280 pt 侧栏，
+Updates 的侧栏是信息源，Todo 右边 300 pt 是 Later，Wiki 一排四个标签，标签栏在顶部。拼图脚本 `compose_ipad.py`。
+定稿复制到 `03-stores/app-store/04-ipad-13in-2064x2752/`。
