@@ -38,7 +38,7 @@ Android 和 Google Play 的关系、一共有哪几个渠道、行业通行做�
 | 商店 | 上传文件 | 文案和检查清单 |
 |---|---|---|
 | Google Play | `03-stores/google-play/`：图标 512、Feature graphic 1024×500、7 张 1080×1920 截图 | `google-play/listing.md` |
-| App Store | `03-stores/app-store/`：iPhone 1206×2622（必需）和 1320×2868 各 7 张、iPad 2064×2752 竖屏 7 张；图标随构建包上传 | `app-store/listing.md` |
+| App Store | `03-stores/app-store/`：iPhone 1206×2622（必需）和 1320×2868 各 7 张、iPad 2064×2752 竖屏 6 张；图标随构建包上传 | `app-store/listing.md` |
 | Claude / ChatGPT 目录、Google 登录同意页 | `03-stores/ai-directories/`：图标 120 / 512 / 1024 | — |
 
 ⚠️ Google Play 截图现在用的是 iOS 界面，Android 版出来后要替换。仓库里还没有 Android 工程。

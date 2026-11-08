@@ -1,6 +1,6 @@
-# iPad set of the App Store screenshots v2 (2026-11-08), after Otter: the iPhone set's 7 pages,
-# headlines and pop-outs, with a straight-on iPad Pro 13" portrait in place of the phone.
-# 7 separate pages of 2064 x 2752 (App Store iPad 13" portrait), no panorama across the cuts.
+# iPad set of the App Store screenshots v2 (2026-11-08), after Otter: pages 1-6 of the iPhone set,
+# headlines and pop-outs, with a straight-on iPad Pro 13" portrait in place of the phone. No watch
+# page (Xinyi 2026-11-08). 6 separate pages of 2064 x 2752 (App Store iPad 13" portrait), no panorama across the cuts.
 # Page 1 has no 3D device; page 2 reuses the Mac, iPad mini and watch of the iPhone opening F.
 # Run after render_screens.py and bezels.py (build.sh --ipad). Content: docs/app-store-screenshots/README.md
 import asyncio, pathlib
@@ -13,9 +13,9 @@ OUT.mkdir(exist_ok=True)
 S = H.as_uri()
 KIT = H.parents[1].as_uri()                                    # brand/hey-atu-brand-kit
 SITE = (H.parents[3] / 'website' / 'assets').resolve().as_uri()  # website -> ../pi-remote/site
-W, HH, N = 2064, 2752, 7
+W, HH, N = 2064, 2752, 6
 TAG = 'ipad-r1'
-NAMES = ['01-opening', '02-everywhere', '03-your-ai', '04-todo', '05-daily', '06-wiki', '07-watch']
+NAMES = ['01-opening', '02-everywhere', '03-your-ai', '04-todo', '05-daily', '06-wiki']
 FEAT = 150    # feature headline size
 
 
@@ -45,11 +45,6 @@ def ipad(k, name, top, w=1640, z=3):
 def watchb(name, cx, cy, w, z=5):
     h = w * 3125 / 1917
     return img(f'{S}/watchb-{name}.png', cx - w / 2, cy - h / 2, w, z=z, cls='wt')
-
-
-def watchs(name, cx, cy, w, z=5):
-    h = w * 2122 / 1917
-    return img(f'{S}/watchs-{name}.png', cx - w / 2, cy - h / 2, w, z=z, cls='wt')
 
 
 def grid(k, names, y0, size=200, gap=52, cols=6):
@@ -118,15 +113,6 @@ P6 = ''.join([
     img(f'{S}/scr-gn1.png', k + 1330, 2000, 520, z=5, cls='card'),
 ])
 
-# 7 watch: the iPad from the top (cut above the date row), headline, two watches
-k = 6 * W
-P7 = ''.join([
-    ipad(6, 'days', -245, 1300),               # cut above the date row
-    head(6, ['Record your day', 'on your *wrist*.'], y=1600),
-    watchs('rec', k + 700, 2360, 520),
-    watchs('reply-ipad', k + 1364, 2300, 520),
-])
-
 CSS = f'''
 @font-face{{font-family:"Departure Mono";src:url("{KIT}/07-fonts-and-tokens/fonts/DepartureMono-Regular.ttf")}}
 *{{box-sizing:border-box;margin:0;padding:0}}
@@ -151,7 +137,7 @@ body{{-webkit-font-smoothing:antialiased}}
 async def main():
     # Each page is clipped to itself, so nothing runs across a cut.
     pages = ''
-    for i, body in enumerate([P1, P2, P3, P4, P5, P6, P7]):
+    for i, body in enumerate([P1, P2, P3, P4, P5, P6]):
         bg = ('<div class="dots"></div>'
               f'<div class="glow" style="left:-500px;top:-560px;width:1700px;height:1700px"></div>'
               f'<div class="glow" style="left:900px;top:1500px;width:1700px;height:1700px;opacity:.5"></div>')

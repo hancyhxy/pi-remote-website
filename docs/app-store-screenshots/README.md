@@ -189,7 +189,7 @@ A 的抽屉照 App 现在的样子：宽 `min(320, 屏宽 − 62)`（390 pt 的�
 |---|---|---|---|
 | iPhone 6.9" | 1320 × 2868 | 1–5 | 主稿尺寸，先出这一套 |
 | iPhone 6.3" | 1206 × 2622 | 1–5 | 由 6.9" 等比缩小 |
-| iPad 13" | 2064 × 2752（竖屏） | 1–7 | 照 Otter：7 张和 iPhone 一样，手机换成 iPad Pro 13 寸、界面换成 iPad 宽屏布局；第 1 张写 `from your *iPad*.`，第 7 张手表按钮写 `Open on iPad`（2026-11-08）。`compose_ipad.py` |
+| iPad 13" | 2064 × 2752（竖屏） | 1–6 | 照 Otter：iPhone 的第 1–6 张，手机换成 iPad Pro 13 寸、界面换成 iPad 宽屏布局；第 1 张写 `from your *iPad*.`；不放第 7 张手表（Xinyi 2026-11-08）。`compose_ipad.py` |
 | Apple Watch | 上传前按 App Store Connect 现行规格查证 | 6a | Watch App 打包在 iOS App 里，截图单独一组 |
 | Google Play | — | 暂不做 | 还没有 Android 版 |
 
