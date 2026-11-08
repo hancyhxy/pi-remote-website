@@ -10,3 +10,5 @@ ipadm.png
 pano-c*.html
 out/*
 !out/r6f-*
+ip13-*.png
+pano-ipad.html

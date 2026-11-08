@@ -299,6 +299,50 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
 .pad .side { width: 380px; height: 100%; background: #fafafa; border-right: .5px solid #e2e2e6; position: relative; }
 .pad .sbp { position: absolute; top: 14px; left: 26px; right: 26px; display: flex; justify-content: space-between; font: 600 15px system-ui; }
 .pad .main { flex: 1; position: relative; }
+/* iPad Pro 13" portrait, 1032 x 1376 pt (Apple bezel hole 2064 x 2752). From 1024 pt the app uses its
+   wide layout (NativeAppView: wide = width >= 1024): Chats keeps a 280 pt sidebar, Updates lists its
+   sources in the sidebar, Todo shows Later in a 300 pt side column, Wiki shows four tags in a row.
+   The iPadOS tab bar floats at the top. */
+.ip { position: relative; width: 1032px; height: 1376px; overflow: hidden; background: #f4f4f5; }
+.ip .sbi { position: absolute; top: 12px; left: 28px; right: 26px; display: flex; justify-content: space-between; align-items: center; font: 600 15px system-ui; z-index: 9; }
+.ip .tbar { position: absolute; top: 40px; left: 50%; transform: translateX(-50%); display: flex; gap: 2px; padding: 5px; border-radius: 28px; background: rgba(255,255,255,.9); box-shadow: 0 8px 24px -6px rgba(0,0,0,.14), 0 0 0 .5px rgba(0,0,0,.08); z-index: 9; }
+.ip .tbar span { padding: 11px 20px; border-radius: 23px; font: 600 15.5px system-ui; color: #1a1a1a; }
+.ip .tbar span.on { background: rgba(0,0,0,.06); color: #d2643f; }
+.ip .iside { position: absolute; left: 0; top: 0; bottom: 0; width: 280px; background: #fafafa; border-right: .5px solid #e2e2e6; z-index: 2; }
+.ip .imain { position: absolute; top: 0; bottom: 0; right: 0; left: 280px; }
+.ip .ihead { position: absolute; top: 104px; left: 28px; right: 28px; height: 52px; display: flex; align-items: center; gap: 12px; z-index: 8; }
+.ip .ihead .atu { width: 52px; height: 44px; border-radius: 22px; background: rgba(255,255,255,.86); box-shadow: 0 4px 14px rgba(0,0,0,.07), 0 0 0 .5px rgba(0,0,0,.07); display: grid; place-items: center; }
+.ip .ihead .atu img { width: 34px; }
+.ip .ihead b { font: 700 30px system-ui; letter-spacing: -.02em; } .ip .ihead small { display: block; margin-top: 1px; font: 14px system-ui; color: #77777d; }
+.ip .ihead .av { margin-left: auto; width: 44px; height: 44px; border-radius: 50%; background: #fff; display: grid; place-items: center; font: 600 16px system-ui; position: relative; box-shadow: 0 4px 14px rgba(0,0,0,.07), 0 0 0 .5px rgba(0,0,0,.07); }
+.ip .ihead .av::after { content: ""; position: absolute; right: 2px; bottom: 2px; width: 9px; height: 9px; border-radius: 50%; background: #2fa04f; border: 2px solid #fff; }
+.ip .ask { position: absolute; bottom: 30px; height: 56px; display: flex; align-items: center; gap: 10px; padding: 0 8px; border-radius: 28px; background: rgba(255,255,255,.95); box-shadow: 0 8px 26px -12px rgba(0,0,0,.25), 0 0 0 .5px rgba(0,0,0,.07); font-size: 16.5px; color: #9a9aa0; z-index: 8; }
+.ip .ask .face { width: 40px; height: 40px; border-radius: 50%; background: #fff url(../../../../../pi-remote/mockup/site-app-screens/mascot-idle-frame.png) center 2px / 46px no-repeat; box-shadow: 0 0 0 1px rgba(0,0,0,.06); }
+.ip .ask .pl { margin-left: auto; width: 42px; height: 42px; border-radius: 50%; background: #1d1d1f; color: #fff; display: grid; place-items: center; font: 300 26px system-ui; }
+.ip .botfade { height: 140px; }
+/* iPad Updates: sources sidebar and a two-column feed */
+.src-h { padding: 104px 20px 6px; font: 700 26px system-ui; letter-spacing: -.01em; }
+.src-l { padding: 14px 20px 4px; font: 600 13px system-ui; color: #8a8a90; }
+.src { display: flex; align-items: center; gap: 12px; margin: 0 10px; padding: 9px 10px; border-radius: 14px; }
+.src.on { background: #ececee; }
+.src i { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font: 700 9px system-ui; font-style: normal; color: #fff; flex: none; }
+.src div { flex: 1; min-width: 0; font: 500 15.5px system-ui; } .src.on div { font-weight: 650; }
+.src small { display: block; font: 12.5px system-ui; color: #8a8a90; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.feed { position: absolute; top: 210px; left: 24px; right: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+.feed .col { display: flex; flex-direction: column; gap: 14px; }
+.feed .brief { position: static; }
+.tile2 { background: #fff; border-radius: 20px; box-shadow: 0 0 0 .5px rgba(0,0,0,.06); padding: 16px 16px 10px; }
+.tile2 .tg { display: flex; align-items: center; gap: 8px; font: 600 12.5px system-ui; color: #77777d; }
+.tile2 .tg i { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font: 700 7px system-ui; font-style: normal; color: #fff; }
+.tile2 .tg span { margin-left: auto; font-weight: 400; }
+.tile2 .bt { margin-top: 8px; font: 400 22px/1.15 "New York", ui-serif, Georgia, serif; color: #111; }
+.tile2 .bd { margin-top: 6px; font: 400 15px/1.42 "New York", ui-serif, Georgia, serif; color: #333; }
+.tile2 .it { display: flex; align-items: center; padding: 8px 0; border-top: .5px solid #f0f0f2; font: 600 14px system-ui; color: #111; }
+.tile2 .it:first-of-type { margin-top: 8px; }
+.tile2 .it div { flex: 1; } .tile2 .it small { display: block; margin-top: 1px; font: 12.5px system-ui; color: #8a8a90; font-weight: 400; }
+.tile2 .big { margin-top: 6px; font: 600 34px system-ui; letter-spacing: -.02em; } .tile2 .big em { font: 600 15px system-ui; font-style: normal; color: #2f9e55; margin-left: 8px; }
+.tile2 .spark { display: flex; align-items: flex-end; gap: 4px; height: 44px; margin: 8px 0 6px; }
+.tile2 .spark i { flex: 1; border-radius: 3px 3px 0 0; background: #d4d4d8; } .tile2 .spark i.on { background: #2f9e55; }
 </style></head><body>
 
 <svg width="0" height="0" style="position:absolute">
@@ -677,6 +721,236 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
       <div class="tool"><div class="hd" style="border-bottom:0"><svg class="chev" viewBox="0 0 12 12" style="transform:rotate(-90deg)"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>edit <i>web/search.js</i><span class="spin"></span></div></div>
     </div>
     <div class="compose" style="left:56px;right:56px;bottom:26px"><span class="p">+</span>Message Atu<span class="s"><svg viewBox="0 0 24 24"><path d="M12 19V6M6 11.5 12 5.5l6 6"/></svg></span></div>
+  </div>
+</div>
+
+<!-- iPad 1 · Chats: the sidebar beside the chat (wide layout, sidebar 280 pt) -->
+<div class="ip" id="ip-chat">
+  <div class="sbi"><span>9:41&nbsp;&nbsp;Tue 3 Nov</span><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="tbar"><span class="on">Chats</span><span>Todo</span><span>Updates</span><span>Days</span><span>Wiki</span></div>
+  <div class="iside">
+    <div class="dr-h" style="top:100px;left:20px;right:14px"><b>Chats</b><small>Studio Mac</small><span class="av">F</span></div>
+    <div class="atu-row" style="top:162px;left:8px;right:8px"><span class="face"></span><div style="min-width:0">Atu<small style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Your morning brief is ready.</small></div><span class="n">1</span></div>
+    <div class="seg" style="top:232px;left:12px;right:12px"><span class="on">Recent</span><span>Projects</span></div>
+    <div class="dl dw-l" style="top:286px">
+      <div class="dr sel"><div class="u">Fix the checkout total<small>Working · shop-app</small></div><span class="spin"></span></div>
+      <div class="dr sub"><div>Run the 48 checkout tests</div><span class="spin"></span></div>
+      <div class="dr sub"><div>Check the coupon rules</div></div>
+      <div class="dr"><div class="u">Fix search paging test<small>Working · web-app</small></div><span class="spin"></span></div>
+      <div class="dr"><div class="u">Add retries to deploy script<small>Done · web-app</small></div><span class="dot"></span></div>
+      <div class="dr"><div class="u">Compare 3 hotels in Tokyo<small class="td">◷ Todo · 3 Nov</small></div><span class="dot"></span></div>
+      <div class="dr"><div>Sort October invoices<small>personal</small></div></div>
+      <div class="dr"><div>Landing page copy<small>side-project</small></div></div>
+      <div class="dr"><div>Draft the reply to Lena<small>personal</small></div></div>
+      <div class="dr"><div>Weekly report<small>personal</small></div></div>
+      <div class="dr"><div>Refactor the auth module<small>web-app</small></div></div>
+      <div class="dr"><div>Plan the team offsite<small>personal</small></div></div>
+      <div class="dr"><div>Read the Q3 survey results<small>side-project</small></div></div>
+      <div class="dr"><div>Clean up old branches<small>shop-app</small></div></div>
+    </div>
+    <div class="dw-fade" style="background:linear-gradient(rgba(250,250,250,0),#fafafa 60%)"></div>
+    <div class="dr-b" style="left:14px;right:14px;bottom:30px"><span class="chat">Chat</span><span class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>Search</span><span class="gear"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></span></div>
+  </div>
+  <div class="imain">
+    <div class="cap" style="left:120px;right:120px;top:104px"><b>Fix the checkout total</b><small>shop-app · Ctx 38%</small></div>
+    <span class="glass" style="right:28px;top:104px"><svg viewBox="0 0 24 24"><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><path d="M17.5 3.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></span>
+    <div class="thread" style="left:56px;right:56px;top:180px;bottom:110px;font-size:15px;justify-content:flex-start">
+      <div class="me">The checkout test fails on CI. Can you fix it?</div>
+      <div class="tool">
+        <div class="hd"><svg class="chev" viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>bash <i>npm test -- checkout</i><span class="ok">✓</span></div>
+        <div class="blk"><div><span class="c">$</span> npm test -- checkout</div><div><span class="g">✓</span> cart total <span class="c">(9 ms)</span></div><div><span class="x">✗</span> total with coupon <span class="c">(14 ms)</span></div><div><span class="c">  expected 90.00, got 88.00</span></div></div>
+        <div class="ft"><span class="g">✓</span> Done · 4 lines</div>
+      </div>
+      <div class="ag">Found it: the coupon comes off after tax.</div>
+      <div class="tool">
+        <div class="hd"><svg class="chev" viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>edit <i>src/cart/total.ts</i><span class="ok">✓</span></div>
+        <div class="blk">
+          <div>  <span class="k">const</span> sub = sum(items);</div>
+          <div class="del">- <span class="k">const</span> total = withTax(sub) - coupon;</div>
+          <div class="add">+ <span class="k">const</span> total = withTax(sub - coupon);</div>
+        </div>
+        <div class="ft"><span class="g">✓</span> Replaced 1 block · <span class="g">+1</span> <span class="r">-1</span></div>
+      </div>
+      <div class="tool">
+        <div class="hd"><svg class="chev" viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>bash <i>npm test</i><span class="ok">✓</span></div>
+        <div class="blk"><div><span class="c">$</span> npm test</div><div><span class="g">✓</span> 48 passed <span class="c">(2.1 s)</span></div></div>
+        <div class="ft"><span class="g">✓</span> Done · 2 lines</div>
+      </div>
+      <div class="ag">All 48 tests pass. Push it, or open a PR first?</div>
+      <div class="opts" style="max-width:520px">What next?<div>Open a PR</div><div>Push to main</div></div>
+    </div>
+    <div class="compose" style="left:56px;right:56px;bottom:30px"><span class="p">+</span>Message Atu<span class="s"><svg viewBox="0 0 24 24"><path d="M12 19V6M6 11.5 12 5.5l6 6"/></svg></span></div>
+  </div>
+</div>
+
+<!-- iPad 3 · Providers: a form sheet over the dimmed chat (needs scr-ip-chat.png) -->
+<div class="ip" id="ip-providers">
+  <img src="scr-ip-chat.png" style="position:absolute;inset:0;width:1032px;height:1376px">
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,.22)"></div>
+  <div class="sheet" style="left:206px;right:206px;top:170px;bottom:auto;height:760px;border-radius:38px">
+    <div class="bar" style="height:68px"><span class="bk" style="top:14px"><svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg></span>Providers<span class="x" style="top:14px"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg></span></div>
+    <div class="grp-t" style="margin-top:4px">Connected · 4</div>
+    <div class="grp">
+      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/openai.png"></span><span class="tx"><b>ChatGPT</b><small>Connected · ChatGPT plan</small></span></div>
+      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/claude.png"></span><span class="tx"><b>Claude</b><small>Connected · Claude account</small></span></div>
+      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/githubcopilot.png"></span><span class="tx"><b>GitHub Copilot</b><small>Connected · Copilot plan</small></span></div>
+      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/deepseek.png"></span><span class="tx"><b>DeepSeek</b><small>Connected · API key</small></span></div>
+    </div>
+    <div class="grp-t">Add</div>
+    <div class="grp">
+      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/google.png"></span><span class="tx"><b>Google Gemini</b><small>Google account or API key</small></span></div>
+      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/kimi.png"></span><span class="tx"><b>Kimi</b><small>API key</small></span></div>
+      <div class="prow"><span class="lg" style="background:#f0f0f2;font:300 24px system-ui">+</span><span class="tx"><b>More providers</b><small>Qwen, Zhipu GLM, OpenRouter and more</small></span></div>
+    </div>
+    <div class="note">Accounts are saved on the Mac, not on this iPad.</div>
+  </div>
+</div>
+
+<!-- iPad 4 · Todo: Today in the main column, Later in the 300 pt side column -->
+<div class="ip" id="ip-todo">
+  <div class="sbi"><span>9:41&nbsp;&nbsp;Tue 27 Oct</span><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="tbar"><span>Chats</span><span class="on">Todo</span><span>Updates</span><span>Days</span><span>Wiki</span></div>
+  <div class="ihead"><span class="atu"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span><b>Todo</b><small>Tuesday, 27 October</small></span><span class="av">F</span></div>
+  <div class="tseg" style="top:178px;left:30px"><span class="on">Today<small>8</small></span><span>Done<small>5</small></span></div>
+  <div class="tcard" style="top:224px;left:20px;right:332px">
+    <h3>Needs you<small>4</small></h3>
+    <h4>Review <span>· Atu finished</span></h4>
+    <div class="trow"><i class="cb"></i><div>Read the reply to Lena<small>The draft is ready</small></div><span class="go">›</span></div>
+    <div class="trow"><i class="cb"></i><div>Check the Tokyo trip budget<small>Atu compared 3 hotels</small></div><span class="go">›</span></div>
+    <h4>Reply <span>· Atu waits for you</span></h4>
+    <div class="trow"><i class="cb"></i><div>Pick a dentist time<small>Tue 9:30 or Wed 2:00</small></div><span class="go">›</span></div>
+    <div class="trow"><i class="cb"></i><div>Confirm the invoice amount<small>$1,240 or $1,320?</small></div><span class="go">›</span></div>
+  </div>
+  <div class="tcard" style="top:560px;left:20px;right:332px">
+    <h3>Atu working<small>2</small></h3>
+    <div class="trow"><i class="cb"></i><div>Watch flight prices to Tokyo<small>Every morning</small></div><span class="sp"></span></div>
+    <div class="trow"><i class="cb"></i><div>Fix the checkout total<small>Running the 48 checkout tests</small></div><span class="sp"></span></div>
+  </div>
+  <div class="tcard" style="top:730px;left:20px;right:332px">
+    <h3>To-dos<small>3</small><span class="sel">Select</span></h3>
+    <div class="trow"><i class="cb"></i><div>Pay the rent<small>Friday · Added by Atu from a chat</small></div><span class="st">Start</span></div>
+    <div class="trow"><i class="cb"></i><div>Book the car service<small>Added by Atu from a chat</small></div><span class="st">Start</span></div>
+    <div class="trow"><i class="cb"></i><div>Renew the passport<small>Before the Tokyo trip</small></div><span class="st">Start</span></div>
+  </div>
+  <div class="tcard" style="top:224px;left:712px;right:20px">
+    <h3>Later<small>7</small></h3>
+    <h4>This week</h4>
+    <div class="trow"><i class="cb"></i><div>Send the expense claim<small>Thu</small></div></div>
+    <div class="trow"><i class="cb"></i><div>Call the landlord<small>Fri</small></div></div>
+    <div class="trow"><i class="cb"></i><div>Book Kyoto temples<small>Sat</small></div></div>
+    <h4>Later</h4>
+    <div class="trow"><i class="cb"></i><div>Plan the team offsite<small>Nov</small></div></div>
+    <div class="trow"><i class="cb"></i><div>Sell the old bike<small>No date</small></div></div>
+    <div class="trow"><i class="cb"></i><div>Learn the new tax rules<small>No date</small></div></div>
+    <div class="trow"><i class="cb"></i><div>Back up the photo library<small>No date</small></div></div>
+  </div>
+  <div class="botfade"></div>
+  <div class="ask" style="left:20px;right:332px"><span class="face"></span>Ask Atu to plan your day<span class="pl">+</span></div>
+</div>
+
+<!-- iPad 5 · Updates: the sources in the sidebar, the feed in two columns -->
+<div class="ip" id="ip-updates">
+  <div class="sbi"><span>9:41&nbsp;&nbsp;Tue 3 Nov</span><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="tbar"><span>Chats</span><span>Todo</span><span class="on">Updates</span><span>Days</span><span>Wiki</span></div>
+  <div class="iside">
+    <div class="src-h">Updates</div>
+    <div class="src on"><i style="background:#1d1d1f">ALL</i><div>All<small>4 new today</small></div></div>
+    <div class="src-l">Scenes</div>
+    <div class="src"><i style="background:#8b6cf0">MB</i><div>Morning brief<small>Every day 7:00 AM</small></div></div>
+    <div class="src"><i style="background:#e0605a">AN</i><div>AI news daily<small>Every day 7:05 AM</small></div></div>
+    <div class="src"><i style="background:#4a7fe0">PW</i><div>Price watch<small>Every day 8:00 AM</small></div></div>
+    <div class="src"><i style="background:#ef7d45">ID</i><div>Inbox digest<small>Weekdays 6:30 PM</small></div></div>
+    <div class="src"><i style="background:#2f9e55">WR</i><div>Weekly review<small>Sundays 6:00 PM</small></div></div>
+  </div>
+  <div class="imain">
+    <div class="ihead" style="left:24px"><span class="atu"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span><b>All</b><small>Tuesday, 3 November</small></span><span class="av">F</span></div>
+    <div class="dayl" style="top:180px;left:28px;right:28px">Today</div>
+    <div class="feed">
+      <div class="col">
+        <div class="brief">
+          <div class="bt">Morning brief</div>
+          <div class="meta">Tue, Nov 3 · 7:00 AM<br>Sydney 16–22° · Rain after noon</div>
+          <hr>
+          <div class="hl">Two meetings this morning, the afternoon is clear</div>
+          <div class="bd">Review at 9:30 and a 1:1 with Mia at 11:00. After that you are free until evening, so you can finish the <u>launch plan</u>.</div>
+          <div class="lb">Waits for you · 2</div>
+          <div class="it"><div>Launch plan: A or B?<small>Atu waited 1 day</small></div><span>›</span></div>
+          <div class="it"><div>Expense claim not sent<small>Due today</small></div><span>›</span></div>
+          <div class="lb">Sydney news</div>
+          <div class="it"><div>New ferry route opens Monday<small class="g">Local news</small></div><span>↗</span></div>
+          <div class="it"><div>Fire ban from Saturday<small class="g">Local news</small></div><span>↗</span></div>
+        </div>
+        <div class="tile2"><div class="tg"><i style="background:#ef7d45">ID</i>Inbox digest<span>Yesterday 6:30 PM</span></div>
+          <div class="bt">3 emails need a reply</div>
+          <div class="it"><div>Lena: the venue for Friday<small>Atu drafted a reply</small></div></div>
+          <div class="it"><div>Bank: card renewal<small>Nothing to do</small></div></div></div>
+      </div>
+      <div class="col">
+        <div class="tile2"><div class="tg"><i style="background:#4a7fe0">PW</i>Price watch<span>8:00 AM</span></div>
+          <div class="bt">Flights to Tokyo dropped</div>
+          <div class="big">$812<em>↓ 6% this week</em></div>
+          <div class="spark"><i style="height:80%"></i><i style="height:86%"></i><i style="height:78%"></i><i style="height:90%"></i><i style="height:84%"></i><i style="height:70%"></i><i class="on" style="height:62%"></i></div>
+          <div class="bd">Tuesday 14 April is the cheapest day. Atu keeps watching.</div></div>
+        <div class="tile2"><div class="tg"><i style="background:#e0605a">AN</i>AI news daily<span>7:05 AM</span></div>
+          <div class="bt">Three things worth reading</div>
+          <div class="it"><div>A new open model tops the coding charts<small>2 min read</small></div></div>
+          <div class="it"><div>Agents that run on your own computer<small>5 min read</small></div></div>
+          <div class="it"><div>What changed in this week's model prices<small>3 min read</small></div></div></div>
+      </div>
+    </div>
+    <div class="botfade"></div>
+    <div class="ask" style="left:24px;right:24px"><span class="face"></span>Ask Atu about your updates<span class="pl">+</span></div>
+  </div>
+</div>
+
+<!-- iPad 6 · Wiki home, wide layout: this week in a row, four tags in a row -->
+<div class="ip" id="ip-wiki">
+  <div class="sbi"><span>9:41&nbsp;&nbsp;Tue 3 Nov</span><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="tbar"><span>Chats</span><span>Todo</span><span>Updates</span><span>Days</span><span class="on">Wiki</span></div>
+  <div class="ihead"><span class="atu"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span><b>Wiki</b><small>Synced 6 h ago · 418 chats read</small></span><span class="av">F</span></div>
+  <div class="wk-stats" style="top:178px;left:20px;right:20px;grid-template-columns:repeat(4,1fr);padding:16px 0"><div style="padding:0 18px"><b>142</b><em>Pages</em>12 tags · from 418 chats</div><div style="padding:0 18px"><b>6</b><em>Last night ›</em><span class="g">2 new</span> · 4 updated</div><div style="padding:0 18px"><b>23</b><em>This week ›</em><span class="g">7 new</span> · 16 updated</div><div style="padding:0 18px"><b>9</b><em>Waiting ›</em>Atu files them tonight</div></div>
+  <div class="wk-h" style="top:316px;left:26px">This week<small>23</small></div>
+  <div class="wk-recent" style="top:348px;left:20px;right:20px;display:grid;grid-template-columns:repeat(3,1fr)"><div style="width:auto;height:126px"><b>Kyoto in April</b>Temples first, then the Philosopher's Path while it is quiet.<small><i>New</i>Nov 2 · # Japan trip</small></div><div style="width:auto;height:126px"><b>Builder quotes</b>Three quotes for the kitchen, side by side.<small>Nov 1 · # Home</small></div><div style="width:auto;height:126px"><b>Rail pass or not</b>Only worth it with two long trips.<small><i>New</i>Oct 30 · # Japan trip</small></div></div>
+  <div class="wk-h" style="top:504px;left:26px">Tags<small>12</small></div>
+  <div class="wk-tags" style="top:536px;left:20px;right:20px;grid-template-columns:repeat(4,1fr)">
+    <div><b># Home renovation</b><em>24 pages<i>+2 new</i></em><p>Kitchen layout choices<br>Builder quotes compared<br>Paint colours</p></div>
+    <div><b># Japan trip</b><em>18 pages<i>+1 new</i></em><p>Kyoto in April<br>Rail pass or not<br>Hotel shortlist</p></div>
+    <div><b># Investing</b><em>16 pages</em><p>Index funds, my rules<br>Tax checklist<br>Rebalancing</p></div>
+    <div><b># Product ideas</b><em>15 pages<i>+3 new</i></em><p>Attention as the limit<br>Shared to-do lists<br>Voice notes</p></div>
+    <div><b># Health</b><em>12 pages</em><p>Sleep: what works for me<br>Running plan<br>Doctor visits</p></div>
+    <div><b># Reading notes</b><em>11 pages<i>+1 new</i></em><p>Getting Things Done<br>Spaced review<br>Deep Work</p></div>
+    <div><b># Work</b><em>10 pages</em><p>Launch plan<br>Design review notes<br>1:1 with Mia</p></div>
+    <div><b># Cooking</b><em>8 pages</em><p>Weeknight dinners<br>Bread notes<br>Shopping list</p></div>
+    <div><b># Family</b><em>7 pages</em><p>Birthdays<br>Holiday plans<br>School dates</p></div>
+    <div><b># Car</b><em>5 pages</em><p>Service history<br>Insurance<br>Tyres</p></div>
+    <div><b># Learning</b><em>5 pages</em><p>Japanese basics<br>Piano practice<br>Courses</p></div>
+    <div><b># Money</b><em>4 pages</em><p>Budget 2026<br>Subscriptions<br>Bills</p></div>
+  </div>
+  <div class="botfade"></div>
+  <div class="ask" style="left:20px;right:20px"><span class="face"></span>Ask your Wiki<span class="pl">+</span></div>
+</div>
+
+<!-- iPad 7 · Days home (Watch recordings), the day column at 600 pt -->
+<div class="ip" id="ip-days">
+  <div class="sbi"><span>9:41&nbsp;&nbsp;Tue 3 Nov</span><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="tbar"><span>Chats</span><span>Todo</span><span>Updates</span><span class="on">Days</span><span>Wiki</span></div>
+  <div class="ihead"><span class="atu"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span><b>Days</b><small><i style="font-style:normal;color:#d93a2b;font-weight:600">● Recording</i> since 08:04</small></span><span class="av">F</span></div>
+  <div style="position:absolute;left:156px;width:720px;top:96px;bottom:0">
+    <div class="dy-date" style="top:84px"><b>3</b><div><strong>Tuesday</strong>November · Recorded 5h 08m</div><span><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg></span><span><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span></div>
+    <div class="dy-week" style="top:162px"><div>M<b>2</b></div><div>T<b class="on">3</b></div><div>W<b class="off">4</b></div><div>T<b class="off">5</b></div><div>F<b class="off">6</b></div><div>S<b class="off">7</b></div><div>S<b class="off">8</b></div></div>
+    <div class="dy-card" style="top:232px"><small>TODAY SO FAR</small><b>5h 08m recorded · 2 marks</b><p>Atu writes the recap at 22:30.</p><div class="dy-bars" style="height:70px"><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i><i style="height:40%"></i><i style="height:72%"></i><i style="height:95%"></i><i class="z"></i><i style="height:55%"></i><i style="height:80%"></i><i style="height:30%"></i><i style="height:18%"></i><i class="r" style="height:42%"></i><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i><i class="z"></i></div><div class="dy-ax"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div></div>
+    <div class="dy-list" style="top:432px">
+      <div class="dy-row"><span class="t rec">17:00</span><div>Run 5.2 km<small><em class="k">Run</em><em class="rc">● Recording</em></small></div><span>›</span></div>
+      <div class="dy-row"><span class="t">16:00</span><div>Mostly quiet<small>2m</small></div><span>›</span></div>
+      <div class="dy-row"><span class="t">15:00</span><div>Note to self: send the brief to Atu<small><em class="m">Marked</em>3m</small></div><span>›</span></div>
+      <div class="dy-row"><span class="t">14:00</span><div>Design review: cards lead with the answer<small>55m</small></div><span>›</span></div>
+      <div class="dy-row"><span class="t">13:00</span><div>Lunch with Mia<small>48m</small></div><span>›</span></div>
+      <div class="dy-row"><span class="t">11:00</span><div>1:1 with Mia: launch plan B<small><em class="m">Marked</em>32m</small></div><span>›</span></div>
+      <div class="dy-row"><span class="t">09:00</span><div>Review: the checkout release<small>41m</small></div><span>›</span></div>
+      <div class="dy-row"><span class="t">08:30</span><div>Commute: ideas for the onboarding<small><em class="m">Marked</em>18m</small></div><span>›</span></div>
+      <div class="dy-row"><span class="t">08:04</span><div>Started recording<small>Apple Watch</small></div><span>›</span></div>
+    </div>
+    <div class="dy-card" style="top:1000px"><small>YESTERDAY</small><b>Recap: a calm Monday</b><p>3 promises, 1 decision. Atu added 2 to-dos.</p></div>
   </div>
 </div>
 
