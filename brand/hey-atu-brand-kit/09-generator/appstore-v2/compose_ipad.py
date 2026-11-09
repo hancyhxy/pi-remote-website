@@ -1,7 +1,8 @@
 # iPad set of the App Store screenshots v2 (2026-11-08), after Otter: pages 1-6 of the iPhone set,
 # headlines and pop-outs, with a straight-on iPad Pro 13" portrait in place of the phone. No watch
 # page (Xinyi 2026-11-08). 6 separate pages of 2064 x 2752 (App Store iPad 13" portrait), no panorama across the cuts.
-# Page 1 has no 3D device; page 2 reuses the Mac, iPad mini and watch of the iPhone opening F.
+# Page 1 has no 3D device; page 2 reuses the Mac and iPad mini of the iPhone opening F, without the
+# watch (it pairs with an iPhone only). Page 3 has no third-party logos, one line says 25+ providers.
 # Run after render_screens.py and bezels.py (build.sh --ipad). Content: docs/app-store-screenshots/README.md
 import asyncio, pathlib
 from playwright.async_api import async_playwright
@@ -67,24 +68,21 @@ P1 = ''.join([
     ipad(0, 'chat', 800, 1760),
 ])
 
-# 2 every screen: the Mac, the iPad mini and the watch of opening F, larger, the headline on top
+# 2 every screen: the Mac and the iPad mini of opening F, larger, the headline on top
 k = W
 P2 = ''.join([
     head(1, ['One Atu,', 'every *screen*.']),
-    img(f'{S}/mac-desktop.png', k + 160, 640, 1750, z=2, cls='dev'),
-    img(f'{S}/ipadm.png', k + 947, 1530, 970, z=3, cls='dev'),
-    watchb('talk', k + 729, 2350, 525, z=5),
+    img(f'{S}/mac-desktop.png', k + 110, 700, 1840, z=2, cls='dev'),   # no watch on iPad: it pairs with iPhone only
+    img(f'{S}/ipadm.png', k + 760, 1640, 1200, z=3, cls='dev'),
 ])
 
-# 3 your AI: provider tiles under the headline, the providers sheet, the model card pops out
+# 3 your AI: one line of how many providers (no third-party logos), the providers sheet, the model card
 k = 2 * W
-PROVIDERS = ['openai', 'claude', 'google', 'deepseek', 'qwen', 'kimi',
-             'githubcopilot', 'xai', 'zhipu', 'minimax', 'openrouter']
 P3 = ''.join([
     head(2, ['Bring your own', '*AI* plan.']),
-    grid(2, PROVIDERS, 590),
-    ipad(2, 'providers', 1160, 1600),
-    img(f'{S}/scr-picker.png', k + 1130, 1800, 820, z=5, cls='card'),
+    text(k, 560, 84, ['Works with *25+* AI providers.'], align='center', width=W),
+    ipad(2, 'providers', 860, 1600),
+    img(f'{S}/scr-picker.png', k + 1130, 1500, 820, z=5, cls='card'),
 ])
 
 # 4 to-dos: the chat line that became a to-do, and the follow-up sheet

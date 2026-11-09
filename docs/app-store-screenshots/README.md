@@ -55,7 +55,7 @@ A 的抽屉照 App 现在的样子：宽 `min(320, 屏宽 − 62)`（390 pt 的�
 |---|---|---|---|---|
 | 1 | 一句话说清楚这是什么：电脑上的 AI 一直在干活，你用手机管它 | `Keep your AI working from your *phone*.` | 手机：左上角的导航打开，Chats 抽屉（Recent）列着十来个任务：`Fix the checkout total`（选中，在跑，下面两个子任务）、`Fix search paging test`（在跑）、两个做完未读，其余是普通对话；右侧露出后面被模糊的对话 | 左上角品牌标 + 大标题，占上半部分；下半部分一台 3D 手机，右边抬高（逆时针约 9°）、露出左侧按键、稍微仰视，偏右放、不居中，从底边出画，右下角伸进第 2 张约 10% |
 | 2 | 手机、Mac、iPad、手表上是同一个 Atu | 右下角 `One Atu, every *screen*.` | Mac 上开着桌面端，同时露出侧栏导航和对话 `Fix search paging test`；iPad mini 横屏分栏：左边 Chats 列表，右边同一个对话；手表显示“按住和 Atu 说话” | 几台设备叠在一起（iPad mini 和 Mac 按真实比例），照官网 v3 首屏：Mac 在后面、偏上；iPad mini 横屏压住 Mac 的右下角；手表在 Mac 下面、最前面，压住 iPad 的左下；不放手机，设备之间不连虚线 |
-| 3 | 用你已经在付费的 AI | `Bring your own *AI* plan.` | Providers 列表 + 模型选择卡 | 标题下面是 11 个主流厂商图标，像 CapWords 的国旗那样 6 个一排、只排 2 排、都立正，最后一格是 `…`；中外混排，让人一眼看到自己的订阅：第一排 OpenAI、Claude、Google、DeepSeek、Qwen、Kimi，第二排 GitHub Copilot、xAI、智谱、MiniMax、OpenRouter、`…`。下面一台放大的手机立正居中，从底边出画；模型卡放大、从右下角跑出手机（不旋转） |
+| 3 | 用你已经在付费的 AI | `Bring your own *AI* plan.` / `Works with *25+* AI providers.` | Providers 列表 + 模型选择卡 | 标题下面一行写支持多少家，不放第三方厂商图标墙（商标风险，Xinyi 2026-11-08；Happy、Paseo、Vibe42 都没有图标墙）。25+：Pi 内置 42 条，合并地区和套餐后是 29 家厂商。下面一台放大的手机立正居中，从底边出画；模型卡放大、从右下角跑出手机（不旋转） |
 | 4 | AI 替你写好待办，你来跟进 | `AI writes to-dos. You *follow up*.` | Todo 的 Today 页（行上标着 `Added by Atu from a chat`） | 银色手机立正（和其他页一样）。两个 pop-up：右上是 AI 的部分，一句聊天 `Remind me to pay the rent on Friday` 和 `Todo · Added 1` 卡片；下半部分是最大的 Follow up 面板，伸出手机两边 |
 | 5 | 每天定时替你跑事 | `Run your own *daily* tasks.` | Updates 页的 Morning brief | 手机立正；定时任务列表放大、从左下角跑出手机（不旋转） |
 | 6 | AI 自动把聊天整理成知识库，页面之间互相关联 | `A *wiki* that writes itself.` | Wiki 首页：142 页 / 12 个标签 / 来自 418 个对话，Recent，Tags | 两台手机前后叠放、都立正：前面左下是 Wiki 首页；后面右上稍小的一台是点开 `# Japan trip` 之后的标签页（18 pages · 4 chapters、New this week 的 Kyoto in April、Contents 里按章列出 Flights: Tuesday is cheapest、Rail pass or not、Hotel shortlist、Tokyo budget 等页面和日期），露出上半部分和右侧 |
@@ -189,7 +189,7 @@ A 的抽屉照 App 现在的样子：宽 `min(320, 屏宽 − 62)`（390 pt 的�
 |---|---|---|---|
 | iPhone 6.9" | 1320 × 2868 | 1–5 | 主稿尺寸，先出这一套 |
 | iPhone 6.3" | 1206 × 2622 | 1–5 | 由 6.9" 等比缩小 |
-| iPad 13" | 2064 × 2752（竖屏） | 1–6 | 照 Otter：iPhone 的第 1–6 张，手机换成 iPad Pro 13 寸、界面换成 iPad 宽屏布局；第 1 张写 `from your *iPad*.`；不放第 7 张手表（Xinyi 2026-11-08）。`compose_ipad.py` |
+| iPad 13" | 2064 × 2752（竖屏） | 1–6 | 照 Otter：iPhone 的第 1–6 张，手机换成 iPad Pro 13 寸、界面换成 iPad 宽屏布局；第 1 张写 `from your *iPad*.`；不放手表：没有第 7 张，第 2 张只有 Mac 和 iPad mini，因为手表只能配 iPhone（Xinyi 2026-11-08）。`compose_ipad.py` |
 | Apple Watch | 上传前按 App Store Connect 现行规格查证 | 6a | Watch App 打包在 iOS App 里，截图单独一组 |
 | Google Play | — | 暂不做 | 还没有 Android 版 |
 

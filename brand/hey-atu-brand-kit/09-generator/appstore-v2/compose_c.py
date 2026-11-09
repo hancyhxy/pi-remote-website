@@ -1,6 +1,6 @@
 # Style C, round 4 (2026-11-07): 7 slices of one panorama, dark palette of style A.
 # Kept in brand/hey-atu-brand-kit/09-generator/appstore-v2 (README.md there): build.sh runs the steps.
-# 1-2 opening: tilted phone that runs 10% into page 2; Mac, Watch, iPad · 3 Your AI: provider grid
+# 1-2 opening: tilted phone that runs 10% into page 2; Mac, Watch, iPad · 3 Your AI: providers count line
 # under the headline, big phone cut by the bottom · 4 To-dos + follow up · 5 Daily tasks ·
 # 6 Wiki: home in front of the # Japan trip page · 7 phone from the top, headline, two watches.
 # Content: heyatu-marketing/docs/app-store-screenshots/README.md
@@ -165,14 +165,13 @@ else:
 
 # ---- page 3: your AI ---------------------------------------------------------------------
 k = 2 * W
-# Two rows of the plans people already pay for, Western and Chinese mixed; the last cell is "more".
-PROVIDERS = ['openai', 'claude', 'google', 'deepseek', 'qwen', 'kimi',
-             'githubcopilot', 'xai', 'zhipu', 'minimax', 'openrouter']
+# No third-party logos (trademark risk, Xinyi 2026-11-08); one line says how many providers.
+# 25+: Pi lists 29 vendors once regional and plan entries are merged (pi-ai models.generated).
 P3 = ''.join([
     head(2, ['Bring your own', '*AI* plan.']),
-    grid(2, PROVIDERS, 500, size=148, gap=36),
-    phone('p3-providers', k + 660, 950, 1000),                        # cut by the bottom edge
-    img(f'{S}/scr-picker.png', k + 610, 1920, 660, z=5, cls='card'),
+    text(k, 500, 60, ['Works with *25+* AI providers.'], align='center', width=W),
+    phone('p3-providers', k + 660, 720, 1000),                        # cut by the bottom edge
+    img(f'{S}/scr-picker.png', k + 610, 1690, 660, z=5, cls='card'),
 ])
 
 # ---- page 4: AI writes the to-dos, you follow up -------------------------------------------
