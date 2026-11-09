@@ -208,8 +208,8 @@ P7 = ''.join([
     watchs('reply', k + 965, 2320, 540),
 ])
 
-# ---- stickers across cuts (small turns only) ----------------------------------------------
-STICK = ''.join([logo(4 * W - 180, 600, 320, -6), logo(5 * W - 160, 660, 300, 6)])
+# ---- stickers across cuts: none ----------------------------------------------------------
+STICK = ''   # no Atu heads across the cuts (Xinyi 2026-11-08); was logo() at 4W-180 and 5W-160
 
 CSS = f'''
 @font-face{{font-family:"Departure Mono";src:url("{KIT}/07-fonts-and-tokens/fonts/DepartureMono-Regular.ttf")}}
