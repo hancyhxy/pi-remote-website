@@ -203,7 +203,7 @@ P6 = ''.join([
 # ---- page 7: a space: Atu makes a page from one message and keeps it up to date ---------------
 k = 6 * W
 P7 = ''.join([
-    head(6, ['Describe a page.', 'Atu makes a *space*.']),          # heyatu.com 19:00 Spaces
+    head(6, ['Describe a page.', 'Atu *builds it*.']),               # app (NativeSpaceNew) and heyatu.com: "page", not "app" (guideline 4.7)
     text(k, 500, 56, ['In your tab bar. *Updates itself.*'], align='center', width=W),
     phone('p7-space', k + 640, 821),
     img(f'{S}/scr-spadd.png', k + 560, 1440, 700, z=5),              # the message and the space card in the chat

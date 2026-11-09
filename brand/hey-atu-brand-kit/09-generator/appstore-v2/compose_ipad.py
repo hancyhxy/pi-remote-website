@@ -114,7 +114,7 @@ P6 = ''.join([
 # 7 space: the run log, the message and its space card, the space menu (2026-11-09)
 k = 6 * W
 P7 = ''.join([
-    head(6, ['Describe a page.', 'Atu makes a *space*.']),          # heyatu.com 19:00 Spaces
+    head(6, ['Describe a page.', 'Atu *builds it*.']),               # app (NativeSpaceNew) and heyatu.com: "page", not "app" (guideline 4.7)
     text(k, 560, 84, ['In your tab bar. *Updates itself.*'], align='center', width=W),
     ipad(6, 'space', 860),
     img(f'{S}/scr-spadd.png', k + 1080, 1740, 900, z=5),
