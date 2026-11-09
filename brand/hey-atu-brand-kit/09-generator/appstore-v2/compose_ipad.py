@@ -1,6 +1,6 @@
 # iPad set of the App Store screenshots v2 (2026-11-08), after Otter: pages 1-6 of the iPhone set,
 # headlines and pop-outs, with a straight-on iPad Pro 13" portrait in place of the phone. No watch
-# page (Xinyi 2026-11-08). 6 separate pages of 2064 x 2752 (App Store iPad 13" portrait), no panorama across the cuts.
+# page (Xinyi 2026-11-08). 7 separate pages of 2064 x 2752 (App Store iPad 13" portrait), no panorama across the cuts.
 # Page 1 has no 3D device; page 2 reuses the Mac and iPad mini of the iPhone opening F, without the
 # watch (it pairs with an iPhone only). Page 3 has no third-party logos, one line says 25+ providers.
 # Run after render_screens.py and bezels.py (build.sh --ipad). Content: docs/app-store-screenshots/README.md
@@ -14,9 +14,9 @@ OUT.mkdir(exist_ok=True)
 S = H.as_uri()
 KIT = H.parents[1].as_uri()                                    # brand/hey-atu-brand-kit
 SITE = (H.parents[3] / 'website' / 'assets').resolve().as_uri()  # website -> ../pi-remote/site
-W, HH, N = 2064, 2752, 6
+W, HH, N = 2064, 2752, 7
 TAG = 'ipad-r1'
-NAMES = ['01-opening', '02-everywhere', '03-your-ai', '04-todo', '05-daily', '06-wiki']
+NAMES = ['01-opening', '02-everywhere', '03-your-ai', '04-todo', '05-daily', '06-wiki', '07-space']
 FEAT = 150    # feature headline size
 
 
@@ -111,6 +111,15 @@ P6 = ''.join([
     img(f'{S}/scr-gn1.png', k + 1330, 2000, 520, z=5, cls='card'),
 ])
 
+# 7 space: the run log, the message and its space card, the space menu (2026-11-09)
+k = 6 * W
+P7 = ''.join([
+    head(6, ['One message,', 'your own *app*.']),
+    ipad(6, 'space', 760),
+    img(f'{S}/scr-spadd.png', k + 1080, 1640, 900, z=5),
+    img(f'{S}/scr-spmenu.png', k + 110, 2020, 900, z=6, cls='card'),
+])
+
 CSS = f'''
 @font-face{{font-family:"Departure Mono";src:url("{KIT}/07-fonts-and-tokens/fonts/DepartureMono-Regular.ttf")}}
 *{{box-sizing:border-box;margin:0;padding:0}}
@@ -135,7 +144,7 @@ body{{-webkit-font-smoothing:antialiased}}
 async def main():
     # Each page is clipped to itself, so nothing runs across a cut.
     pages = ''
-    for i, body in enumerate([P1, P2, P3, P4, P5, P6]):
+    for i, body in enumerate([P1, P2, P3, P4, P5, P6, P7]):
         bg = ('<div class="dots"></div>'
               f'<div class="glow" style="left:-500px;top:-560px;width:1700px;height:1700px"></div>'
               f'<div class="glow" style="left:900px;top:1500px;width:1700px;height:1700px;opacity:.5"></div>')

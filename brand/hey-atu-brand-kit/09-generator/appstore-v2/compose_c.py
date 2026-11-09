@@ -1,8 +1,9 @@
-# Style C, round 4 (2026-11-07): 7 slices of one panorama, dark palette of style A.
+# Style C, round 4 (2026-11-07): 8 slices of one panorama, dark palette of style A.
 # Kept in brand/hey-atu-brand-kit/09-generator/appstore-v2 (README.md there): build.sh runs the steps.
 # 1-2 opening: tilted phone that runs 10% into page 2; Mac, Watch, iPad · 3 Your AI: providers count line
 # under the headline, big phone cut by the bottom · 4 To-dos + follow up · 5 Daily tasks ·
-# 6 Wiki: home in front of the # Japan trip page · 7 phone from the top, headline, two watches.
+# 6 Wiki: home in front of the # Japan trip page · 7 Space: the run log, the chat card and the space menu
+# (2026-11-09) · 8 phone from the top, headline, two watches.
 # Content: heyatu-marketing/docs/app-store-screenshots/README.md
 # Usage: pyx compose_c.py [--p1-flat]   (--p1-flat: page 1 with the flat bezel phone instead of the 3D one)
 import asyncio, pathlib, sys
@@ -15,11 +16,11 @@ OUT.mkdir(exist_ok=True)
 S = H.as_uri()
 KIT = H.parents[1].as_uri()                                    # brand/hey-atu-brand-kit
 SITE = (H.parents[3] / 'website' / 'assets').resolve().as_uri()  # website -> ../pi-remote/site
-W, HH, N = 1320, 2868, 7
+W, HH, N = 1320, 2868, 8
 P1_3D = '--p1-flat' not in sys.argv   # page 1: the 3D phone (real-object style of pages 1-2)
 OPEN = sys.argv[sys.argv.index('--open') + 1] if '--open' in sys.argv else 'F'   # opening version, round 6
 TAG = 'r6' + OPEN.lower()
-NAMES = ['01-opening', '02-everywhere', '03-your-ai', '04-todo', '05-daily', '06-wiki', '07-watch']
+NAMES = ['01-opening', '02-everywhere', '03-your-ai', '04-todo', '05-daily', '06-wiki', '07-space', '08-watch']
 FEAT = 106    # feature headline size
 
 
@@ -199,11 +200,20 @@ P6 = ''.join([
     phone('p6-wiki', k + 470, 1150, 820, z=3),
 ])
 
-# ---- page 7: phone from the top, headline in the middle, two watches below ------------------
+# ---- page 7: a space: one message makes a small app that Atu keeps up to date ---------------
 k = 6 * W
 P7 = ''.join([
+    head(6, ['One message,', 'your own *app*.']),
+    phone('p7-space', k + 640, 821),
+    img(f'{S}/scr-spadd.png', k + 560, 1440, 700, z=5),              # the message and the space card in the chat
+    img(f'{S}/scr-spmenu.png', k + 90, 2010, 700, z=6, cls='card'),  # the space menu: refresh, history, tell Atu
+])
+
+# ---- page 8: phone from the top, headline in the middle, two watches below ------------------
+k = 7 * W
+P8 = ''.join([
     phone('p7-days', k + 660, -289, 900),                             # cut above the date row
-    head(6, ['Record your day', 'on your *wrist*.'], y=1625),
+    head(7, ['Record your day', 'on your *wrist*.'], y=1625),
     watchs('rec', k + 355, 2400, 540),
     watchs('reply', k + 965, 2320, 540),
 ])
@@ -260,7 +270,7 @@ async def main():
           + f'<div class="glow" style="left:{W - 500}px;top:1500px;width:1300px;height:1300px;opacity:.6"></div>')
     html = H / 'pano-c.html'
     html.write_text(f'<!doctype html><meta charset="utf-8"><style>{CSS}</style><body>{FILTER}<div class="pano">'
-                    f'{bg}{P1}{P2}{P3}{P4}{P5}{P6}{P7}{STICK}</div></body>')
+                    f'{bg}{P1}{P2}{P3}{P4}{P5}{P6}{P7}{P8}{STICK}</div></body>')
     async with async_playwright() as p:
         b = await p.chromium.launch(args=['--allow-file-access-from-files'])
         pg = await b.new_page(viewport={'width': W * N, 'height': HH})
@@ -274,7 +284,7 @@ async def main():
     mark(pano, OUT / f'{TAG}-marked-all.jpg', 0, N, 3200)
     mark(pano, OUT / f'{TAG}-marked-p12.jpg', 0, 2, 1600)
     mark(pano, OUT / f'{TAG}-marked-p345.jpg', 2, 5, 2100)
-    mark(pano, OUT / f'{TAG}-marked-p67.jpg', 5, 7, 1600)
+    mark(pano, OUT / f'{TAG}-marked-p67.jpg', 5, 8, 2100)
     print('done', OUT)
 
 

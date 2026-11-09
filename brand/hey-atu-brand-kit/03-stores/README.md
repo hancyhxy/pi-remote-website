@@ -5,7 +5,7 @@
 | 渠道 | 文件夹 | 文案和检查清单 |
 |---|---|---|
 | Google Play（Android） | `google-play/`：图标 512、Feature graphic 1024×500、7 张 1080×1920 截图 | `google-play/listing.md` |
-| App Store（iOS / iPadOS） | `app-store/`：iPhone 1206×2622（必需）和 1320×2868 各 7 张、iPad 2064×2752 竖屏 6 张；图标随构建包上传 | `app-store/listing.md` |
+| App Store（iOS / iPadOS） | `app-store/`：iPhone 1206×2622（必需）和 1320×2868 各 8 张、iPad 2064×2752 竖屏 7 张；图标随构建包上传 | `app-store/listing.md` |
 | Claude / ChatGPT 目录、Google 登录同意页 | `ai-directories/`：图标 120 / 512 / 1024 | — |
 
 ## 现在的缺口

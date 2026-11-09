@@ -343,6 +343,65 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
 .tile2 .big { margin-top: 6px; font: 600 34px system-ui; letter-spacing: -.02em; } .tile2 .big em { font: 600 15px system-ui; font-style: normal; color: #2f9e55; margin-left: 8px; }
 .tile2 .spark { display: flex; align-items: flex-end; gap: 4px; height: 44px; margin: 8px 0 6px; }
 .tile2 .spark i { flex: 1; border-radius: 3px 3px 0 0; background: #d4d4d8; } .tile2 .spark i.on { background: #2f9e55; }
+
+/* drawer v2 (pi-remote 7e5ab114, NativeSessionDrawer + NativeDrawerSections): the Agents row, then
+   Tabs (no Chats row) and Spaces (3 rows, More, New space), then the Chats heading with the list and
+   folder buttons; the bottom bar is Task, Search and Settings. */
+.dsec { position: absolute; left: 12px; right: 12px; }
+.sl { display: block; padding-left: 14px; font: 600 13px system-ui; color: #74747e; }
+.dsec > .sl { margin: 10px 0 4px; } .dsec > .sl.s2 { margin-top: 14px; }
+.trw { display: flex; align-items: center; gap: 12px; height: 44px; margin-bottom: 2px; padding: 0 14px; font: 16px system-ui; color: #18181b; }
+.trw svg { flex: none; width: 22px; height: 22px; margin: 0 3px; fill: none; stroke: #18181b; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.trw.ds { color: #5f5f68; } .trw.ds svg { width: 20px; height: 20px; margin: 0 4px; stroke: #5f5f68; }
+.chd { display: flex; align-items: center; height: 44px; margin: 0 0 6px; }
+.chd .sl { flex: 1; }
+.chd .ib { width: 44px; height: 44px; display: grid; place-items: center; }
+.chd .ib i { width: 36px; height: 30px; border-radius: 9px; display: grid; place-items: center; }
+.chd .ib.on i { background: rgba(0,0,0,.055); }
+.chd .ib svg { width: 18px; height: 18px; fill: none; stroke: #9a9aa2; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.chd .ib.on svg { stroke: #18181b; }
+.dsec .dw-l .dr { padding-left: 14px; padding-right: 12px; } .dsec .dw-l .dr.sel { margin: 0; padding-left: 14px; }
+.dsec .dw-l .dr.sub { padding-left: 38px; } .dsec .dw-l .dr.sub::before { left: 22px; }
+.atu-row .chv { color: #9a9aa0; font-size: 22px; margin-left: 2px; }
+/* Wiki home: Cards / Map beside the Tags heading (NativeWikiTagViewSwitch) */
+.tvs { position: absolute; display: flex; align-items: center; height: 34px; padding: 0 2px; border-radius: 17px; background: rgba(0,0,0,.06); }
+.tvs i { width: 40px; height: 30px; border-radius: 15px; display: grid; place-items: center; }
+.tvs i.on { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+.tvs svg { width: 17px; height: 17px; fill: none; stroke: #333; stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
+/* providers list: connected rows have no chevron (NativeProvidersSection) */
+.prow.nc::after { content: none; }
+.prow .lg.plus { width: 32px; height: 32px; margin: 0 4px; border: 0; border-radius: 9px; background: #f0f0f2; font: 300 22px system-ui; color: #333; }
+/* space: fixed top bar on the colour of the space (NativeSpaceTopBar), the space view below (run log
+   sample from docs/product/spaces-mockup screen F) */
+.spbar { position: absolute; left: 0; right: 0; top: 0; height: 100px; background: #1f3d2b; z-index: 7; }
+.spbar .mb, .spbar .hb { position: absolute; top: 50px; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.14); display: grid; place-items: center; color: #fff; font: 600 16px system-ui; }
+.spbar .mb { left: 16px; } .spbar .hb { right: 16px; }
+.spbar .mb svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 1.9; stroke-linecap: round; }
+.spbar .hb::after { content: ""; position: absolute; right: 2px; bottom: 2px; width: 9px; height: 9px; border-radius: 50%; background: #2fa04f; border: 2px solid #1f3d2b; }
+.spbar .lo { position: absolute; left: 50%; top: 50px; width: 44px; height: 44px; margin-left: -22px; display: grid; place-items: center; }
+.spbar .lo img { width: 34px; }
+.run-hero { background: #1f3d2b; color: #fff; padding: 112px 22px 22px; }
+.run-hero .k { font: 13.5px system-ui; opacity: .72; }
+.run-hero .v { margin-top: 2px; font: 800 46px system-ui; letter-spacing: -.02em; } .run-hero .v small { margin-left: 5px; font: 600 17px system-ui; opacity: .75; }
+.run-hero .m { font: 13.5px system-ui; opacity: .72; }
+.run-bars { display: flex; align-items: flex-end; gap: 8px; height: 74px; margin-top: 16px; }
+.run-bars i { flex: 1; border-radius: 6px 6px 2px 2px; background: #9ad7a8; } .run-bars i.off { height: 8%; background: rgba(255,255,255,.18); }
+.run-days { display: flex; gap: 8px; margin-top: 6px; font: 11.5px system-ui; opacity: .7; } .run-days span { flex: 1; text-align: center; }
+.run-list { padding: 14px 12px; }
+.run-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; padding: 12px 14px; border-radius: 16px; background: #fffdf8; color: #20261f; }
+.run-row .d { width: 44px; text-align: center; font: 12px system-ui; color: #6b705f; } .run-row .d b { display: block; font: 700 20px system-ui; color: #1f3d2b; }
+.run-row .mm { flex: 1; min-width: 0; } .run-row .mm b { font: 600 15.5px system-ui; } .run-row .mm small { display: block; margin-top: 2px; font: 12.5px system-ui; color: #6b705f; }
+.run-row .pb { padding: 2px 7px; border-radius: 6px; background: #d9eedd; color: #1f3d2b; font: 700 11.5px system-ui; }
+/* popout: the space card in the chat (ChatWeb cards.ts spaceCard) */
+.spc { display: flex; align-items: center; gap: 10px; padding: 10px 6px 10px 12px; border-radius: 16px; background: #fff; box-shadow: 0 0 0 .5px rgba(0,0,0,.06); }
+.spc .ico { flex: none; width: 40px; height: 40px; border-radius: 11px; background: #f0f0f2; display: grid; place-items: center; }
+.spc .ico svg { width: 20px; height: 20px; fill: none; stroke: #555; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.spc .tx { flex: 1; } .spc .tx b { display: block; font: 650 17px system-ui; } .spc .tx small { font: 13.5px system-ui; color: #8a8a90; }
+.spc .op { padding: 0 14px; font: 500 15px system-ui; color: #2f6fe0; }
+.addwrap .rep { padding: 0 6px; font: 15px/1.4 system-ui; color: #222; }
+/* popout: the space menu (NativeSpacePage menu) */
+.smenu .srow i { background: none; } .smenu .srow i svg { width: 22px; height: 22px; fill: none; stroke: #333; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.smenu .srow i.face { background: #fff url(../../../../../pi-remote/mockup/site-app-screens/mascot-idle-frame.png) center 2px / 36px no-repeat; box-shadow: 0 0 0 1px rgba(0,0,0,.06); }
 </style></head><body>
 
 <svg width="0" height="0" style="position:absolute">
@@ -351,6 +410,16 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
   <symbol id="t-todo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.7 2.7L16 9.5"/></symbol>
   <symbol id="t-upd" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5H8.5"/></symbol>
   <symbol id="t-wiki" viewBox="0 0 24 24"><path d="M12 6.5C10 5 7 4.6 3.5 5v13c3.5-.4 6.5 0 8.5 1.5 2-1.5 5-1.9 8.5-1.5V5C17 4.6 14 5 12 6.5zM12 6.5v13"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
+  <symbol id="i-house" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20h-5v-6H9v6H4z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.5 4.5L20 16M20 20v-4h-4"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-cards" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M12 4v16M12 11h8.5M3.5 14H12"/></symbol>
   <symbol id="sb" viewBox="0 0 70 12"><path d="M1 11h2V8H1zM5 11h2V6H5zM9 11h2V3.5H9zM13 11h2V1h-2z"/><path transform="translate(22 0)" d="M8 11.2l2.3-2.6a3.3 3.3 0 0 0-4.6 0zM3.4 6.4l1.4 1.5a4.6 4.6 0 0 1 6.4 0l1.4-1.5a6.6 6.6 0 0 0-9.2 0zM.6 3.6L2 5.1a8.6 8.6 0 0 1 12 0l1.4-1.5a10.6 10.6 0 0 0-14.8 0z"/><g transform="translate(42 0)"><rect x=".5" y=".5" width="23" height="11" rx="3.5" fill="none" stroke="#111" opacity=".45"/><rect x="2.5" y="2.5" width="18" height="7" rx="2"/></g></symbol>
 </svg>
 
@@ -458,22 +527,26 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
   <div class="dw-under"><img src="scr-code.png"></div><div class="dw-wash"></div>
   <div class="dw-panel">
     <div class="dr-h" style="left:20px;right:14px"><b>Chats</b><small>Studio Mac</small><span class="av">F</span></div>
-    <div class="atu-row" style="left:10px;right:10px"><span class="face"></span><div>Atu<small>Your morning brief is ready.</small></div><span class="n">1</span><span class="chv">›</span></div>
-    <div class="seg" style="left:12px;right:12px"><span class="on">Recent</span><span>Projects</span></div>
-    <div class="dl dw-l" style="top:244px">
-      <div class="dr sel"><div class="u">Fix the checkout total<small>shop-app</small></div><span class="spin"></span></div>
-      <div class="dr sub"><div>Run the 48 checkout tests</div><span class="spin"></span></div>
-      <div class="dr sub"><div>Check the coupon rules</div></div>
-      <div class="dr"><div class="u">Fix search paging test<small>web-app</small></div><span class="spin"></span></div>
-      <div class="dr"><div class="u">Add retries to deploy script<small>web-app</small></div><span class="dot"></span></div>
-      <div class="dr"><div class="u">Compare 3 hotels in Tokyo<small class="td">◷ Todo · 3 Nov</small></div><span class="dot"></span></div>
-      <div class="dr"><div>Sort October invoices<small>personal</small></div></div>
-      <div class="dr"><div>Landing page copy<small>side-project</small></div></div>
-      <div class="dr"><div>Draft the reply to Lena<small>personal</small></div></div>
-      <div class="dr"><div>Weekly report<small>personal</small></div></div>
+    <div class="atu-row" style="left:12px;right:12px"><span class="face"></span><div>Atu<small>Your morning brief is ready.</small></div><span class="n">1</span><span class="chv">›</span></div>
+    <div class="dsec" style="top:186px">
+      <span class="sl">Tabs</span>
+      <div class="trw"><svg><use href="#t-todo"/></svg>Todo</div>
+      <div class="trw"><svg><use href="#t-upd"/></svg>Updates</div>
+      <div class="trw"><svg><use href="#t-wiki"/></svg>Wiki</div>
+      <span class="sl s2">Spaces</span>
+      <div class="trw"><svg><use href="#i-heart"/></svg>Run log</div>
+      <div class="trw"><svg><use href="#i-house"/></svg>Home dashboard</div>
+      <div class="trw ds"><svg><use href="#i-plus"/></svg>New space</div>
+      <div class="chd"><span class="sl">Chats</span><span class="ib on"><i><svg><use href="#i-list"/></svg></i></span><span class="ib "><i><svg><use href="#i-folder"/></svg></i></span></div>
+      <div class="dw-l">
+        <div class="dr sel"><div class="u">Fix the checkout total<small>shop-app</small></div><span class="spin"></span></div>
+        <div class="dr sub"><div>Run the 48 checkout tests</div><span class="spin"></span></div>
+        <div class="dr"><div class="u">Fix search paging test<small>web-app</small></div><span class="spin"></span></div>
+        <div class="dr"><div class="u">Add retries to deploy script<small>web-app</small></div><span class="dot"></span></div>
+      </div>
     </div>
     <div class="dw-fade"></div>
-    <div class="dr-b" style="left:14px;right:14px"><span class="chat">Chat</span><span class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>Search</span><span class="gear"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></span></div>
+    <div class="dr-b" style="left:14px;right:14px"><span class="chat">Task</span><span class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>Search</span><span class="gear"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></span></div>
   </div>
   <div class="sb"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
 </div>
@@ -568,7 +641,7 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
   <div class="wk-stats"><div><b>142</b><em>Pages</em>12 tags<br>from 418 chats</div><div><b>6</b><em>Last night ›</em><span class="g">2 new</span><br>4 updated</div><div><b>23</b><em>This week ›</em><span class="g">7 new</span><br>16 updated</div></div>
   <div class="wk-h" style="top:232px">Recent<small>9</small></div>
   <div class="wk-recent"><div><b>Kyoto in April</b>Temples first, then the Philosopher's Path while it is quiet.<small><i>New</i>Nov 2 · # Japan trip</small></div><div><b>Builder quotes</b>Three quotes for the kitchen, side by side.<small>Nov 1 · # Home</small></div></div>
-  <div class="wk-h" style="top:394px">Tags<small>12</small></div>
+  <div class="wk-h" style="top:394px">Tags<small>12</small></div><span class="tvs" style="top:384px;right:14px"><i class="on"><svg><use href="#i-cards"/></svg></i><i><svg><use href="#i-map"/></svg></i></span>
   <div class="wk-tags">
     <div><b># Home renovation</b><em>24 pages<i>+2 new</i></em><p>Kitchen layout choices<br>Builder quotes compared</p></div>
     <div><b># Japan trip</b><em>18 pages<i>+1 new</i></em><p>Kyoto in April<br>Rail pass or not</p></div>
@@ -579,7 +652,7 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
   </div>
   <div class="botfade" style="height:190px"></div>
   <div class="askd"><span class="face"></span>Ask your Wiki</div><span class="plusb">+</span>
-  <nav class="tabs"><span class=""><svg><use href="#t-chat"/></svg>Chats</span><span class=""><svg><use href="#t-todo"/></svg>Todo</span><span class=""><svg><use href="#t-upd"/></svg>Updates</span><span class=""><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg>Days</span><span class="on"><svg><use href="#t-wiki"/></svg>Wiki</span></nav>
+  <nav class="tabs"><span class=""><svg><use href="#t-chat"/></svg>Chats</span><span class=""><svg><use href="#t-todo"/></svg>Todo</span><span class=""><svg><use href="#t-upd"/></svg>Updates</span><span class="on"><svg><use href="#t-wiki"/></svg>Wiki</span><span class=""><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg>Days</span></nav>
 </div>
 
 <!-- 7 · Days home (Watch recordings) -->
@@ -596,7 +669,7 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
     <div class="dy-row"><span class="t">14:00</span><div>Design review: cards lead with the answer<small>55m</small></div><span>›</span></div>
   </div>
   <div class="botfade" style="height:150px"></div>
-  <nav class="tabs"><span class=""><svg><use href="#t-chat"/></svg>Chats</span><span class=""><svg><use href="#t-todo"/></svg>Todo</span><span class=""><svg><use href="#t-upd"/></svg>Updates</span><span class="on"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg>Days</span><span class=""><svg><use href="#t-wiki"/></svg>Wiki</span></nav>
+  <nav class="tabs"><span class=""><svg><use href="#t-chat"/></svg>Chats</span><span class=""><svg><use href="#t-todo"/></svg>Todo</span><span class=""><svg><use href="#t-upd"/></svg>Updates</span><span class=""><svg><use href="#t-wiki"/></svg>Wiki</span><span class="on"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg>Days</span></nav>
 </div>
 
 <!-- 6c · Wiki tag page: # Japan trip -->
@@ -623,7 +696,7 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
   </div>
   <div class="botfade" style="height:190px"></div>
   <div class="askd" style="right:12px"><span class="face"></span>Ask about this tag</div>
-  <nav class="tabs"><span class=""><svg><use href="#t-chat"/></svg>Chats</span><span class=""><svg><use href="#t-todo"/></svg>Todo</span><span class=""><svg><use href="#t-upd"/></svg>Updates</span><span class=""><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg>Days</span><span class="on"><svg><use href="#t-wiki"/></svg>Wiki</span></nav>
+  <nav class="tabs"><span class=""><svg><use href="#t-chat"/></svg>Chats</span><span class=""><svg><use href="#t-todo"/></svg>Todo</span><span class=""><svg><use href="#t-upd"/></svg>Updates</span><span class="on"><svg><use href="#t-wiki"/></svg>Wiki</span><span class=""><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg>Days</span></nav>
 </div>
 
 <!-- 4c · Follow-up sheet (popout) -->
@@ -691,7 +764,7 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
     <div class="sbp"><span>9:41&nbsp;&nbsp;Tue 3 Nov</span><span></span></div>
     <div class="dr-h" style="top:46px"><b>Chats</b><small>Studio Mac</small><span class="av">F</span></div>
     <div class="atu-row" style="top:108px"><span class="face"></span><div>Atu<small>Your morning brief is ready.</small></div><span class="n">1</span></div>
-    <div class="seg" style="top:178px"><span>Recent</span><span class="on">Projects</span></div>
+    <div class="dsec" style="top:176px"><div class="chd"><span class="sl">Chats</span><span class="ib "><i><svg><use href="#i-list"/></svg></i></span><span class="ib on"><i><svg><use href="#i-folder"/></svg></i></span></div></div>
     <div class="dl" style="top:232px">
       <div class="dp"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>web-app</div>
       <div class="dr" style="background:#ececee;border-radius:12px;margin:0 10px;padding-left:20px"><div class="u">Fix search paging test<small>Working · 42 s</small></div><span class="spin"></span></div>
@@ -702,7 +775,7 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
       <div class="dr"><div>Sort October invoices<small>Mon</small></div></div>
             <div class="dp"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>side-project</div>
     </div>
-    <div class="dr-b" style="bottom:28px"><span class="chat">Chat</span><span class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>Search</span></div>
+    <div class="dr-b" style="bottom:28px"><span class="chat">Task</span><span class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>Search</span></div>
   </div>
   <div class="main">
     <div class="sbp" style="justify-content:flex-end"><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
@@ -727,12 +800,21 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
 <!-- iPad 1 · Chats: the sidebar beside the chat (wide layout, sidebar 280 pt) -->
 <div class="ip" id="ip-chat">
   <div class="sbi"><span>9:41&nbsp;&nbsp;Tue 3 Nov</span><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
-  <div class="tbar"><span class="on">Chats</span><span>Todo</span><span>Updates</span><span>Days</span><span>Wiki</span></div>
+  <div class="tbar"><span class="on">Chats</span><span>Todo</span><span>Updates</span><span>Wiki</span><span>Days</span></div>
   <div class="iside">
     <div class="dr-h" style="top:100px;left:20px;right:14px"><b>Chats</b><small>Studio Mac</small><span class="av">F</span></div>
-    <div class="atu-row" style="top:162px;left:8px;right:8px"><span class="face"></span><div style="min-width:0">Atu<small style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Your morning brief is ready.</small></div><span class="n">1</span></div>
-    <div class="seg" style="top:232px;left:12px;right:12px"><span class="on">Recent</span><span>Projects</span></div>
-    <div class="dl dw-l" style="top:286px">
+    <div class="atu-row" style="top:162px;left:8px;right:8px"><span class="face"></span><div style="min-width:0">Atu<small style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Your morning brief is ready.</small></div><span class="n">1</span><span class="chv">›</span></div>
+    <div class="dsec" style="top:230px;left:8px;right:8px">
+      <span class="sl">Tabs</span>
+      <div class="trw"><svg><use href="#t-todo"/></svg>Todo</div>
+      <div class="trw"><svg><use href="#t-upd"/></svg>Updates</div>
+      <div class="trw"><svg><use href="#t-wiki"/></svg>Wiki</div>
+      <span class="sl s2">Spaces</span>
+      <div class="trw"><svg><use href="#i-heart"/></svg>Run log</div>
+      <div class="trw"><svg><use href="#i-house"/></svg>Home dashboard</div>
+      <div class="trw ds"><svg><use href="#i-plus"/></svg>New space</div>
+      <div class="chd"><span class="sl">Chats</span><span class="ib on"><i><svg><use href="#i-list"/></svg></i></span><span class="ib "><i><svg><use href="#i-folder"/></svg></i></span></div>
+      <div class="dw-l">
       <div class="dr sel"><div class="u">Fix the checkout total<small>Working · shop-app</small></div><span class="spin"></span></div>
       <div class="dr sub"><div>Run the 48 checkout tests</div><span class="spin"></span></div>
       <div class="dr sub"><div>Check the coupon rules</div></div>
@@ -743,13 +825,10 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
       <div class="dr"><div>Landing page copy<small>side-project</small></div></div>
       <div class="dr"><div>Draft the reply to Lena<small>personal</small></div></div>
       <div class="dr"><div>Weekly report<small>personal</small></div></div>
-      <div class="dr"><div>Refactor the auth module<small>web-app</small></div></div>
-      <div class="dr"><div>Plan the team offsite<small>personal</small></div></div>
-      <div class="dr"><div>Read the Q3 survey results<small>side-project</small></div></div>
-      <div class="dr"><div>Clean up old branches<small>shop-app</small></div></div>
+      </div>
     </div>
     <div class="dw-fade" style="background:linear-gradient(rgba(250,250,250,0),#fafafa 60%)"></div>
-    <div class="dr-b" style="left:14px;right:14px;bottom:30px"><span class="chat">Chat</span><span class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>Search</span><span class="gear"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></span></div>
+    <div class="dr-b" style="left:14px;right:14px;bottom:30px"><span class="chat">Task</span><span class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>Search</span><span class="gear"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></span></div>
   </div>
   <div class="imain">
     <div class="cap" style="left:120px;right:120px;top:104px"><b>Fix the checkout total</b><small>shop-app · Ctx 38%</small></div>
@@ -787,29 +866,23 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
 <div class="ip" id="ip-providers">
   <img src="scr-ip-chat.png" style="position:absolute;inset:0;width:1032px;height:1376px">
   <div style="position:absolute;inset:0;background:rgba(0,0,0,.22)"></div>
-  <div class="sheet" style="left:206px;right:206px;top:170px;bottom:auto;height:760px;border-radius:38px">
+  <div class="sheet" style="left:206px;right:206px;top:170px;bottom:auto;height:400px;border-radius:38px">
     <div class="bar" style="height:68px"><span class="bk" style="top:14px"><svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg></span>Providers<span class="x" style="top:14px"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg></span></div>
-    <div class="grp-t" style="margin-top:4px">Connected · 4</div>
+    <div style="height:6px"></div>
     <div class="grp">
-      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/openai.png"></span><span class="tx"><b>ChatGPT</b><small>Connected · ChatGPT plan</small></span></div>
-      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/claude.png"></span><span class="tx"><b>Claude</b><small>Connected · Claude account</small></span></div>
-      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/githubcopilot.png"></span><span class="tx"><b>GitHub Copilot</b><small>Connected · Copilot plan</small></span></div>
-      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/deepseek.png"></span><span class="tx"><b>DeepSeek</b><small>Connected · API key</small></span></div>
+      <div class="prow nc"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/openai.png"></span><span class="tx"><b>ChatGPT</b><small>Connected · ChatGPT plan · 64% left</small></span></div>
+      <div class="prow nc"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/claude.png"></span><span class="tx"><b>Claude</b><small>Connected · Claude account · 82% left</small></span></div>
+      <div class="prow nc"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/githubcopilot.png"></span><span class="tx"><b>GitHub Copilot</b><small>Connected · Copilot plan</small></span></div>
+      <div class="prow nc"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/deepseek.png"></span><span class="tx"><b>DeepSeek</b><small>Connected · API key</small></span></div>
+      <div class="prow"><span class="lg plus">+</span><span class="tx"><b>Add provider</b></span></div>
     </div>
-    <div class="grp-t">Add</div>
-    <div class="grp">
-      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/google.png"></span><span class="tx"><b>Google Gemini</b><small>Google account or API key</small></span></div>
-      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/kimi.png"></span><span class="tx"><b>Kimi</b><small>API key</small></span></div>
-      <div class="prow"><span class="lg" style="background:#f0f0f2;font:300 24px system-ui">+</span><span class="tx"><b>More providers</b><small>Qwen, Zhipu GLM, OpenRouter and more</small></span></div>
-    </div>
-    <div class="note">Accounts are saved on the Mac, not on this iPad.</div>
   </div>
 </div>
 
 <!-- iPad 4 · Todo: Today in the main column, Later in the 300 pt side column -->
 <div class="ip" id="ip-todo">
   <div class="sbi"><span>9:41&nbsp;&nbsp;Tue 27 Oct</span><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
-  <div class="tbar"><span>Chats</span><span class="on">Todo</span><span>Updates</span><span>Days</span><span>Wiki</span></div>
+  <div class="tbar"><span>Chats</span><span class="on">Todo</span><span>Updates</span><span>Wiki</span><span>Days</span></div>
   <div class="ihead"><span class="atu"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span><b>Todo</b><small>Tuesday, 27 October</small></span><span class="av">F</span></div>
   <div class="tseg" style="top:178px;left:30px"><span class="on">Today<small>8</small></span><span>Done<small>5</small></span></div>
   <div class="tcard" style="top:224px;left:20px;right:332px">
@@ -851,7 +924,7 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
 <!-- iPad 5 · Updates: the sources in the sidebar, the feed in two columns -->
 <div class="ip" id="ip-updates">
   <div class="sbi"><span>9:41&nbsp;&nbsp;Tue 3 Nov</span><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
-  <div class="tbar"><span>Chats</span><span>Todo</span><span class="on">Updates</span><span>Days</span><span>Wiki</span></div>
+  <div class="tbar"><span>Chats</span><span>Todo</span><span class="on">Updates</span><span>Wiki</span><span>Days</span></div>
   <div class="iside">
     <div class="src-h">Updates</div>
     <div class="src on"><i style="background:#1d1d1f">ALL</i><div>All<small>4 new today</small></div></div>
@@ -906,12 +979,12 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
 <!-- iPad 6 · Wiki home, wide layout: this week in a row, four tags in a row -->
 <div class="ip" id="ip-wiki">
   <div class="sbi"><span>9:41&nbsp;&nbsp;Tue 3 Nov</span><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
-  <div class="tbar"><span>Chats</span><span>Todo</span><span>Updates</span><span>Days</span><span class="on">Wiki</span></div>
+  <div class="tbar"><span>Chats</span><span>Todo</span><span>Updates</span><span class="on">Wiki</span><span>Days</span></div>
   <div class="ihead"><span class="atu"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span><b>Wiki</b><small>Synced 6 h ago · 418 chats read</small></span><span class="av">F</span></div>
   <div class="wk-stats" style="top:178px;left:20px;right:20px;grid-template-columns:repeat(4,1fr);padding:16px 0"><div style="padding:0 18px"><b>142</b><em>Pages</em>12 tags · from 418 chats</div><div style="padding:0 18px"><b>6</b><em>Last night ›</em><span class="g">2 new</span> · 4 updated</div><div style="padding:0 18px"><b>23</b><em>This week ›</em><span class="g">7 new</span> · 16 updated</div><div style="padding:0 18px"><b>9</b><em>Waiting ›</em>Atu files them tonight</div></div>
   <div class="wk-h" style="top:316px;left:26px">This week<small>23</small></div>
   <div class="wk-recent" style="top:348px;left:20px;right:20px;display:grid;grid-template-columns:repeat(3,1fr)"><div style="width:auto;height:126px"><b>Kyoto in April</b>Temples first, then the Philosopher's Path while it is quiet.<small><i>New</i>Nov 2 · # Japan trip</small></div><div style="width:auto;height:126px"><b>Builder quotes</b>Three quotes for the kitchen, side by side.<small>Nov 1 · # Home</small></div><div style="width:auto;height:126px"><b>Rail pass or not</b>Only worth it with two long trips.<small><i>New</i>Oct 30 · # Japan trip</small></div></div>
-  <div class="wk-h" style="top:504px;left:26px">Tags<small>12</small></div>
+  <div class="wk-h" style="top:504px;left:26px">Tags<small>12</small></div><span class="tvs" style="top:494px;right:22px"><i class="on"><svg><use href="#i-cards"/></svg></i><i><svg><use href="#i-map"/></svg></i></span>
   <div class="wk-tags" style="top:536px;left:20px;right:20px;grid-template-columns:repeat(4,1fr)">
     <div><b># Home renovation</b><em>24 pages<i>+2 new</i></em><p>Kitchen layout choices<br>Builder quotes compared<br>Paint colours</p></div>
     <div><b># Japan trip</b><em>18 pages<i>+1 new</i></em><p>Kyoto in April<br>Rail pass or not<br>Hotel shortlist</p></div>
@@ -930,6 +1003,44 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
   <div class="ask" style="left:20px;right:20px"><span class="face"></span>Ask your Wiki<span class="pl">+</span></div>
 </div>
 
+
+<!-- 7 · Space: the run log, with its own look (docs/product/spaces.md; mockup screen F) -->
+<div class="screen" id="space" style="background:#f3efe6">
+  <div class="sb" style="color:#fff"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px;fill:#fff"><use href="#sb"/></svg></div>
+  <div class="spbar"><span class="mb"><svg><use href="#i-menu"/></svg></span><span class="lo"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span class="hb">F</span></div>
+  <div class="run-hero"><div class="k">Run log · updated 07:00</div><div class="v">21.3<small>km</small></div><div class="m">Last 7 days · 3 runs · 2 h 04 min</div><div class="run-bars"><i style="height:50%"></i><i class="off"></i><i style="height:59%"></i><i class="off"></i><i style="height:100%"></i><i class="off"></i><i class="off"></i></div><div class="run-days"><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span><span>M</span><span>T</span></div></div>
+  <div class="run-list"><div class="run-row"><span class="d"><b>01</b>Sun</span><span class="mm"><b>Long run · 10.2 km</b><small>5:41 /km · HR 148</small></span><span class=pb>PB</span></div><div class="run-row"><span class="d"><b>30</b>Fri</span><span class="mm"><b>Tempo · 6.0 km</b><small>5:12 /km · HR 161</small></span></div><div class="run-row"><span class="d"><b>28</b>Wed</span><span class="mm"><b>Easy · 5.1 km</b><small>6:05 /km · HR 139</small></span></div><div class="run-row"><span class="d"><b>25</b>Sun</span><span class="mm"><b>Long run · 9.8 km</b><small>5:49 /km · HR 151</small></span></div><div class="run-row"><span class="d"><b>23</b>Fri</span><span class="mm"><b>Tempo · 6.1 km</b><small>5:18 /km · HR 159</small></span></div><div class="run-row"><span class="d"><b>21</b>Wed</span><span class="mm"><b>Easy · 5.0 km</b><small>6:10 /km · HR 137</small></span></div></div>
+  <div class="botfade" style="height:150px;background:linear-gradient(rgba(243,239,230,0),rgba(243,239,230,.96) 50%)"></div>
+  <nav class="tabs"><span><svg><use href="#t-chat"/></svg>Chats</span><span><svg><use href="#t-todo"/></svg>Todo</span><span><svg><use href="#t-upd"/></svg>Updates</span><span class="on"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="#e0764f" stroke="#e0764f"/></svg>Run log</span><span><svg><use href="#t-wiki"/></svg>Wiki</span></nav>
+</div>
+
+<!-- 7b · Popout: one message, and the space card in the chat (ChatWeb spaceCard) -->
+<div class="addwrap" id="spadd">
+  <div class="bub">Make a page of my runs. Update it every morning.</div>
+  <div class="spc"><span class="ico"><svg><use href="#i-heart"/></svg></span><span class="tx"><b>Run log</b><small>Space · Daily 07:00</small></span><span class="op">Open</span></div>
+</div>
+
+<!-- 7c · Popout: the space menu, from a tap on the Atu logo (NativeSpacePage) -->
+<div class="scn smenu" id="spmenu">
+  <div class="bar">Run log</div>
+  <div class="grp" style="margin-top:8px">
+    <div class="srow"><i><svg><use href="#i-refresh"/></svg></i><div>Refresh<small>Daily 07:00 · last run today 07:00</small></div></div>
+    <div class="srow"><i><svg><use href="#i-clock"/></svg></i><div>Change history<small>Undo any change</small></div><em></em></div>
+  </div>
+  <div class="grp" style="margin-top:12px">
+    <div class="srow"><i class="face"></i><div>Tell Atu to make changes</div><em></em></div>
+  </div>
+</div>
+
+<!-- iPad 7 · Space: the run log in the wide layout, the tab bar at the top -->
+<div class="ip" id="ip-space" style="background:#f3efe6">
+  <div class="sbi" style="color:#fff"><span>9:41&nbsp;&nbsp;Tue 3 Nov</span><svg style="height:12px;width:70px;fill:#fff"><use href="#sb"/></svg></div>
+  <div class="tbar"><span>Chats</span><span>Todo</span><span>Updates</span><span class="on">Run log</span><span>Wiki</span></div>
+  <div class="spbar" style="height:160px"><span class="mb" style="top:106px;left:28px"><svg><use href="#i-menu"/></svg></span><span class="lo" style="top:106px"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span class="hb" style="top:106px;right:28px">F</span></div>
+  <div class="run-hero" style="padding:176px 40px 30px"><div class="k">Run log · updated 07:00</div><div class="v">21.3<small>km</small></div><div class="m">Last 7 days · 3 runs · 2 h 04 min</div><div class="run-bars" style="height:120px;gap:14px"><i style="height:50%"></i><i class="off"></i><i style="height:59%"></i><i class="off"></i><i style="height:100%"></i><i class="off"></i><i class="off"></i></div><div class="run-days" style="gap:14px"><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span><span>M</span><span>T</span></div></div>
+  <div class="run-list" style="display:grid;grid-template-columns:1fr 1fr;column-gap:14px;padding:18px 24px"><div class="run-row"><span class="d"><b>01</b>Sun</span><span class="mm"><b>Long run · 10.2 km</b><small>5:41 /km · HR 148</small></span><span class=pb>PB</span></div><div class="run-row"><span class="d"><b>30</b>Fri</span><span class="mm"><b>Tempo · 6.0 km</b><small>5:12 /km · HR 161</small></span></div><div class="run-row"><span class="d"><b>28</b>Wed</span><span class="mm"><b>Easy · 5.1 km</b><small>6:05 /km · HR 139</small></span></div><div class="run-row"><span class="d"><b>25</b>Sun</span><span class="mm"><b>Long run · 9.8 km</b><small>5:49 /km · HR 151</small></span></div><div class="run-row"><span class="d"><b>23</b>Fri</span><span class="mm"><b>Tempo · 6.1 km</b><small>5:18 /km · HR 159</small></span></div><div class="run-row"><span class="d"><b>21</b>Wed</span><span class="mm"><b>Easy · 5.0 km</b><small>6:10 /km · HR 137</small></span></div><div class="run-row"><span class="d"><b>18</b>Sun</span><span class="mm"><b>Long run · 9.5 km</b><small>5:52 /km · HR 150</small></span></div><div class="run-row"><span class="d"><b>16</b>Fri</span><span class="mm"><b>Tempo · 5.8 km</b><small>5:20 /km · HR 158</small></span></div><div class="run-row"><span class="d"><b>14</b>Wed</span><span class="mm"><b>Easy · 5.2 km</b><small>6:02 /km · HR 140</small></span></div><div class="run-row"><span class="d"><b>11</b>Sun</span><span class="mm"><b>Long run · 9.1 km</b><small>5:55 /km · HR 149</small></span></div><div class="run-row"><span class="d"><b>09</b>Fri</span><span class="mm"><b>Tempo · 5.6 km</b><small>5:24 /km · HR 157</small></span></div><div class="run-row"><span class="d"><b>07</b>Wed</span><span class="mm"><b>Easy · 4.8 km</b><small>6:12 /km · HR 136</small></span></div><div class="run-row"><span class="d"><b>04</b>Sun</span><span class="mm"><b>Long run · 8.7 km</b><small>5:58 /km · HR 147</small></span></div><div class="run-row"><span class="d"><b>02</b>Fri</span><span class="mm"><b>Tempo · 5.5 km</b><small>5:26 /km · HR 156</small></span></div></div>
+</div>
+
 <!-- 2 · Providers -->
 <div class="screen" id="providers">
   <div class="dim"></div>
@@ -939,12 +1050,11 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
     <div class="bar"><span class="bk"><svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg></span>Providers<span class="x"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg></span></div>
     <div style="height:8px"></div>
     <div class="grp">
-      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/openai.png"></span><span class="tx"><b>ChatGPT</b><small>Connected · ChatGPT plan</small></span></div>
-      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/claude.png"></span><span class="tx"><b>Claude</b><small>Connected · Claude account</small></span></div>
-      <div class="prow"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/deepseek.png"></span><span class="tx"><b>DeepSeek</b><small>Connected · API key</small></span></div>
-      <div class="prow"><span class="lg" style="background:#f0f0f2;font:300 24px system-ui">+</span><span class="tx"><b>Add provider</b><small>ChatGPT, Claude, Zhipu GLM and more</small></span></div>
+      <div class="prow nc"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/openai.png"></span><span class="tx"><b>ChatGPT</b><small>Connected · ChatGPT plan · 64% left</small></span></div>
+      <div class="prow nc"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/claude.png"></span><span class="tx"><b>Claude</b><small>Connected · Claude account · 82% left</small></span></div>
+      <div class="prow nc"><span class="lg"><img src="../../../../../pi-remote/site/assets/providers/deepseek.png"></span><span class="tx"><b>DeepSeek</b><small>Connected · API key</small></span></div>
+      <div class="prow"><span class="lg plus">+</span><span class="tx"><b>Add provider</b></span></div>
     </div>
-    <div class="note">Accounts are saved on the Mac, not on this phone.</div>
   </div>
 </div>
 

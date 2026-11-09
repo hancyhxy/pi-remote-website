@@ -17,7 +17,7 @@ WATCH_HTML = str(PIR / 'docs/product/watch-days-mockup/index.html')
 
 PHONES = {  # name: screen
     'p1-task': 'scr-task.png', 'p3-providers': 'scr-providers.png', 'p4-todo': 'scr-todo.png',
-    'p5-updates': 'scr-updates.png', 'p6-wiki': 'scr-wiki.png', 'p6-jtrip': 'scr-jtrip.png', 'p7-days': 'scr-days.png', 'p2-code': 'scr-code.png',
+    'p5-updates': 'scr-updates.png', 'p6-wiki': 'scr-wiki.png', 'p6-jtrip': 'scr-jtrip.png', 'p7-days': 'scr-days.png', 'p7-space': 'scr-space.png', 'p2-code': 'scr-code.png',
 }
 WATCHES = {'rec': 1, 'talk': 8, 'reply': 9}   # index of .wv-case in the watch mockup
 
@@ -98,7 +98,7 @@ def main(args):
     # iPad mini (A20 Pro) Starlight, landscape (Apple Design Resources Bezel-iPad-mini-(A20-Pro).dmg)
     put(H / 'bezels/ipad-mini-starlight-land.png', Image.open(H / 'scr-padm.png'), 'ipadm.png')
     # iPad Pro (M5) 13" Silver, portrait (Apple Design Resources Bezel-iPad-Pro-(M5).dmg), for the iPad set
-    for n in ['chat', 'providers', 'todo', 'updates', 'wiki']:
+    for n in ['chat', 'providers', 'todo', 'updates', 'wiki', 'space']:
         if (H / f'scr-ip-{n}.png').exists():
             put(H / 'bezels/ipad-pro-13-silver-port.png', Image.open(H / f'scr-ip-{n}.png'), f'ip13-{n}.png')
     for n in WATCHES:
