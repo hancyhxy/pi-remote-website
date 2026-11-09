@@ -15,7 +15,7 @@ App Store 搜索结果里只露出前 3 张，所以第 1–3 张最重要。
 
 第 1–2 张合起来做开场（参考 Otter），第 3–8 张讲功能。
 
-2026-11-09 按 App 最新版（`pi-remote` `7e5ab114`）更新：抽屉换成新结构（Agents 行、Tabs、Spaces、Chats 标题带列表/文件夹按钮，底部 `Task`）；标签栏默认顺序 `Chats Todo Updates Wiki Days`（Days 最后）；Providers 已连接的行没有箭头，订阅账号显示剩余用量，`Add provider` 没有副标题，底部说明删掉；Wiki 的 Tags 旁边有 Cards / Map 切换；新加第 7 张 Space，手表顺延到第 8 张。界面仍是 HTML 还原，Space 页 App 侧没有模拟器截图可对照（未验证）。每张图只有一句标题。
+2026-11-09 按 App 最新版（`pi-remote` `7e5ab114`）更新：抽屉换成新结构（Agents 行、Tabs、Spaces、Chats 标题带列表/文件夹按钮，底部 `Task`）；标签栏默认顺序 `Chats Todo Updates Wiki Days`（Days 最后）；Providers 已连接的行没有箭头，订阅账号显示剩余用量，`Add provider` 没有副标题，底部说明删掉；Wiki 的 Tags 旁边有 Cards / Map 切换；新加 Space，手表顺延到第 8 张。Space 是亮点，放在 Todo 后面、第 5 张（Xinyi 2026-11-09），Daily 和 Wiki 顺延到第 6、7 张。界面仍是 HTML 还原，Space 页 App 侧没有模拟器截图可对照（未验证）。每张图只有一句标题。
 
 跑出手机的元素（pop-up）的规则：参考 Otter，把界面里的一个组件放大拎出来，压在它原本的位置上、伸出手机边框。
 手机是什么角度，pop-up 就是什么角度，不额外旋转。
@@ -59,9 +59,9 @@ A 的抽屉照 App 现在的样子：宽 `min(320, 屏宽 − 62)`（390 pt 的�
 | 2 | 手机、Mac、iPad、手表上是同一个 Atu | 右下角 `One Atu, every *screen*.` | Mac 上开着桌面端，同时露出侧栏导航和对话 `Fix search paging test`；iPad mini 横屏分栏：左边 Chats 列表，右边同一个对话；手表显示“按住和 Atu 说话” | 几台设备叠在一起（iPad mini 和 Mac 按真实比例），照官网 v3 首屏：Mac 在后面、偏上；iPad mini 横屏压住 Mac 的右下角；手表在 Mac 下面、最前面，压住 iPad 的左下；不放手机，设备之间不连虚线 |
 | 3 | 用你已经在付费的 AI | `Bring your own *AI* plan.` / `Works with *25+* AI providers.` | Providers 列表 + 模型选择卡 | 标题下面一行写支持多少家，不放第三方厂商图标墙（商标风险，Xinyi 2026-11-08；Happy、Paseo、Vibe42 都没有图标墙）。25+：Pi 内置 42 条，合并地区和套餐后是 29 家厂商。下面一台放大的手机立正居中，从底边出画；模型卡放大、从右下角跑出手机（不旋转） |
 | 4 | AI 替你写好待办，你来跟进 | `AI writes to-dos. You *follow up*.` | Todo 的 Today 页（行上标着 `Added by Atu from a chat`） | 银色手机立正（和其他页一样）。两个 pop-up：右上是 AI 的部分，一句聊天 `Remind me to pay the rent on Friday` 和 `Todo · Added 1` 卡片；下半部分是最大的 Follow up 面板，伸出手机两边 |
-| 5 | 每天定时替你跑事 | `Run your own *daily* tasks.` | Updates 页的 Morning brief | 手机立正；定时任务列表放大、从左下角跑出手机（不旋转） |
-| 6 | AI 自动把聊天整理成知识库，页面之间互相关联 | `A *wiki* that writes itself.` | Wiki 首页：142 页 / 12 个标签 / 来自 418 个对话，Recent，Tags | 两台手机前后叠放、都立正：前面左下是 Wiki 首页；后面右上稍小的一台是点开 `# Japan trip` 之后的标签页（18 pages · 4 chapters、New this week 的 Kyoto in April、Contents 里按章列出 Flights: Tuesday is cheapest、Rail pass or not、Hotel shortlist、Tokyo budget 等页面和日期），露出上半部分和右侧 |
-| 7 | 一句话让 Atu 在你的 Mac 上做一个小 App（Space），它自己保持更新 | `Describe a page. Atu *builds it*.` / `In your tab bar. *Updates itself.*`（Xinyi 2026-11-09 选定。用 page 不用 app：和 App 的 New space 文案 `Describe a page you want. Atu builds it…`、官网 `Describe a page. Atu makes it.` 一致，也避开审核指南 4.7 对 App 内小程序的审查） | 官网同款的 `Family week 🏡` Space（heyatu.com 19:00 Spaces，`site/home.html` 第 5 幕；Xinyi 2026-11-09）：黄色点点底、粗描边彩色卡片，今晚晚饭 Taco Tuesday、Mia 的星星、本周安排、购物清单；iPad 多两行卡片（睡前故事、家务、周六野餐、阅读打卡）。顶栏按 App（菜单、Atu 标、电脑按钮），标签栏里 `Family` 选中 | 手机立正。两个 pop-up：右边是聊天里的一句 `Make a page for our family week.` 和 Space 卡片（`Family week · Space · Daily 08:00 · Open`，App 的写法）；左下是点 Atu 标打开的 Space 菜单（Refresh、Change history、Tell Atu to make changes）。抽屉的 Spaces 分区第一个也是 Family week |
+| 5 | 一句话让 Atu 在你的 Mac 上做一个小 App（Space），它自己保持更新 | `Describe a page. Atu *builds it*.` / `In your tab bar. *Updates itself.*`（Xinyi 2026-11-09 选定。用 page 不用 app：和 App 的 New space 文案 `Describe a page you want. Atu builds it…`、官网 `Describe a page. Atu makes it.` 一致，也避开审核指南 4.7 对 App 内小程序的审查） | 官网同款的 `Family week 🏡` Space（heyatu.com 19:00 Spaces，`site/home.html` 第 5 幕；Xinyi 2026-11-09）：黄色点点底、粗描边彩色卡片，今晚晚饭 Taco Tuesday、Mia 的星星、本周安排、购物清单；iPad 多两行卡片（睡前故事、家务、周六野餐、阅读打卡）。顶栏按 App（菜单、Atu 标、电脑按钮），标签栏里 `Family` 选中 | 手机立正。两个 pop-up：右边是聊天里的一句 `Make a page for our family week.` 和 Space 卡片（`Family week · Space · Daily 08:00 · Open`，App 的写法）；左下是点 Atu 标打开的 Space 菜单（Refresh、Change history、Tell Atu to make changes）。抽屉的 Spaces 分区第一个也是 Family week |
+| 6 | 每天定时替你跑事 | `Run your own *daily* tasks.` | Updates 页的 Morning brief | 手机立正；定时任务列表放大、从左下角跑出手机（不旋转） |
+| 7 | AI 自动把聊天整理成知识库，页面之间互相关联 | `A *wiki* that writes itself.` | Wiki 首页：142 页 / 12 个标签 / 来自 418 个对话，Recent，Tags | 两台手机前后叠放、都立正：前面左下是 Wiki 首页；后面右上稍小的一台是点开 `# Japan trip` 之后的标签页（18 pages · 4 chapters、New this week 的 Kyoto in April、Contents 里按章列出 Flights: Tuesday is cheapest、Rail pass or not、Hotel shortlist、Tokyo budget 等页面和日期），露出上半部分和右侧 |
 | 8 | 用 Apple Watch 录下一天，iPhone 上看整理好的 Days，对 Atu 说的事会变成待办 | `Record your day on your *wrist*.` | iPhone 的 Days 页：录音中、今天 5h 08m · 2 个标记、小时柱状图、按小时的记录 | 上下结构，参考 Otter 最后一张：手机在上，从顶边出画，露出日期行以下；标题在中间、居中；下面并排两块手表（Series 11 银色铝壳正视、不带表带、不旋转），左边录音中 `5:08:12`，右边稍高一点是 Atu 的回复 `Added to Todo` |
 
 第 1 张原来的任务页（第三到五轮用过，第六轮换成了对话页；对照 App 的 Todo 任务抽屉，工作中状态）：
@@ -192,7 +192,7 @@ A 的抽屉照 App 现在的样子：宽 `min(320, 屏宽 − 62)`（390 pt 的�
 |---|---|---|---|
 | iPhone 6.9" | 1320 × 2868 | 1–5 | 主稿尺寸，先出这一套 |
 | iPhone 6.3" | 1206 × 2622 | 1–5 | 由 6.9" 等比缩小 |
-| iPad 13" | 2064 × 2752（竖屏） | 1–7 | 照 Otter：iPhone 的第 1–7 张（第 7 张是 Space），手机换成 iPad Pro 13 寸、界面换成 iPad 宽屏布局；第 1 张写 `from your *iPad*.`；不放手表：没有第 7 张，第 2 张只有 Mac 和 iPad mini，因为手表只能配 iPhone（Xinyi 2026-11-08）。`compose_ipad.py` |
+| iPad 13" | 2064 × 2752（竖屏） | 1–7 | 照 Otter：iPhone 的第 1–7 张（第 5 张是 Space），手机换成 iPad Pro 13 寸、界面换成 iPad 宽屏布局；第 1 张写 `from your *iPad*.`；不放手表：没有第 7 张，第 2 张只有 Mac 和 iPad mini，因为手表只能配 iPhone（Xinyi 2026-11-08）。`compose_ipad.py` |
 | Apple Watch | 上传前按 App Store Connect 现行规格查证 | 6a | Watch App 打包在 iOS App 里，截图单独一组 |
 | Google Play | — | 暂不做 | 还没有 Android 版 |
 

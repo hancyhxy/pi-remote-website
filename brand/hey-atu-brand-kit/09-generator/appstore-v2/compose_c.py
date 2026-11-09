@@ -20,7 +20,7 @@ W, HH, N = 1320, 2868, 8
 P1_3D = '--p1-flat' not in sys.argv   # page 1: the 3D phone (real-object style of pages 1-2)
 OPEN = sys.argv[sys.argv.index('--open') + 1] if '--open' in sys.argv else 'F'   # opening version, round 6
 TAG = 'r6' + OPEN.lower()
-NAMES = ['01-opening', '02-everywhere', '03-your-ai', '04-todo', '05-daily', '06-wiki', '07-space', '08-watch']
+NAMES = ['01-opening', '02-everywhere', '03-your-ai', '04-todo', '05-space', '06-daily', '07-wiki', '08-watch']
 FEAT = 106    # feature headline size
 
 
@@ -184,26 +184,26 @@ P4 = ''.join([
     img(f'{S}/scr-followup.png', k + 150, 1880, 1020, z=6),          # follow up, the biggest popout
 ])
 
-# ---- page 5: daily tasks ------------------------------------------------------------------
-k = 4 * W
+# ---- page 6: daily tasks ------------------------------------------------------------------
+k = 5 * W
 P5 = ''.join([
-    head(4, ['Run your own', '*daily* tasks.']),
+    head(5, ['Run your own', '*daily* tasks.']),
     phone('p5-updates', k + 700, 1720 - 879),
     img(f'{S}/scr-scenes.png', k + 50, 2010, 640, z=5, cls='card'),
 ])
 
-# ---- page 6: wiki: the home in front, the # Japan trip page behind it ---------------------
-k = 5 * W
+# ---- page 7: wiki: the home in front, the # Japan trip page behind it ---------------------
+k = 6 * W
 P6 = ''.join([
-    head(5, ['A *wiki* that', 'writes itself.']),
+    head(6, ['A *wiki* that', 'writes itself.']),
     phone('p6-jtrip', k + 910, 540, 740, z=2),
     phone('p6-wiki', k + 470, 1150, 820, z=3),
 ])
 
-# ---- page 7: a space: Atu makes a page from one message and keeps it up to date ---------------
-k = 6 * W
+# ---- page 5: a space: Atu makes a page from one message and keeps it up to date ---------------
+k = 4 * W
 P7 = ''.join([
-    head(6, ['Describe a page.', 'Atu *builds it*.']),               # app (NativeSpaceNew) and heyatu.com: "page", not "app" (guideline 4.7)
+    head(4, ['Describe a page.', 'Atu *builds it*.']),               # app (NativeSpaceNew) and heyatu.com: "page", not "app" (guideline 4.7)
     text(k, 500, 56, ['In your tab bar. *Updates itself.*'], align='center', width=W),
     phone('p7-space', k + 640, 821),
     img(f'{S}/scr-spadd.png', k + 560, 1440, 700, z=5),              # the message and the space card in the chat

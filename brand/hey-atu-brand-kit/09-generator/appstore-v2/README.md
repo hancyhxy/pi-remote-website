@@ -51,7 +51,7 @@
 
 ## iPad 版（2026-11-08）
 
-照 Otter：iPhone 的第 1–7 张（第 7 张是 Space，2026-11-09），同样的标题和弹出卡片（不放手表：没有手表页，第 2 张也去掉手表，Xinyi 2026-11-08），手机换成正放的 iPad Pro 13 寸（竖屏），每张单独成图、不跨页。
+照 Otter：iPhone 的第 1–7 张（第 5 张是 Space，排在 Todo 后面，2026-11-09），同样的标题和弹出卡片（不放手表：没有手表页，第 2 张也去掉手表，Xinyi 2026-11-08），手机换成正放的 iPad Pro 13 寸（竖屏），每张单独成图、不跨页。
 iPad 界面在 `screens.html` 的 `ip-*`，按 App 的宽屏布局还原（`NativeAppView`：宽度 ≥ 1024 pt）：Chats 带 280 pt 侧栏，
 Updates 的侧栏是信息源，Todo 右边 300 pt 是 Later，Wiki 一排四个标签，标签栏在顶部。拼图脚本 `compose_ipad.py`。
 定稿复制到 `03-stores/app-store/04-ipad-13in-2064x2752/`。

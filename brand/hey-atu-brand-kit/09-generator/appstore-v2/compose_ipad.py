@@ -16,7 +16,7 @@ KIT = H.parents[1].as_uri()                                    # brand/hey-atu-b
 SITE = (H.parents[3] / 'website' / 'assets').resolve().as_uri()  # website -> ../pi-remote/site
 W, HH, N = 2064, 2752, 7
 TAG = 'ipad-r1'
-NAMES = ['01-opening', '02-everywhere', '03-your-ai', '04-todo', '05-daily', '06-wiki', '07-space']
+NAMES = ['01-opening', '02-everywhere', '03-your-ai', '04-todo', '05-space', '06-daily', '07-wiki']
 FEAT = 150    # feature headline size
 
 
@@ -94,29 +94,29 @@ P4 = ''.join([
     img(f'{S}/scr-followup.png', k + 110, 1830, 1300, z=6),
 ])
 
-# 5 daily tasks: the scenes card pops out
-k = 4 * W
+# 6 daily tasks: the scenes card pops out
+k = 5 * W
 P5 = ''.join([
-    head(4, ['Run your own', '*daily* tasks.']),
-    ipad(4, 'updates', 760),
+    head(5, ['Run your own', '*daily* tasks.']),
+    ipad(5, 'updates', 760),
     img(f'{S}/scr-scenes.png', k + 80, 1900, 900, z=5, cls='card'),
 ])
 
-# 6 wiki: the # Japan trip tag pops out of its card
-k = 5 * W
+# 7 wiki: the # Japan trip tag pops out of its card
+k = 6 * W
 P6 = ''.join([
-    head(5, ['A *wiki* that', 'writes itself.']),
-    ipad(5, 'wiki', 760),
+    head(6, ['A *wiki* that', 'writes itself.']),
+    ipad(6, 'wiki', 760),
     img(f'{S}/scr-gtag.png', k + 560, 1520, 640, z=5, cls='card'),
     img(f'{S}/scr-gn1.png', k + 1330, 2000, 520, z=5, cls='card'),
 ])
 
-# 7 space: the run log, the message and its space card, the space menu (2026-11-09)
-k = 6 * W
+# 5 space: the run log, the message and its space card, the space menu (2026-11-09)
+k = 4 * W
 P7 = ''.join([
-    head(6, ['Describe a page.', 'Atu *builds it*.']),               # app (NativeSpaceNew) and heyatu.com: "page", not "app" (guideline 4.7)
+    head(4, ['Describe a page.', 'Atu *builds it*.']),               # app (NativeSpaceNew) and heyatu.com: "page", not "app" (guideline 4.7)
     text(k, 560, 84, ['In your tab bar. *Updates itself.*'], align='center', width=W),
-    ipad(6, 'space', 860),
+    ipad(4, 'space', 860),
     img(f'{S}/scr-spadd.png', k + 1080, 1740, 900, z=5),
     img(f'{S}/scr-spmenu.png', k + 110, 2080, 900, z=6, cls='card'),
 ])
@@ -145,7 +145,7 @@ body{{-webkit-font-smoothing:antialiased}}
 async def main():
     # Each page is clipped to itself, so nothing runs across a cut.
     pages = ''
-    for i, body in enumerate([P1, P2, P3, P4, P5, P6, P7]):
+    for i, body in enumerate([P1, P2, P3, P4, P7, P5, P6]):   # 5 space, 6 daily, 7 wiki
         bg = ('<div class="dots"></div>'
               f'<div class="glow" style="left:-500px;top:-560px;width:1700px;height:1700px"></div>'
               f'<div class="glow" style="left:900px;top:1500px;width:1700px;height:1700px;opacity:.5"></div>')
