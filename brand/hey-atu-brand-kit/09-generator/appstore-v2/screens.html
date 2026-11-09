@@ -402,6 +402,21 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
 /* popout: the space menu (NativeSpacePage menu) */
 .smenu .srow i { background: none; } .smenu .srow i svg { width: 22px; height: 22px; fill: none; stroke: #333; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .smenu .srow i.face { background: #fff url(../../../../../pi-remote/mockup/site-app-screens/mascot-idle-frame.png) center 2px / 36px no-repeat; box-shadow: 0 0 0 1px rgba(0,0,0,.06); }
+/* family week space, as on heyatu.com 19:00 Spaces (site/assets/home-v3/home.css .fw) */
+.fw { position: absolute; left: 0; right: 0; top: 0; bottom: 0; background: #fff3cf; background-image: radial-gradient(#f5c94a 1.6px, transparent 1.8px), radial-gradient(#f39ab0 1.6px, transparent 1.8px); background-size: 46px 46px, 46px 46px; background-position: 0 0, 23px 23px; padding: 112px 18px 120px; font-family: ui-rounded, "SF Pro Rounded", -apple-system, system-ui, sans-serif; color: #2a2320; }
+.fw-head { padding: 6px 4px 14px; } .fw-head b { display: block; font-size: 32px; font-weight: 850; letter-spacing: -.02em; line-height: 1.05; } .fw-head small { font-size: 15px; font-weight: 600; color: #8a6d3b; }
+.fw-card { display: flex; gap: 12px; align-items: center; margin: 0 0 14px; padding: 12px 14px; border: 2.5px solid #2a2320; border-radius: 20px; box-shadow: 3px 4px 0 #2a2320; background: #fff; }
+.fw-card small { display: block; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; opacity: .7; }
+.fw-card b { display: block; font-size: 22px; font-weight: 850; line-height: 1.15; } .fw-card i { display: block; font-style: normal; font-size: 14px; font-weight: 600; margin-top: 2px; }
+.fw-col { flex-direction: column; align-items: stretch; } .fw-emo { font-size: 44px; line-height: 1; }
+.fw-o { background: #ffb27a; } .fw-p { background: #cdb8ff; } .fw-g { background: #b6ecb0; } .fw-b { background: #a9dcff; } .fw-y { background: #ffe07a; } .fw-r { background: #ffb3c7; }
+.fw-stars { letter-spacing: 2px; } .fw-stars em { font-style: normal; color: #7a62c9; }
+.fw-chips, .fw-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.fw-chips span, .fw-list span { background: #fff; border: 2px solid #2a2320; border-radius: 999px; padding: 4px 10px; font-size: 13.5px; font-weight: 700; }
+.fw-list .ok { text-decoration: line-through; opacity: .55; }
+.spbar.lt { background: #fff3cf; } .spbar.lt .mb, .spbar.lt .hb { background: rgba(255,255,255,.82); color: #111; box-shadow: 0 4px 14px rgba(0,0,0,.07), 0 0 0 .5px rgba(0,0,0,.07); }
+.spbar.lt .mb svg { stroke: #222; } .spbar.lt .hb::after { border-color: #fff; }
+.spc .ico.fwi { background: #fff3cf; border: 2px solid #2a2320; font-size: 22px; }
 </style></head><body>
 
 <svg width="0" height="0" style="position:absolute">
@@ -534,8 +549,8 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
       <div class="trw"><svg><use href="#t-upd"/></svg>Updates</div>
       <div class="trw"><svg><use href="#t-wiki"/></svg>Wiki</div>
       <span class="sl s2">Spaces</span>
+      <div class="trw"><svg><use href="#i-house"/></svg>Family week</div>
       <div class="trw"><svg><use href="#i-heart"/></svg>Run log</div>
-      <div class="trw"><svg><use href="#i-house"/></svg>Home dashboard</div>
       <div class="trw ds"><svg><use href="#i-plus"/></svg>New space</div>
       <div class="chd"><span class="sl">Chats</span><span class="ib on"><i><svg><use href="#i-list"/></svg></i></span><span class="ib "><i><svg><use href="#i-folder"/></svg></i></span></div>
       <div class="dw-l">
@@ -810,8 +825,8 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
       <div class="trw"><svg><use href="#t-upd"/></svg>Updates</div>
       <div class="trw"><svg><use href="#t-wiki"/></svg>Wiki</div>
       <span class="sl s2">Spaces</span>
+      <div class="trw"><svg><use href="#i-house"/></svg>Family week</div>
       <div class="trw"><svg><use href="#i-heart"/></svg>Run log</div>
-      <div class="trw"><svg><use href="#i-house"/></svg>Home dashboard</div>
       <div class="trw ds"><svg><use href="#i-plus"/></svg>New space</div>
       <div class="chd"><span class="sl">Chats</span><span class="ib on"><i><svg><use href="#i-list"/></svg></i></span><span class="ib "><i><svg><use href="#i-folder"/></svg></i></span></div>
       <div class="dw-l">
@@ -1004,27 +1019,26 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
 </div>
 
 
-<!-- 7 · Space: the run log, with its own look (docs/product/spaces.md; mockup screen F) -->
-<div class="screen" id="space" style="background:#f3efe6">
-  <div class="sb" style="color:#fff"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px;fill:#fff"><use href="#sb"/></svg></div>
-  <div class="spbar"><span class="mb"><svg><use href="#i-menu"/></svg></span><span class="lo"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span class="hb">F</span></div>
-  <div class="run-hero"><div class="k">Run log · updated 07:00</div><div class="v">21.3<small>km</small></div><div class="m">Last 7 days · 3 runs · 2 h 04 min</div><div class="run-bars"><i style="height:50%"></i><i class="off"></i><i style="height:59%"></i><i class="off"></i><i style="height:100%"></i><i class="off"></i><i class="off"></i></div><div class="run-days"><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span><span>M</span><span>T</span></div></div>
-  <div class="run-list"><div class="run-row"><span class="d"><b>01</b>Sun</span><span class="mm"><b>Long run · 10.2 km</b><small>5:41 /km · HR 148</small></span><span class=pb>PB</span></div><div class="run-row"><span class="d"><b>30</b>Fri</span><span class="mm"><b>Tempo · 6.0 km</b><small>5:12 /km · HR 161</small></span></div><div class="run-row"><span class="d"><b>28</b>Wed</span><span class="mm"><b>Easy · 5.1 km</b><small>6:05 /km · HR 139</small></span></div><div class="run-row"><span class="d"><b>25</b>Sun</span><span class="mm"><b>Long run · 9.8 km</b><small>5:49 /km · HR 151</small></span></div><div class="run-row"><span class="d"><b>23</b>Fri</span><span class="mm"><b>Tempo · 6.1 km</b><small>5:18 /km · HR 159</small></span></div><div class="run-row"><span class="d"><b>21</b>Wed</span><span class="mm"><b>Easy · 5.0 km</b><small>6:10 /km · HR 137</small></span></div></div>
-  <div class="botfade" style="height:150px;background:linear-gradient(rgba(243,239,230,0),rgba(243,239,230,.96) 50%)"></div>
-  <nav class="tabs"><span><svg><use href="#t-chat"/></svg>Chats</span><span><svg><use href="#t-todo"/></svg>Todo</span><span><svg><use href="#t-upd"/></svg>Updates</span><span class="on"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="#e0764f" stroke="#e0764f"/></svg>Run log</span><span><svg><use href="#t-wiki"/></svg>Wiki</span></nav>
+<!-- 7 · Space: the family week, as on heyatu.com 19:00 Spaces (site/home.html scene 5). The top bar
+     follows the app (NativeSpaceTopBar: menu, Atu logo, computer) on the colour of the space. -->
+<div class="screen" id="space">
+  <div class="fw"><div class="fw-head"><b>Family week <span>🏡</span></b><small>Hi Mia &amp; Dad! · Tuesday</small></div><div class="fw-card fw-o" style="rotate:-1.5deg"><span class="fw-emo">🌮</span><div><small>Tonight’s dinner</small><b>Taco Tuesday</b><i>Mia picks the toppings!</i></div></div><div class="fw-card fw-p" style="rotate:1deg"><div style="flex:1"><small>Mia’s stars</small><b class="fw-stars">⭐⭐⭐⭐<em>☆</em></b><i>One more for ice cream 🍦</i></div></div><div class="fw-card fw-g fw-col" style="rotate:-.6deg"><small>This week</small><div class="fw-chips"><span>🏊 Swim · Tue 4pm</span><span>🎒 Trip form · Thu</span><span>🎂 Grandma · Sat</span></div></div><div class="fw-card fw-b fw-col" style="rotate:.8deg"><small>Shopping</small><div class="fw-list"><span class="ok">🥑 Limes</span><span>🫓 Tortillas</span><span>🥛 Milk</span></div></div></div>
+  <div class="spbar lt"><span class="mb"><svg><use href="#i-menu"/></svg></span><span class="lo"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span class="hb">F</span></div>
+  <div class="sb"><span>9:41</span><i class="island"></i><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <nav class="tabs"><span><svg><use href="#t-chat"/></svg>Chats</span><span><svg><use href="#t-todo"/></svg>Todo</span><span><svg><use href="#t-upd"/></svg>Updates</span><span class="on"><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20h-5v-6H9v6H4z" fill="#e0764f" stroke="#e0764f"/></svg>Family</span><span><svg><use href="#t-wiki"/></svg>Wiki</span></nav>
 </div>
 
-<!-- 7b · Popout: one message, and the space card in the chat (ChatWeb spaceCard) -->
+<!-- 7b · Popout: one message, and the space card in the chat (ChatWeb spaceCard; site scene 5) -->
 <div class="addwrap" id="spadd">
-  <div class="bub">Make a page of my runs. Update it every morning.</div>
-  <div class="spc"><span class="ico"><svg><use href="#i-heart"/></svg></span><span class="tx"><b>Run log</b><small>Space · Daily 07:00</small></span><span class="op">Open</span></div>
+  <div class="bub">Make a page for our family week.</div>
+  <div class="spc"><span class="ico fwi">🏡</span><span class="tx"><b>Family week</b><small>Space · Daily 08:00</small></span><span class="op">Open</span></div>
 </div>
 
 <!-- 7c · Popout: the space menu, from a tap on the Atu logo (NativeSpacePage) -->
 <div class="scn smenu" id="spmenu">
-  <div class="bar">Run log</div>
+  <div class="bar">Family week</div>
   <div class="grp" style="margin-top:8px">
-    <div class="srow"><i><svg><use href="#i-refresh"/></svg></i><div>Refresh<small>Daily 07:00 · last run today 07:00</small></div></div>
+    <div class="srow"><i><svg><use href="#i-refresh"/></svg></i><div>Refresh<small>Daily 08:00 · last run today 08:00</small></div></div>
     <div class="srow"><i><svg><use href="#i-clock"/></svg></i><div>Change history<small>Undo any change</small></div><em></em></div>
   </div>
   <div class="grp" style="margin-top:12px">
@@ -1032,13 +1046,13 @@ body { margin: 0; background: transparent; display: flex; flex-wrap: wrap; gap: 
   </div>
 </div>
 
-<!-- iPad 7 · Space: the run log in the wide layout, the tab bar at the top -->
-<div class="ip" id="ip-space" style="background:#f3efe6">
-  <div class="sbi" style="color:#fff"><span>9:41&nbsp;&nbsp;Tue 3 Nov</span><svg style="height:12px;width:70px;fill:#fff"><use href="#sb"/></svg></div>
-  <div class="tbar"><span>Chats</span><span>Todo</span><span>Updates</span><span class="on">Run log</span><span>Wiki</span></div>
-  <div class="spbar" style="height:160px"><span class="mb" style="top:106px;left:28px"><svg><use href="#i-menu"/></svg></span><span class="lo" style="top:106px"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span class="hb" style="top:106px;right:28px">F</span></div>
-  <div class="run-hero" style="padding:176px 40px 30px"><div class="k">Run log · updated 07:00</div><div class="v">21.3<small>km</small></div><div class="m">Last 7 days · 3 runs · 2 h 04 min</div><div class="run-bars" style="height:120px;gap:14px"><i style="height:50%"></i><i class="off"></i><i style="height:59%"></i><i class="off"></i><i style="height:100%"></i><i class="off"></i><i class="off"></i></div><div class="run-days" style="gap:14px"><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span><span>M</span><span>T</span></div></div>
-  <div class="run-list" style="display:grid;grid-template-columns:1fr 1fr;column-gap:14px;padding:18px 24px"><div class="run-row"><span class="d"><b>01</b>Sun</span><span class="mm"><b>Long run · 10.2 km</b><small>5:41 /km · HR 148</small></span><span class=pb>PB</span></div><div class="run-row"><span class="d"><b>30</b>Fri</span><span class="mm"><b>Tempo · 6.0 km</b><small>5:12 /km · HR 161</small></span></div><div class="run-row"><span class="d"><b>28</b>Wed</span><span class="mm"><b>Easy · 5.1 km</b><small>6:05 /km · HR 139</small></span></div><div class="run-row"><span class="d"><b>25</b>Sun</span><span class="mm"><b>Long run · 9.8 km</b><small>5:49 /km · HR 151</small></span></div><div class="run-row"><span class="d"><b>23</b>Fri</span><span class="mm"><b>Tempo · 6.1 km</b><small>5:18 /km · HR 159</small></span></div><div class="run-row"><span class="d"><b>21</b>Wed</span><span class="mm"><b>Easy · 5.0 km</b><small>6:10 /km · HR 137</small></span></div><div class="run-row"><span class="d"><b>18</b>Sun</span><span class="mm"><b>Long run · 9.5 km</b><small>5:52 /km · HR 150</small></span></div><div class="run-row"><span class="d"><b>16</b>Fri</span><span class="mm"><b>Tempo · 5.8 km</b><small>5:20 /km · HR 158</small></span></div><div class="run-row"><span class="d"><b>14</b>Wed</span><span class="mm"><b>Easy · 5.2 km</b><small>6:02 /km · HR 140</small></span></div><div class="run-row"><span class="d"><b>11</b>Sun</span><span class="mm"><b>Long run · 9.1 km</b><small>5:55 /km · HR 149</small></span></div><div class="run-row"><span class="d"><b>09</b>Fri</span><span class="mm"><b>Tempo · 5.6 km</b><small>5:24 /km · HR 157</small></span></div><div class="run-row"><span class="d"><b>07</b>Wed</span><span class="mm"><b>Easy · 4.8 km</b><small>6:12 /km · HR 136</small></span></div><div class="run-row"><span class="d"><b>04</b>Sun</span><span class="mm"><b>Long run · 8.7 km</b><small>5:58 /km · HR 147</small></span></div><div class="run-row"><span class="d"><b>02</b>Fri</span><span class="mm"><b>Tempo · 5.5 km</b><small>5:26 /km · HR 156</small></span></div></div>
+<!-- iPad 7 · Space: the family week in the wide layout, cards in two columns, the tab bar at the top -->
+<div class="ip" id="ip-space">
+  <div class="fw" style="padding:178px 32px 40px"><div style="zoom:1.55"><div class="fw-head" style="padding-bottom:22px"><b>Family week <span>🏡</span></b><small>Hi Mia &amp; Dad! · Tuesday</small></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:26px;row-gap:10px"><div class="fw-card fw-o" style="rotate:-1.5deg"><span class="fw-emo">🌮</span><div><small>Tonight’s dinner</small><b>Taco Tuesday</b><i>Mia picks the toppings!</i></div></div><div class="fw-card fw-p" style="rotate:1deg"><div style="flex:1"><small>Mia’s stars</small><b class="fw-stars">⭐⭐⭐⭐<em>☆</em></b><i>One more for ice cream 🍦</i></div></div><div class="fw-card fw-g fw-col" style="rotate:-.6deg"><small>This week</small><div class="fw-chips"><span>🏊 Swim · Tue 4pm</span><span>🎒 Trip form · Thu</span><span>🎂 Grandma · Sat</span></div></div><div class="fw-card fw-b fw-col" style="rotate:.8deg"><small>Shopping</small><div class="fw-list"><span class="ok">🥑 Limes</span><span>🫓 Tortillas</span><span>🥛 Milk</span></div></div><div class="fw-card fw-y" style="rotate:.6deg"><span class="fw-emo">📚</span><div><small>Bedtime story</small><b>The Gruffalo</b><i>Dad reads, Mia does the voices</i></div></div><div class="fw-card fw-r fw-col" style="rotate:-.8deg"><small>Chores</small><div class="fw-list"><span class="ok">🧸 Tidy toys</span><span>🐶 Feed Biscuit</span><span>🌱 Water plants</span></div></div><div class="fw-card fw-g" style="rotate:-1deg"><span class="fw-emo">🏞️</span><div><small>Saturday</small><b>Picnic at the park</b><i>Sunny, 24° · bring the kite</i></div></div><div class="fw-card fw-o" style="rotate:.9deg"><span class="fw-emo">🔥</span><div><small>Reading streak</small><b>12 nights</b><i>Mia’s best ever!</i></div></div></div></div></div>
+  <div class="spbar lt" style="height:160px"><span class="mb" style="top:106px;left:28px"><svg><use href="#i-menu"/></svg></span><span class="lo" style="top:106px"><img src="../../../../../pi-remote/site/assets/brand/atu-color.svg"></span><span class="hb" style="top:106px;right:28px">F</span></div>
+  <div class="sbi"><span>9:41&nbsp;&nbsp;Tue 3 Nov</span><svg style="height:12px;width:70px"><use href="#sb"/></svg></div>
+  <div class="tbar"><span>Chats</span><span>Todo</span><span>Updates</span><span class="on">Family</span><span>Wiki</span></div>
 </div>
 
 <!-- 2 · Providers -->

@@ -207,7 +207,7 @@ P7 = ''.join([
     text(k, 500, 56, ['In your tab bar. *Updates itself.*'], align='center', width=W),
     phone('p7-space', k + 640, 821),
     img(f'{S}/scr-spadd.png', k + 560, 1440, 700, z=5),              # the message and the space card in the chat
-    img(f'{S}/scr-spmenu.png', k + 90, 2010, 700, z=6, cls='card'),  # the space menu: refresh, history, tell Atu
+    img(f'{S}/scr-spmenu.png', k + 90, 2190, 700, z=6, cls='card'),  # the space menu: refresh, history, tell Atu
 ])
 
 # ---- page 8: phone from the top, headline in the middle, two watches below ------------------
