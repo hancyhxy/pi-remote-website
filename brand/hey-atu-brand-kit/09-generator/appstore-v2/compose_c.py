@@ -200,10 +200,11 @@ P6 = ''.join([
     phone('p6-wiki', k + 470, 1150, 820, z=3),
 ])
 
-# ---- page 7: a space: one message makes a small app that Atu keeps up to date ---------------
+# ---- page 7: a space: Atu makes a page from one message and keeps it up to date ---------------
 k = 6 * W
 P7 = ''.join([
-    head(6, ['One message,', 'your own *app*.']),
+    head(6, ['Describe a page.', 'Atu makes a *space*.']),          # heyatu.com 19:00 Spaces
+    text(k, 500, 56, ['In your tab bar. *Updates itself.*'], align='center', width=W),
     phone('p7-space', k + 640, 821),
     img(f'{S}/scr-spadd.png', k + 560, 1440, 700, z=5),              # the message and the space card in the chat
     img(f'{S}/scr-spmenu.png', k + 90, 2010, 700, z=6, cls='card'),  # the space menu: refresh, history, tell Atu

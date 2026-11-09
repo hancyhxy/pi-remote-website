@@ -114,10 +114,11 @@ P6 = ''.join([
 # 7 space: the run log, the message and its space card, the space menu (2026-11-09)
 k = 6 * W
 P7 = ''.join([
-    head(6, ['One message,', 'your own *app*.']),
-    ipad(6, 'space', 760),
-    img(f'{S}/scr-spadd.png', k + 1080, 1640, 900, z=5),
-    img(f'{S}/scr-spmenu.png', k + 110, 2020, 900, z=6, cls='card'),
+    head(6, ['Describe a page.', 'Atu makes a *space*.']),          # heyatu.com 19:00 Spaces
+    text(k, 560, 84, ['In your tab bar. *Updates itself.*'], align='center', width=W),
+    ipad(6, 'space', 860),
+    img(f'{S}/scr-spadd.png', k + 1080, 1740, 900, z=5),
+    img(f'{S}/scr-spmenu.png', k + 110, 2080, 900, z=6, cls='card'),
 ])
 
 CSS = f'''
